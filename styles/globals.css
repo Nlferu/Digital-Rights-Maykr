@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -104,4 +104,33 @@ a {
   html {
     color-scheme: dark;
   }
+} */
+
+
+body {
+  background-color: #333;
+}
+
+nav {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lama {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rambo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ameba button {
+  background-color:black !important
 }

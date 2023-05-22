@@ -11,10 +11,12 @@ export default function App({ Component, pageProps }) {
                 <meta name="description" content="Digital Rights Maykr" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <MoralisProvider initializeOnMount={false}>
-                <Header />
-                <Component {...pageProps} />
-            </MoralisProvider>
+            <div className="lama">
+                <MoralisProvider initializeOnMount={false}>
+                    <Header />
+                    <Component {...pageProps} />
+                </MoralisProvider>
+            </div>
         </div>
     )
 }
