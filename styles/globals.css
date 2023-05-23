@@ -109,6 +109,7 @@ a {
 
 body {
   background-color: #333;
+  font-color: #fff;
 }
 
 nav {
@@ -116,21 +117,29 @@ nav {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.lama {
-  max-width: 1400px;
+.home {
+  color: white;
+  padding: 1.5rem;
+}
+
+.title {
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #fff;
 }
 
-.rambo {
+.rightNavBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-decoration: none;
+  color: #fff;
+  padding: 0 1.5rem;
 }
 
-.ameba button {
-  background-color:black !important
+.button button {
+  background-color:black !important;
 }

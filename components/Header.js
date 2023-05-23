@@ -2,20 +2,24 @@ import { ConnectButton } from "web3uikit"
 import Link from "next/link"
 
 export default function Header() {
-    const connectButtonStyle = {
-        backgroundColor: "black",
-        color: "black",
-        // Add any other desired styles here
-    }
-
     return (
         <nav>
-            <div className="lama">
+            <div className="title">
                 <h1>Digital Rights Maykr</h1>
-                <div className="rambo">
-                    <Link href="/">Home</Link>
-                    <Link href="/certificates">Certificates</Link>
-                    <div className="ameba">
+                <div className="rightNavBar">
+                    <Link className="rightNavBar" href="/">
+                        Home
+                    </Link>
+                    <Link className="rightNavBar" href="/creator">
+                        Create
+                    </Link>
+                    <Link className="rightNavBar" href="/lend">
+                        Lend Certificate
+                    </Link>
+                    <Link className="rightNavBar" href="/buy">
+                        Buy Rights
+                    </Link>
+                    <div className="button">
                         <ConnectButton moralisAuth={false} />
                     </div>
                 </div>
