@@ -6,22 +6,21 @@ export default function Header() {
         <nav>
             <div className="title">
                 <h1>Digital Rights Maykr</h1>
-                <div className="rightNavBar">
-                    <Link className="rightNavBar" href="/">
+                <div className="navBar">
+                    <Link className="navBar" href="/">
                         Home
                     </Link>
-                    <Link className="rightNavBar" href="/creator">
-                        Create
+                    <Link className="navBar" href="/create_certificate">
+                        Create Certificate
                     </Link>
-                    <Link className="rightNavBar" href="/lend">
+                    <Link className="navBar" href="/lend_certificate">
                         Lend Certificate
                     </Link>
-                    <Link className="rightNavBar" href="/buy">
+                    <Link className="navBar" href="/buy_rights">
                         Buy Rights
                     </Link>
-                    <div className="button">
-                        <ConnectButton moralisAuth={false} />
-                    </div>
+
+                    <ConnectButton moralisAuth={false} />
                 </div>
             </div>
         </nav>

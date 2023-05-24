@@ -1,1 +1,1 @@
-// Those will be recently created certificates showed on Home page
+// This will be recently created certificate showed on Home page and it's properties
