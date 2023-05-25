@@ -1,21 +1,11 @@
 import "../styles/CreateCertificate.module.css"
 import { useEffect, useState } from "react"
 import contract from "../contracts/DigitalRightsMaykr.json"
-import InputFields from "../components/InputFields"
-import CertificateGenerator from "@/components/CertificateGenerator"
 
 const contractAddress = contract.address
 const abi = contract.abi
 
 export default function Home() {
-    // var artName = document.getElementById("artInput")
-    // var author = document.getElementById("authorInput")
-    // var description = document.getElementById("descriptionInput")
-
-    // const retVal = () => {
-    //     return console.log(`Art Name: ${artName.value}, \nAuthor: ${author.value}, \nDescription: ${description.value}`)
-    // }
-
     const mintNftHandler = async () => {
         try {
             const { ethereum } = window
@@ -40,34 +30,10 @@ export default function Home() {
         }
     }
 
-    const inputs = () => {
-        return (
-            <div>
-                <InputFields />
-            </div>
-        )
-    }
-
-    const imgGenerator = () => {
-        return (
-            <div>
-                <CertificateGenerator />
-            </div>
-        )
-    }
-
     const mintNftButton = () => {
         return (
-            <button onClick={imgGenerator} className="cta-button mint-nft-button">
+            <button onClick={mintNftHandler} className="cta-button mint-nft-button">
                 Mint NFT
-            </button>
-        )
-    }
-
-    const imageButton = () => {
-        return (
-            <button onClick={imgGenerator} className="cta-button mint-nft-button">
-                Generate Image
             </button>
         )
     }
@@ -76,9 +42,6 @@ export default function Home() {
         <div>
             <h1>Page assigned for creating Cerificates</h1>
             <div>{mintNftButton()}</div>
-            <div>{imageButton()}</div>
-            <div>{inputs()}</div>
-            <div>{imgGenerator()}</div>
         </div>
     )
 }
