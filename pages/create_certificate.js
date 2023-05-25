@@ -2,7 +2,7 @@ import "../styles/CreateCertificate.module.css"
 import { useEffect, useState } from "react"
 import contract from "../contracts/DigitalRightsMaykr.json"
 import InputFields from "../components/InputFields"
-import CertificateGenerator from "@/components/CertificateGenerator"
+import CertificateGenerator from "../components/CertificateGenerator"
 
 const contractAddress = contract.address
 const abi = contract.abi

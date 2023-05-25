@@ -1,5 +1,5 @@
 import React from "react"
-import htmlToImage from "html-to-image"
+import html2canvas from "html2canvas"
 import download from "downloadjs"
 
 class CertificateGenerator extends React.Component {
@@ -21,9 +21,9 @@ class CertificateGenerator extends React.Component {
         const { author, address, description } = this.state
         const container = document.getElementById("certificate-container")
 
-        htmlToImage
-            .toPng(container)
-            .then((dataUrl) => {
+        html2canvas(container)
+            .then((canvas) => {
+                const dataUrl = canvas.toDataURL("image/png")
                 this.setState({ imageUrl: dataUrl })
             })
             .catch((error) => {
@@ -35,10 +35,11 @@ class CertificateGenerator extends React.Component {
         const { author, address, description } = this.state
         const container = document.getElementById("certificate-container")
 
-        htmlToImage
-            .toBlob(container)
-            .then((blob) => {
-                download(blob, "certificate.png")
+        html2canvas(container)
+            .then((canvas) => {
+                canvas.toBlob((blob) => {
+                    download(blob, "certificate.png")
+                })
             })
             .catch((error) => {
                 console.error("Error generating certificate image:", error)
@@ -46,20 +47,42 @@ class CertificateGenerator extends React.Component {
     }
 
     render() {
+        const { imageUrl } = this.state
         return (
             <div>
                 <input type="text" name="author" placeholder="Author" onChange={this.handleInputChange} />
                 <input type="text" name="address" placeholder="Address" onChange={this.handleInputChange} />
                 <input type="text" name="description" placeholder="Description" onChange={this.handleInputChange} />
                 <button onClick={this.handleGenerateCertificate}>Generate Certificate</button>
-                <div id="certificate-container">
-                    <p>Author: {this.state.author}</p>
-                    <p>Address: {this.state.address}</p>
-                    <p>Description: {this.state.description}</p>
+                <div
+                    id="certificate-container"
+                    style={{
+                        position: "relative",
+                        width: "840px",
+                        height: "1188px",
+                        background: `url('/certificate-template.png')`,
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                    }}
+                >
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            textAlign: "center",
+                            color: "white",
+                        }}
+                    >
+                        <p style={{ marginBottom: "10px" }}>Author: {this.state.author}</p>
+                        <p style={{ marginBottom: "10px" }}>Address: {this.state.address}</p>
+                        <p>Description: {this.state.description}</p>
+                    </div>
                 </div>
-                {this.state.imageUrl && (
+                {imageUrl && (
                     <div>
-                        <img src={this.state.imageUrl} alt="Generated Certificate" />
+                        <img src={imageUrl} alt="Generated Certificate" />
                         <button onClick={this.handleDownloadCertificate}>Download</button>
                     </div>
                 )}
