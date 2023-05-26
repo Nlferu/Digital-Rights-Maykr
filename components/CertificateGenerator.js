@@ -1,94 +1,89 @@
-import React from "react"
+import React, { useState } from "react"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
+import Certificate from "../styles/Certificate.module.css"
+import { uploadToNftStorage } from "../utils/uploadToNftStorage"
+import { metadataTemplate } from "../utils/metadata"
 
-class CertificateGenerator extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            author: "",
-            address: "",
-            description: "",
-            imageUrl: "",
+const CertificateGenerator = () => {
+    const [author, setAuthor] = useState("")
+    const [address, setAddress] = useState("")
+    const [description, setDescription] = useState("")
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target
+        if (name === "author") {
+            setAuthor(value)
+        } else if (name === "address") {
+            setAddress(value)
+        } else if (name === "description") {
+            setDescription(value)
         }
     }
 
-    handleInputChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value })
+    const handleGenerateCertificate = async () => {
+        const certificateContainer = document.getElementById("certificate-container")
+        const canvas = await html2canvas(certificateContainer)
+
+        // Convert the canvas to a Blob object
+        const imageBlob = await new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                resolve(blob)
+            }, "image/png")
+        })
+
+        // Pass the image blob to the upload function
+        try {
+            const response = await uploadToNftStorage(imageBlob, metadataTemplate)
+            console.log("NFT.storage response:", response)
+        } catch (error) {
+            console.error("Error uploading to NFT.storage:", error)
+        }
     }
 
-    handleGenerateCertificate = () => {
-        const { author, address, description } = this.state
-        const container = document.getElementById("certificate-container")
-
-        html2canvas(container)
-            .then((canvas) => {
-                const dataUrl = canvas.toDataURL("image/png")
-                this.setState({ imageUrl: dataUrl })
-            })
-            .catch((error) => {
-                console.error("Error generating certificate image:", error)
-            })
-    }
-
-    handleDownloadCertificate = () => {
-        const { author, address, description } = this.state
-        const container = document.getElementById("certificate-container")
-
-        html2canvas(container)
-            .then((canvas) => {
-                canvas.toBlob((blob) => {
-                    download(blob, "certificate.png")
-                })
-            })
-            .catch((error) => {
-                console.error("Error generating certificate image:", error)
-            })
-    }
-
-    render() {
-        const { imageUrl } = this.state
-        return (
-            <div>
-                <input type="text" name="author" placeholder="Author" onChange={this.handleInputChange} />
-                <input type="text" name="address" placeholder="Address" onChange={this.handleInputChange} />
-                <input type="text" name="description" placeholder="Description" onChange={this.handleInputChange} />
-                <button onClick={this.handleGenerateCertificate}>Generate Certificate</button>
-                <div
-                    id="certificate-container"
-                    style={{
-                        position: "relative",
-                        width: "840px",
-                        height: "1188px",
-                        background: `url('/certificate-template.png')`,
-                        backgroundSize: "contain",
-                        backgroundPosition: "center",
-                    }}
-                >
+    return (
+        <div>
+            <div className={Certificate.inputsContainer}>
+                <input type="text" name="author" placeholder="Author" onChange={handleInputChange} />
+                <input type="text" name="address" placeholder="Address" onChange={handleInputChange} />
+                <input type="text" name="description" placeholder="Description" onChange={handleInputChange} />
+                <button className={Certificate.generateButton} onClick={handleGenerateCertificate}>
+                    Generate Certificate
+                </button>
+            </div>
+            {author && address && description && (
+                <div className={Certificate.certPositioning}>
                     <div
+                        id="certificate-container"
                         style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            textAlign: "center",
-                            color: "white",
+                            position: "relative",
+                            width: "556px",
+                            height: "700px",
+                            background: `url('/certificate-template.png')`,
+                            backgroundSize: "contain",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat",
                         }}
                     >
-                        <p style={{ marginBottom: "10px" }}>Author: {this.state.author}</p>
-                        <p style={{ marginBottom: "10px" }}>Address: {this.state.address}</p>
-                        <p>Description: {this.state.description}</p>
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                textAlign: "center",
+                                color: "white",
+                            }}
+                        >
+                            <p style={{ marginBottom: "10px" }}>Author: {author}</p>
+                            <p style={{ marginBottom: "10px" }}>Address: {address}</p>
+                            <p>Description: {description}</p>
+                        </div>
                     </div>
                 </div>
-                {imageUrl && (
-                    <div>
-                        <img src={imageUrl} alt="Generated Certificate" />
-                        <button onClick={this.handleDownloadCertificate}>Download</button>
-                    </div>
-                )}
-            </div>
-        )
-    }
+            )}
+        </div>
+    )
 }
 
 export default CertificateGenerator

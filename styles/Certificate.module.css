@@ -1,0 +1,35 @@
+.certPositioning {
+    float: right;
+    padding: 70px;
+    position: relative;
+    top: -140px;
+    position: flex;
+}
+
+.inputsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 250px;
+    position: relative;
+    top: 20vh;
+    left: 40vw;
+}
+
+.generateButton {
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    min-width: 250px;
+    color: black;
+    font-size: 18px;
+    cursor: pointer;
+    background: orange;
+}
+
+.magicText {
+    float: right;
+    padding: 150px;
+    color: white;
+    z-index: auto;
+}
