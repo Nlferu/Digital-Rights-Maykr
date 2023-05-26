@@ -1,17 +1,15 @@
-import "../styles/CreateCertificate.module.css"
-import { useEffect, useState } from "react"
+import Certificate from "../styles/Certificate.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
-import InputFields from "../components/InputFields"
-import CertificateGenerator from "../components/CertificateGenerator"
+import CertificateGenerator from "../components/CertificateGeneratorDD"
+
+/** @dev Solution for this is that user needs to download his certificate, upload it into nft.storage or pinata and get CID number then in next tab "Mint NFT" he will provide
+ * all details again to create Certificate
+ */
 
 const contractAddress = contract.address
 const abi = contract.abi
 
 export default function Home() {
-    // var artName = document.getElementById("artInput")
-    // var author = document.getElementById("authorInput")
-    // var description = document.getElementById("descriptionInput")
-
     // const retVal = () => {
     //     return console.log(`Art Name: ${artName.value}, \nAuthor: ${author.value}, \nDescription: ${description.value}`)
     // }
@@ -40,14 +38,6 @@ export default function Home() {
         }
     }
 
-    const inputs = () => {
-        return (
-            <div>
-                <InputFields />
-            </div>
-        )
-    }
-
     const imgGenerator = () => {
         return (
             <div>
@@ -58,7 +48,7 @@ export default function Home() {
 
     const mintNftButton = () => {
         return (
-            <button onClick={imgGenerator} className="cta-button mint-nft-button">
+            <button onClick={mintNftHandler} className={CreateCertificate.mint}>
                 Mint NFT
             </button>
         )
@@ -74,10 +64,6 @@ export default function Home() {
 
     return (
         <div>
-            <h1>Page assigned for creating Cerificates</h1>
-            <div>{mintNftButton()}</div>
-            <div>{imageButton()}</div>
-            <div>{inputs()}</div>
             <div>{imgGenerator()}</div>
         </div>
     )
