@@ -1,1 +1,3 @@
-https://ipfs.io/ipfs/bafybeihnht2qlztjf6e2o3fqp6iplu7fb34euwzjdhbb3fhmemtxxbaija/blob
+https://ipfs.io/ipfs/bafybeifnirlrcfy2jvv3c64o2uoykn2uvlosq3sijhzgdpmwvdgug2jzhq/nft.png
+
+ipfs://bafybeifnirlrcfy2jvv3c64o2uoykn2uvlosq3sijhzgdpmwvdgug2jzhq/nft.png

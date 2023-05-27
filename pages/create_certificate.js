@@ -1,6 +1,8 @@
 import Certificate from "../styles/Certificate.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
-import CertificateGenerator from "../components/CertificateGeneratorDD"
+import CertificateGenerator from "../components/CertificateGenerator"
+import { useWeb3Contract } from "react-moralis"
+import { ethers } from "ethers"
 
 /** @dev Solution for this is that user needs to download his certificate, upload it into nft.storage or pinata and get CID number then in next tab "Mint NFT" he will provide
  * all details again to create Certificate
@@ -9,10 +11,19 @@ import CertificateGenerator from "../components/CertificateGeneratorDD"
 const contractAddress = contract.address
 const abi = contract.abi
 
+console.log(contractAddress)
+
 export default function Home() {
     // const retVal = () => {
     //     return console.log(`Art Name: ${artName.value}, \nAuthor: ${author.value}, \nDescription: ${description.value}`)
     // }
+
+    const { runContractFunction: emittedCount } = useWeb3Contract({
+        abi: abi,
+        contractAddress: contractAddress,
+        functionName: "emittedCount",
+        params: {},
+    })
 
     const mintNftHandler = async () => {
         try {
@@ -23,13 +34,12 @@ export default function Home() {
                 const signer = provider.getSigner()
                 const nftContract = new ethers.Contract(contractAddress, abi, signer)
 
-                console.log("Initialize payment")
-                let nftTxn = await nftContract.mintNFTs(1, { value: ethers.utils.parseEther("0.01") })
+                const accounts = await ethereum.request({ method: "eth_accounts" })
+                const address = accounts.toString()
 
-                console.log("Mining... please wait")
-                await nftTxn.wait()
+                const nfts = (await emittedCount()).toString()
 
-                console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`)
+                console.log(`Contract Address: ${contractAddress}, EmittedCount: ${nfts}, User Address: ${address}`)
             } else {
                 console.log("Ethereum object does not exist")
             }
@@ -47,11 +57,7 @@ export default function Home() {
     }
 
     const mintNftButton = () => {
-        return (
-            <button onClick={mintNftHandler} className={CreateCertificate.mint}>
-                Mint NFT
-            </button>
-        )
+        return <button onClick={mintNftHandler}>Mint NFT</button>
     }
 
     const imageButton = () => {
@@ -65,6 +71,7 @@ export default function Home() {
     return (
         <div>
             <div>{imgGenerator()}</div>
+            <div>{mintNftButton()}</div>
         </div>
     )
 }

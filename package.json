@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^1.4.0",
     "downloadjs": "^1.4.7",
     "html2canvas": "^1.4.1",
     "magic-sdk": "^16.1.0",
@@ -22,8 +21,6 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.0",
-    "mime": "^3.0.0",
-    "nft.storage": "^6.0.1",
-    "path": "^0.12.7"
+    "nft.storage": "^6.0.1"
   }
 }

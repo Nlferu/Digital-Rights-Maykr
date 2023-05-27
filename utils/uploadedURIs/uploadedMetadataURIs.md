@@ -1,1 +1,1 @@
-https://ipfs.io/ipfs/bafybeiffer5eflozqtpr3gj4uqs6eukwimspffcadzuh3itjqb4sjoiypq/metadata.json
+https://ipfs.io/ipfs/bafyreiawk4n3n7rhvumfylewqdxoumqrtbdlcdov57k3do4x6bzljzsgnm/metadata.json
