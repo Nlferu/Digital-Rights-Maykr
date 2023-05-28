@@ -1,3 +1,1 @@
-https://ipfs.io/ipfs/bafybeifnirlrcfy2jvv3c64o2uoykn2uvlosq3sijhzgdpmwvdgug2jzhq/nft.png
-
-ipfs://bafybeifnirlrcfy2jvv3c64o2uoykn2uvlosq3sijhzgdpmwvdgug2jzhq/nft.png
+https://ipfs.io/ipfs/bafybeibinp4g7dfv5aqdbukj6rwbbmjq2pqdb2k4u37npbaqzqrdjyl7je/Certificate_Id_1.png

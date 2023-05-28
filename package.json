@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "downloadjs": "^1.4.7",
     "html2canvas": "^1.4.1",
     "magic-sdk": "^16.1.0",

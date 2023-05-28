@@ -1,4 +1,3 @@
-import Certificate from "../styles/Certificate.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
 import CertificateGenerator from "../components/CertificateGenerator"
 import { useWeb3Contract } from "react-moralis"
@@ -10,8 +9,6 @@ import { ethers } from "ethers"
 
 const contractAddress = contract.address
 const abi = contract.abi
-
-console.log(contractAddress)
 
 export default function Home() {
     // const retVal = () => {
@@ -34,12 +31,14 @@ export default function Home() {
                 const signer = provider.getSigner()
                 const nftContract = new ethers.Contract(contractAddress, abi, signer)
 
+                var art = document.getElementById("art")
+
                 const accounts = await ethereum.request({ method: "eth_accounts" })
                 const address = accounts.toString()
 
                 const nfts = (await emittedCount()).toString()
 
-                console.log(`Contract Address: ${contractAddress}, EmittedCount: ${nfts}, User Address: ${address}`)
+                console.log(`Contract Address: ${contractAddress}, EmittedCount: ${nfts}, User Address: ${address}, Art Hash: ${art.value}`)
             } else {
                 console.log("Ethereum object does not exist")
             }
