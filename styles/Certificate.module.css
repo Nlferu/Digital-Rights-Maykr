@@ -1,9 +1,8 @@
 .certPositioning {
     float: right;
-    padding: 70px;
     position: relative;
-    top: -30vh;
-    left: 0vw;
+    top: -17vh;
+    left: -3vw;
     position: flex;
 }
 
@@ -19,7 +18,7 @@
 
 .generateButton {
     padding: 15px;
-    border: none;
+    border: 2px solid #111;
     border-radius: 12px;
     min-width: 250px;
     color: black;
@@ -37,7 +36,9 @@
 
 .magicText {
     float: right;
-    padding: 150px;
+    position: relative;
     color: white;
-    z-index: auto;
+    top: 2vh;
+    left: -5vw;
+    font-size: 35px;
 }

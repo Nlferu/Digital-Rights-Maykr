@@ -12,6 +12,7 @@ const CertificateGenerator = () => {
     const [author, setAuthor] = useState("")
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const { runContractFunction } = useWeb3Contract()
 
     const combinedClasses = `${Certificate.generateButton} ${Certificate.downloadButton}`
 
@@ -53,8 +54,25 @@ const CertificateGenerator = () => {
 
         // Pass the image blob to the upload function
         try {
-            const response = await uploadToNftStorage(art, imageBlob, index)
-            console.log("NFT.storage response:", response)
+            const tokenURI = await uploadToNftStorage(art, imageBlob, index)
+            console.log("NFT.storage response:", tokenURI)
+
+            console.log("Minting NFT...")
+            const mintNft = {
+                abi: abi,
+                contractAddress: contractAddress,
+                functionName: "mintNFT",
+                params: {
+                    createdTokenURI: tokenURI,
+                },
+            }
+
+            await runContractFunction({
+                params: mintNft,
+                onError: console.log("error RR"), // () => handleMintError()
+                onSuccess: console.log("success RR"), // () => handleMintSuccess()
+            })
+            console.log("NFT Minted Successfully!")
         } catch (error) {
             console.error("Error uploading to NFT.storage:", error)
         }
@@ -75,10 +93,6 @@ const CertificateGenerator = () => {
             })
     }
 
-    const readerRid = async () => {
-        return console.log(art)
-    }
-
     return (
         <div>
             <div className={Certificate.inputsContainer}>
@@ -89,20 +103,17 @@ const CertificateGenerator = () => {
                 <button className={Certificate.generateButton} onClick={handleGenerateCertificate}>
                     Generate Certificate
                 </button>
-                <button className={Certificate.generateButton} onClick={readerRid}>
-                    Hasher
-                </button>
             </div>
-
             {/* Certificate will show only if we have "art" field filled */}
+            {!art && <p className={Certificate.magicText}>Magic Will Be Happening Here...</p>}
             {art && (
                 <div className={Certificate.certPositioning}>
                     <div
                         id="certificate-container"
                         style={{
                             position: "relative",
-                            width: "556px",
-                            height: "700px",
+                            width: "504px",
+                            height: "712.8px",
                             background: `url('/certificate-template.png')`,
                             backgroundSize: "contain",
                             backgroundPosition: "center",
@@ -119,9 +130,11 @@ const CertificateGenerator = () => {
                                 color: "white",
                             }}
                         >
-                            <p style={{ marginBottom: "10px" }}>Art Hash: {art}</p>
                             <p style={{ marginBottom: "10px" }}>Author: {author}</p>
                             <p style={{ marginBottom: "10px" }}>Title: {title}</p>
+                            <p style={{ marginBottom: "10px" }}>
+                                Art Hash: <span style={{ fontSize: "14px" }}>{art}</span>
+                            </p>
                             <p>Description: {description}</p>
                         </div>
                     </div>
