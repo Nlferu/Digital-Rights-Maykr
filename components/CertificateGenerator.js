@@ -1,4 +1,4 @@
-import { useWeb3Contract } from "react-moralis"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState } from "react"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -8,8 +8,10 @@ import contract from "../contracts/DigitalRightsMaykr.json"
 import errStoreHash from "../utils/artHasher"
 
 const CertificateGenerator = () => {
+    const { account } = useMoralis()
     const [art, setArt] = useState("")
     const [author, setAuthor] = useState("")
+    const [co_author, setCoAuthor] = useState("")
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const { runContractFunction } = useWeb3Contract()
@@ -33,6 +35,8 @@ const CertificateGenerator = () => {
             setArt(value)
         } else if (name === "author") {
             setAuthor(value)
+        } else if (name === "co_author") {
+            setCoAuthor(value)
         } else if (name === "title") {
             setTitle(value)
         } else if (name === "description") {
@@ -96,12 +100,28 @@ const CertificateGenerator = () => {
     return (
         <div>
             <div className={Certificate.inputsContainer}>
-                <input type="file" id="art" name="art" placeholder="Art Hash" onChange={() => errStoreHash(setArt)} />
-                <input type="text" id="author" name="author" placeholder="Author" onChange={handleInputChange} />
-                <input type="text" id="title" name="title" placeholder="Title" onChange={handleInputChange} />
-                <input type="text" id="description" name="description" placeholder="Description" onChange={handleInputChange} />
+                <input
+                    type="file"
+                    style={{ color: "white" }}
+                    className={Certificate.inputBox}
+                    id="art"
+                    name="art"
+                    placeholder="Art Hash"
+                    onChange={() => errStoreHash(setArt)}
+                />
+                <input type="text" className={Certificate.inputBox} id="author" name="author" placeholder="Author" onChange={handleInputChange} />
+                <input type="text" className={Certificate.inputBox} id="co_author" name="co_author" placeholder="Co-Author" onChange={handleInputChange} />
+                <input type="text" className={Certificate.inputBox} id="title" name="title" placeholder="Title" onChange={handleInputChange} />
+                <input
+                    type="text"
+                    className={Certificate.inputBox}
+                    id="description"
+                    name="description"
+                    placeholder="Description"
+                    onChange={handleInputChange}
+                />
                 <button className={Certificate.generateButton} onClick={handleGenerateCertificate}>
-                    Generate Certificate
+                    Create NFT
                 </button>
             </div>
             {/* Certificate will show only if we have "art" field filled */}
@@ -130,12 +150,48 @@ const CertificateGenerator = () => {
                                 color: "white",
                             }}
                         >
-                            <p style={{ marginBottom: "10px" }}>Author: {author}</p>
-                            <p style={{ marginBottom: "10px" }}>Title: {title}</p>
-                            <p style={{ marginBottom: "10px" }}>
-                                Art Hash: <span style={{ fontSize: "14px" }}>{art}</span>
+                            <p className={Certificate.certText} style={{ marginBottom: "0px", marginTop: "80px" }}>
+                                Author
                             </p>
-                            <p>Description: {description}</p>
+                            <p className={Certificate.certInputText}>
+                                <span>{author}</span>
+                            </p>
+                            {co_author && (
+                                <p className={Certificate.certText}>
+                                    Co-Author
+                                    <p className={Certificate.certInputText}>
+                                        <span>{co_author}</span>
+                                    </p>
+                                </p>
+                            )}
+                            <p className={Certificate.certText}>
+                                Title
+                                <p className={Certificate.certInputText}>
+                                    <span>{title}</span>
+                                </p>
+                            </p>
+                            <p className={Certificate.certText}>
+                                Creator Address
+                                <p className={Certificate.certInputText}>
+                                    <span className={Certificate.certInputText} style={{ fontSize: "15px" }}>
+                                        {account}
+                                    </span>
+                                </p>
+                            </p>
+                            <p className={Certificate.certText}>
+                                Art Hash
+                                <p className={Certificate.certInputText}>
+                                    <span className={Certificate.certInputText} style={{ fontSize: "14px" }}>
+                                        {art}
+                                    </span>
+                                </p>
+                            </p>
+                            <p className={Certificate.certText}>
+                                Description{" "}
+                                <p className={Certificate.certInputText}>
+                                    <span className={Certificate.certInputText}>{description}</span>
+                                </p>
+                            </p>
                         </div>
                     </div>
                     <button className={combinedClasses} onClick={handleDownloadCertificate}>

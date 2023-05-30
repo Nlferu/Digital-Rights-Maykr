@@ -10,6 +10,9 @@ export default function Header() {
                     <Link className="navBar" href="/">
                         Home
                     </Link>
+                    <Link className="navBar" href="/gallery">
+                        Gallery
+                    </Link>
                     <Link className="navBar" href="/create_certificate">
                         Create Certificate
                     </Link>

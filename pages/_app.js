@@ -2,6 +2,7 @@ import "../styles/globals.css"
 import { MoralisProvider } from "react-moralis"
 import Header from "../components/Header"
 import Head from "next/head"
+import CertificateGenerator from "@/components/CertificateGenerator"
 
 export default function App({ Component, pageProps }) {
     return (

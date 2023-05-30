@@ -15,6 +15,25 @@ nav {
     padding: 1.5rem;
 }
 
+/************************************** Choose File Box **************************************/
+
+input[type="file"]::file-selector-button {
+    border: 2px solid rgb(99, 67, 41);
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    background: rgba(5, 5, 0, 0.3);
+    transition: 2s;
+    font-family: "Orbitron", sans-serif;
+    cursor: pointer;
+    color: grey;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #c2ccd6;
+    border: 2px solid #242020;
+    font-family: "Orbitron", sans-serif;
+}
+
 /************************************** Header (Navigation Bar) **************************************/
 
 .title {
@@ -64,35 +83,33 @@ nav {
 
 /* Connect Button And Wallet - Address Text */
 .sc-hCnrGf {
-    color: green !important;
+    color: rgba(159, 137, 94, 0.8) !important;
 }
 
 /* Wallet Logo */
 .sc-eywOmQ {
 }
 
-/************************************** Test **************************************/
+/************************************** Wallets Container Override **************************************/
 
-/* .main-app {
-    text-align: center;
-    margin: 100px;
+/* Close Button */
+.sc-cJPUEC {
+    background-color: black !important;
 }
 
-.cta-button {
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    min-width: 250px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    background: orange;
+/* Upper Bar */
+.sc-bhlPkD {
+    background-color: black !important;
 }
 
-.connect-wallet-button {
-    background: rgb(32, 129, 226);
+/* Wallets Background */
+.sc-fIwssx {
+    background-color: black !important;
 }
 
-.mint-nft-button {
-    background: orange;
-} */
+/* Wallets On Hover */
+.sc-fwEaKe:hover {
+    background: linear-gradient(to right bottom, #00003dea 1%, #000000ea 60%, #23003dea 99%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 20px rgb(255, 255, 255) !important;
+    border-radius: 0 !important;
+}
