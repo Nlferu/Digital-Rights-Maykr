@@ -5,7 +5,7 @@ import download from "downloadjs"
 import Certificate from "../styles/Certificate.module.css"
 import uploadToNftStorage from "../utils/uploadToNftStorage"
 import contract from "../contracts/DigitalRightsMaykr.json"
-import errStoreHash from "../utils/artHasher"
+import hashCreator from "../utils/artHasher"
 
 const CertificateGenerator = () => {
     const { account } = useMoralis()
@@ -107,7 +107,7 @@ const CertificateGenerator = () => {
                     id="art"
                     name="art"
                     placeholder="Art Hash"
-                    onChange={() => errStoreHash(setArt)}
+                    onChange={() => hashCreator(setArt)}
                 />
                 <input type="text" className={Certificate.inputBox} id="author" name="author" placeholder="Author" onChange={handleInputChange} />
                 <input type="text" className={Certificate.inputBox} id="co_author" name="co_author" placeholder="Co-Author" onChange={handleInputChange} />

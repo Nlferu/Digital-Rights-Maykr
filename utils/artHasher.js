@@ -67,18 +67,8 @@ async function readChunked(file, chunkCallback, endCallback) {
     readNext()
 }
 
-async function errStoreHash(setArtHash) {
+async function hashCreator(setArtHash) {
     var art = document.getElementById("art")
-    var author = document.getElementById("author").value
-    var title = document.getElementById("title").value
-    var description = document.getElementById("description").value
-
-    // if (!art.files.length) {
-    //     alert("You must select a file to certify first!")
-    // } else {}
-    // } else if (author.trim().length == 0 || title.trim().length == 0 || description.trim().length == 0) {
-    //     alert("You must fill all required fields below!")
-    // }
 
     if (!art.files.length) {
         console.log("You must select a file to certify first!")
@@ -87,4 +77,4 @@ async function errStoreHash(setArtHash) {
     }
 }
 
-export default errStoreHash
+export default hashCreator
