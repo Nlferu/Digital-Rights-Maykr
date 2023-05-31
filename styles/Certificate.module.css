@@ -16,12 +16,21 @@
     color: white;
 }
 
+.inputBox:focus {
+    padding: 10px;
+    border: 0;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    background-color: rgba(5, 5, 0, 0.3);
+    color: grey;
+    outline: 1px solid rgba(65, 55, 60, 0.8);
+}
+
 .certPositioning {
     float: right;
     position: relative;
-    top: -28vh;
+    top: -29vh;
     left: -4vw;
-    position: flex;
 }
 
 .inputsContainer {
@@ -44,6 +53,7 @@
     cursor: pointer;
     background: rgba(159, 137, 94, 0.8);
     box-shadow: 0 0 10px 1px rgba(73, 104, 78, 0.8);
+    margin-top: 10px;
 }
 
 .generateButton:hover {
@@ -61,8 +71,8 @@
 .downloadButton {
     float: right;
     position: relative;
-    top: 1vh;
-    left: -7vw;
+    top: 2vh;
+    left: -6.5vw;
 }
 
 .certText {
@@ -79,8 +89,8 @@
 .magicText {
     float: right;
     position: relative;
-    color: white;
-    top: 2vh;
+    color: rgba(65, 55, 60, 0.8);
+    top: -1vh;
     left: -5vw;
     font-size: 35px;
 }

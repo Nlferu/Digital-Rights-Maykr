@@ -29,9 +29,10 @@ input[type="file"]::file-selector-button {
 }
 
 input[type="file"]::file-selector-button:hover {
-    background-color: #c2ccd6;
-    border: 2px solid #242020;
+    background-color: rgba(65, 55, 60, 0.8);
+    border: 2px solid rgb(99, 67, 41);
     font-family: "Orbitron", sans-serif;
+    color: black;
 }
 
 /************************************** Header (Navigation Bar) **************************************/

@@ -86,8 +86,14 @@ const CertificateGenerator = () => {
         const container = document.getElementById("certificate-container")
         const index = (await emittedCount()).toString()
 
+        // Remove the box shadow temporarily before generating the image
+        container.style.boxShadow = "none"
+
         html2canvas(container)
             .then((canvas) => {
+                // Restore the box shadow after generating the image
+                container.style.boxShadow = "0 0 20px 6px rgba(100, 79, 46, 0.96)"
+
                 canvas.toBlob((blob) => {
                     download(blob, `Certificate_Id_${index}`)
                 })
@@ -138,6 +144,7 @@ const CertificateGenerator = () => {
                             backgroundSize: "contain",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
+                            boxShadow: "0 0 20px 6px rgba(100, 79, 46, 0.96)",
                         }}
                     >
                         <div
