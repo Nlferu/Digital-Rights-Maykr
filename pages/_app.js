@@ -1,8 +1,8 @@
-import "../styles/globals.css"
 import { MoralisProvider } from "react-moralis"
+import { NotificationProvider } from "web3uikit"
 import Header from "../components/Header"
 import Head from "next/head"
-import CertificateGenerator from "@/components/CertificateGenerator"
+import "../styles/globals.css"
 
 export default function App({ Component, pageProps }) {
     return (
@@ -14,8 +14,10 @@ export default function App({ Component, pageProps }) {
             </Head>
 
             <MoralisProvider initializeOnMount={false}>
-                <Header />
-                <Component {...pageProps} />
+                <NotificationProvider>
+                    <Header />
+                    <Component {...pageProps} />
+                </NotificationProvider>
             </MoralisProvider>
         </div>
     )

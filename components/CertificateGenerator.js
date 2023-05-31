@@ -1,9 +1,11 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState } from "react"
+import { useNotification } from "web3uikit"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
 import Certificate from "../styles/Certificate.module.css"
 import uploadToNftStorage from "../utils/uploadToNftStorage"
+import deleteFromNftStorage from "../utils/deleteFromNftStorage"
 import contract from "../contracts/DigitalRightsMaykr.json"
 import hashCreator from "../utils/artHasher"
 
@@ -15,6 +17,7 @@ const CertificateGenerator = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const { runContractFunction } = useWeb3Contract()
+    const dispatch = useNotification()
 
     const combinedClasses = `${Certificate.generateButton} ${Certificate.downloadButton}`
 
@@ -47,6 +50,7 @@ const CertificateGenerator = () => {
     const handleGenerateCertificate = async () => {
         const certificateContainer = document.getElementById("certificate-container")
         const canvas = await html2canvas(certificateContainer)
+        // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
         const index = (await emittedCount()).toString()
 
         // Convert the canvas to a Blob object
@@ -58,8 +62,8 @@ const CertificateGenerator = () => {
 
         // Pass the image blob to the upload function
         try {
-            const tokenURI = await uploadToNftStorage(art, imageBlob, index)
-            console.log("NFT.storage response:", tokenURI)
+            const { metadata, cid } = await uploadToNftStorage(art, imageBlob, index)
+            console.log("NFT.storage response:", metadata)
 
             console.log("Minting NFT...")
             const mintNft = {
@@ -67,16 +71,16 @@ const CertificateGenerator = () => {
                 contractAddress: contractAddress,
                 functionName: "mintNFT",
                 params: {
-                    createdTokenURI: tokenURI,
+                    createdTokenURI: metadata,
                 },
             }
 
             await runContractFunction({
                 params: mintNft,
-                onError: console.log("error RR"), // () => handleMintError()
-                onSuccess: console.log("success RR"), // () => handleMintSuccess()
+                onError: () => handleMintError(cid),
+                onSuccess: () => handleMintSuccess(),
             })
-            console.log("NFT Minted Successfully!")
+            console.log("NFT Minted Successfully!", metadata, "NFT: ", index)
         } catch (error) {
             console.error("Error uploading to NFT.storage:", error)
         }
@@ -84,6 +88,7 @@ const CertificateGenerator = () => {
 
     const handleDownloadCertificate = async () => {
         const container = document.getElementById("certificate-container")
+        // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
         const index = (await emittedCount()).toString()
 
         // Remove the box shadow temporarily before generating the image
@@ -101,6 +106,28 @@ const CertificateGenerator = () => {
             .catch((error) => {
                 console.error("Error generating certificate image:", error)
             })
+    }
+
+    async function handleMintSuccess() {
+        dispatch({
+            type: "success",
+            message: "NFT Created!",
+            title: "NFT Creation Success",
+            position: "bottomR",
+        })
+        setTimeout(() => {
+            location.reload()
+        }, 10000)
+    }
+
+    async function handleMintError(cid) {
+        dispatch({
+            type: "error",
+            message: "NFT Has Not Been Created",
+            title: "NFT Creation Error",
+            position: "bottomR",
+        })
+        deleteFromNftStorage(cid)
     }
 
     return (

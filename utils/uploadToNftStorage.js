@@ -26,11 +26,12 @@ export default async function uploadToNftStorage(art, imageBlob, index) {
             image: imageFile,
         })
 
+        const cid = response.ipnft
         const metadata = `https://ipfs.io/ipfs/${response.ipnft}/metadata.json`
         const imgUrl = response.data.image.toString().replace("ipfs://", "https://ipfs.io/ipfs/")
         console.log(`Metadata: ${metadata} Image URL: ${imgUrl}`)
 
-        return metadata
+        return { metadata: metadata, cid: cid }
     } catch (error) {
         console.error("Error uploading to NFT.storage:", error)
         throw error

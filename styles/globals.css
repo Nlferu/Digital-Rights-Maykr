@@ -29,7 +29,7 @@ input[type="file"]::file-selector-button {
 }
 
 input[type="file"]::file-selector-button:hover {
-    background-color: rgba(65, 55, 60, 0.8);
+    background-color: rgba(159, 137, 94, 0.8);
     border: 2px solid rgb(99, 67, 41);
     font-family: "Orbitron", sans-serif;
     color: black;
@@ -110,7 +110,14 @@ input[type="file"]::file-selector-button:hover {
 
 /* Wallets On Hover */
 .sc-fwEaKe:hover {
-    background: linear-gradient(to right bottom, #00003dea 1%, #000000ea 60%, #23003dea 99%) !important;
-    box-shadow: inset 0 0 0, 0 0 0, 0 0 20px rgb(255, 255, 255) !important;
-    border-radius: 0 !important;
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
+    border-radius: 8px !important;
+}
+
+/************************************** Notifications **************************************/
+
+/*  */
+.sc-cOFUxI {
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
 }
