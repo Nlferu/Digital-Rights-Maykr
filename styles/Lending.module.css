@@ -1,0 +1,9 @@
+.blockSpacing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 250px;
+    position: relative;
+    top: 40vh;
+    left: 45vw;
+}

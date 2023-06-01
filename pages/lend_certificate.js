@@ -1,3 +1,17 @@
+import LendCertificate from "../components/LendCertificate"
+
 export default function Home() {
-    return <div className="home">Page assigned for lending owned certificates</div>
+    const lendCertificate = () => {
+        return (
+            <div>
+                <LendCertificate />
+            </div>
+        )
+    }
+
+    return (
+        <div>
+            <div>{lendCertificate()}</div>
+        </div>
+    )
 }

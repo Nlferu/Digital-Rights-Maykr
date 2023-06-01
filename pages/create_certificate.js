@@ -1,17 +1,17 @@
-import CertificateGenerator from "../components/CertificateGenerator"
+import CreateCertificate from "../components/CreateCertificate"
 
 export default function Home() {
-    const generateCertificate = () => {
+    const createCertificate = () => {
         return (
             <div>
-                <CertificateGenerator />
+                <CreateCertificate />
             </div>
         )
     }
 
     return (
         <div>
-            <div>{generateCertificate()}</div>
+            <div>{createCertificate()}</div>
         </div>
     )
 }

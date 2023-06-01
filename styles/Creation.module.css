@@ -39,8 +39,8 @@
     gap: 10px;
     width: 250px;
     position: relative;
-    top: 20vh;
-    left: 40vw;
+    top: 25vh;
+    left: 45vw;
 }
 
 .generateButton {
@@ -93,4 +93,28 @@
     top: -1vh;
     left: -5vw;
     font-size: 35px;
+}
+
+.waitSpinner {
+    animation: spin 1s linear infinite;
+    height: 19px;
+    width: 19px;
+    border-bottom: 2px solid;
+    border-radius: 60%;
+    /*margin-left: 250px;*/
+}
+
+.waitSpinnerCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

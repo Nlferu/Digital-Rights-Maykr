@@ -3,23 +3,25 @@ import React, { useState } from "react"
 import { useNotification } from "web3uikit"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
-import Certificate from "../styles/Certificate.module.css"
+import Creation from "../styles/Creation.module.css"
 import uploadToNftStorage from "../utils/uploadToNftStorage"
 import deleteFromNftStorage from "../utils/deleteFromNftStorage"
 import contract from "../contracts/DigitalRightsMaykr.json"
 import hashCreator from "../utils/artHasher"
 
-const CertificateGenerator = () => {
+export default function CreateCertificate() {
     const { account } = useMoralis()
     const [art, setArt] = useState("")
     const [author, setAuthor] = useState("")
     const [co_author, setCoAuthor] = useState("")
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
-    const combinedClasses = `${Certificate.generateButton} ${Certificate.downloadButton}`
+    const combinedClasses = `${Creation.generateButton} ${Creation.downloadButton}`
+    const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter}`
 
     const contractAddress = contract.address
     const abi = contract.abi
@@ -48,6 +50,7 @@ const CertificateGenerator = () => {
     }
 
     const handleGenerateCertificate = async () => {
+        setIsLoading(true)
         const certificateContainer = document.getElementById("certificate-container")
         const canvas = await html2canvas(certificateContainer)
         // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
@@ -83,6 +86,8 @@ const CertificateGenerator = () => {
             console.log("NFT Minted Successfully!", metadata, "NFT: ", index)
         } catch (error) {
             console.error("Error uploading to NFT.storage:", error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -132,35 +137,28 @@ const CertificateGenerator = () => {
 
     return (
         <div>
-            <div className={Certificate.inputsContainer}>
+            <div className={Creation.inputsContainer}>
                 <input
                     type="file"
                     style={{ color: "white" }}
-                    className={Certificate.inputBox}
+                    className={Creation.inputBox}
                     id="art"
                     name="art"
                     placeholder="Art Hash"
                     onChange={() => hashCreator(setArt)}
                 />
-                <input type="text" className={Certificate.inputBox} id="author" name="author" placeholder="Author" onChange={handleInputChange} />
-                <input type="text" className={Certificate.inputBox} id="co_author" name="co_author" placeholder="Co-Author" onChange={handleInputChange} />
-                <input type="text" className={Certificate.inputBox} id="title" name="title" placeholder="Title" onChange={handleInputChange} />
-                <input
-                    type="text"
-                    className={Certificate.inputBox}
-                    id="description"
-                    name="description"
-                    placeholder="Description"
-                    onChange={handleInputChange}
-                />
-                <button className={Certificate.generateButton} onClick={handleGenerateCertificate}>
-                    Create NFT
+                <input type="text" className={Creation.inputBox} id="author" name="author" placeholder="Author" onChange={handleInputChange} />
+                <input type="text" className={Creation.inputBox} id="co_author" name="co_author" placeholder="Co-Author" onChange={handleInputChange} />
+                <input type="text" className={Creation.inputBox} id="title" name="title" placeholder="Title" onChange={handleInputChange} />
+                <input type="text" className={Creation.inputBox} id="description" name="description" placeholder="Description" onChange={handleInputChange} />
+                <button className={combinedSipnner} onClick={handleGenerateCertificate} disabled={isLoading}>
+                    {isLoading ? <div className={Creation.waitSpinner}></div> : "Mint NFT"}
                 </button>
             </div>
             {/* Certificate will show only if we have "art" field filled */}
-            {!art && <p className={Certificate.magicText}>Magic Will Be Happening Here...</p>}
+            {!art && <p className={Creation.magicText}>Magic Will Be Happening Here...</p>}
             {art && (
-                <div className={Certificate.certPositioning}>
+                <div className={Creation.certPositioning}>
                     <div
                         id="certificate-container"
                         style={{
@@ -184,46 +182,46 @@ const CertificateGenerator = () => {
                                 color: "white",
                             }}
                         >
-                            <p className={Certificate.certText} style={{ marginBottom: "0px", marginTop: "80px" }}>
+                            <p className={Creation.certText} style={{ marginBottom: "0px", marginTop: "80px" }}>
                                 Author
                             </p>
-                            <p className={Certificate.certInputText}>
+                            <p className={Creation.certInputText}>
                                 <span>{author}</span>
                             </p>
                             {co_author && (
-                                <p className={Certificate.certText}>
+                                <p className={Creation.certText}>
                                     Co-Author
-                                    <p className={Certificate.certInputText}>
+                                    <p className={Creation.certInputText}>
                                         <span>{co_author}</span>
                                     </p>
                                 </p>
                             )}
-                            <p className={Certificate.certText}>
+                            <p className={Creation.certText}>
                                 Title
-                                <p className={Certificate.certInputText}>
+                                <p className={Creation.certInputText}>
                                     <span>{title}</span>
                                 </p>
                             </p>
-                            <p className={Certificate.certText}>
+                            <p className={Creation.certText}>
                                 Creator Address
-                                <p className={Certificate.certInputText}>
-                                    <span className={Certificate.certInputText} style={{ fontSize: "15px" }}>
+                                <p className={Creation.certInputText}>
+                                    <span className={Creation.certInputText} style={{ fontSize: "15px" }}>
                                         {account}
                                     </span>
                                 </p>
                             </p>
-                            <p className={Certificate.certText}>
+                            <p className={Creation.certText}>
                                 Art Hash
-                                <p className={Certificate.certInputText}>
-                                    <span className={Certificate.certInputText} style={{ fontSize: "14px" }}>
+                                <p className={Creation.certInputText}>
+                                    <span className={Creation.certInputText} style={{ fontSize: "14px" }}>
                                         {art}
                                     </span>
                                 </p>
                             </p>
-                            <p className={Certificate.certText}>
+                            <p className={Creation.certText}>
                                 Description{" "}
-                                <p className={Certificate.certInputText}>
-                                    <span className={Certificate.certInputText}>{description}</span>
+                                <p className={Creation.certInputText}>
+                                    <span className={Creation.certInputText}>{description}</span>
                                 </p>
                             </p>
                         </div>
@@ -236,5 +234,3 @@ const CertificateGenerator = () => {
         </div>
     )
 }
-
-export default CertificateGenerator
