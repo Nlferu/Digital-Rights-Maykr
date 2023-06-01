@@ -55,18 +55,19 @@ export default function LendCertificate() {
             message: "Certificate Lending Allowed",
             title: "Lending Allowed!",
             position: "bottomR",
+            icon: "bell",
         })
     }
 
-    async function handleAllowError(cid) {
+    async function handleAllowError() {
         dispatch({
             type: "error",
             message: "Lending Allowance Failed",
             title: "Allowance Error!",
             position: "bottomR",
+            icon: "exclamation",
         })
     }
-
     const handleBlockCertificate = async () => {
         setIsLoadingB(true)
 
@@ -100,6 +101,7 @@ export default function LendCertificate() {
             message: "Certificate Lending Blocked",
             title: "Lending Blocked!",
             position: "bottomR",
+            icon: "bell",
         })
     }
 
@@ -109,6 +111,7 @@ export default function LendCertificate() {
             message: "Lending Blockage Failed",
             title: "Blockage Error!",
             position: "bottomR",
+            icon: "exclamation",
         })
     }
 

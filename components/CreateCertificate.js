@@ -119,6 +119,7 @@ export default function CreateCertificate() {
             message: "NFT Created!",
             title: "NFT Creation Success",
             position: "bottomR",
+            icon: "bell",
         })
         setTimeout(() => {
             location.reload()
@@ -131,6 +132,7 @@ export default function CreateCertificate() {
             message: "NFT Has Not Been Created",
             title: "NFT Creation Error",
             position: "bottomR",
+            icon: "exclamation",
         })
         deleteFromNftStorage(cid)
     }
