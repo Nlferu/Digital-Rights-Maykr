@@ -52,6 +52,8 @@ export default function CreateCertificate() {
     const handleGenerateCertificate = async () => {
         setIsLoading(true)
         const certificateContainer = document.getElementById("certificate-container")
+        // Reset the box shadow before generating the image
+        certificateContainer.style.boxShadow = "none"
         const canvas = await html2canvas(certificateContainer)
         // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
         const index = (await emittedCount()).toString()
@@ -63,6 +65,8 @@ export default function CreateCertificate() {
             }, "image/png")
         })
 
+        // Restore the box shadow after generating the image
+        certificateContainer.style.boxShadow = "0 0 20px 6px rgba(100, 79, 46, 0.96)"
         // Pass the image blob to the upload function
         try {
             const { metadata, cid } = await uploadToNftStorage(art, imageBlob, index)

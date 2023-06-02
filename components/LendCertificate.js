@@ -105,7 +105,7 @@ export default function LendCertificate() {
         })
     }
 
-    async function handleBlockError(cid) {
+    async function handleBlockError() {
         dispatch({
             type: "error",
             message: "Lending Blockage Failed",

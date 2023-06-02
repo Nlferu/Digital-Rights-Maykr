@@ -1,8 +1,14 @@
 /************************************** Main Page **************************************/
 
 body {
-    background-color: #111;
     font-color: #fff;
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #222 15%, #000000 90%);
+    background-size: cover;
+}
+
+html {
+    min-height: 100%;
 }
 
 nav {
@@ -51,7 +57,7 @@ input[type="file"]::file-selector-button:hover {
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
-    color: #fff;
+    color: #999;
     padding: 0 1.5rem;
 }
 
@@ -117,7 +123,7 @@ input[type="file"]::file-selector-button:hover {
 
 /************************************** Notifications **************************************/
 
-/*  */
+/* Notification Pop-up background */
 .sc-cOFUxI {
-    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    background: linear-gradient(315deg, #485461 25%, #28313b 55%) !important;
 }

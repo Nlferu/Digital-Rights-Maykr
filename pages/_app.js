@@ -1,3 +1,4 @@
+import React from "react"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
 import Header from "../components/Header"
@@ -10,7 +11,7 @@ export default function App({ Component, pageProps }) {
             <Head>
                 <title>Digital Rights Maykr</title>
                 <meta name="description" content="Digital Rights Maykr" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.png" />
             </Head>
 
             <MoralisProvider initializeOnMount={false}>

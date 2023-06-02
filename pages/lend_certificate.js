@@ -2,16 +2,8 @@ import LendCertificate from "../components/LendCertificate"
 
 export default function Home() {
     const lendCertificate = () => {
-        return (
-            <div>
-                <LendCertificate />
-            </div>
-        )
+        return <LendCertificate />
     }
 
-    return (
-        <div>
-            <div>{lendCertificate()}</div>
-        </div>
-    )
+    return lendCertificate()
 }
