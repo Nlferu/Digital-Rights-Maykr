@@ -6,7 +6,6 @@ import contract from "../contracts/DigitalRightsMaykr.json"
 
 // On load working only for swapping pages, but after F5 it will crash (fix to be implemented)
 // Positioning of certificates to be fixed
-// Check if newly created NFT has correct image
 // Create new contract, clear nft.storage and create couple NFT's to check if their indexes are assigned correctly
 
 export default function Home() {
