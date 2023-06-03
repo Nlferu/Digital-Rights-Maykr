@@ -1,14 +1,13 @@
-import { useWeb3Contract } from "react-moralis"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import CertificateBox from "../components/CertificateBox"
 import Gallery from "../styles/Gallery.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
 
-// On load working only for swapping pages, but after F5 it will crash (fix to be implemented)
 // Positioning of certificates to be fixed
-// Create new contract, clear nft.storage and create couple NFT's to check if their indexes are assigned correctly
 
 export default function Home() {
+    const { isWeb3Enabled } = useMoralis()
     const [certificateData, setCertificateData] = useState([])
     const { runContractFunction } = useWeb3Contract()
 
@@ -24,10 +23,10 @@ export default function Home() {
 
     const handleGetCertificates = async () => {
         try {
-            const index = (await emittedCount())?.toString() || "0"
+            const index = (await emittedCount()).toString()
             const imageUrls = []
 
-            for (let i = 0; i < index; i++) {
+            for (let i = 0; i <= index; i++) {
                 // i will be our tokenId, nowwe have to call tokenURI function
                 const tokenUri = {
                     abi: abi,
@@ -58,6 +57,7 @@ export default function Home() {
                         console.error("Error:", error)
                     })
                 setCertificateData(imageUrls.map((imageUrl) => ({ imageUrl })))
+                console.log(`Array: ${imageUrls}`)
             }
         } catch (error) {
             console.error("Error fetching data: ", error)
@@ -65,14 +65,18 @@ export default function Home() {
     }
 
     useEffect(() => {
-        handleGetCertificates()
-    }, [])
+        if (isWeb3Enabled) {
+            handleGetCertificates()
+        }
+    }, [isWeb3Enabled])
 
     return (
-        <div class={Gallery.positioning}>
-            {certificateData.map((certificate, index) => (
-                <CertificateBox key={index} imageUrl={certificate.imageUrl} />
-            ))}
+        <div className={Gallery.positioning}>
+            {certificateData.length === 0 ? (
+                <p className={Gallery.info}>No Certificates To Display For Now...</p>
+            ) : (
+                certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} />)
+            )}
         </div>
     )
 }

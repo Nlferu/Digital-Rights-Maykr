@@ -127,7 +127,7 @@ export default function CreateCertificate() {
         })
         setTimeout(() => {
             location.reload()
-        }, 10000)
+        }, 8000)
     }
 
     async function handleMintError(cid) {

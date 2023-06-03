@@ -1,6 +1,8 @@
 import CertBox from "../styles/CertBox.module.css"
 
 export default function CertificateBox({ imageUrl }) {
+    // Check if certificate rights are allowed to buy
+
     return (
         <div>
             <div class={CertBox.objectMover}>

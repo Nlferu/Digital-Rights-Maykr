@@ -1,1 +1,7 @@
-https://ipfs.io/ipfs/bafyreifewmwyc7oz6yuoju5kac5uhf7pjlwpkvx2ngub7mzxkd7ox46v2e/metadata.json
+https://ipfs.io/ipfs/bafyreigifitxanvzy4ewachnl6sva7e7cdcniupwruhs2o63vqxyh4scbe/metadata.json
+https://ipfs.io/ipfs/bafyreig7bjb2stmeravy3e27fuvaf7tyyqwnc7h7zbpanr52vggyq2hi2q/metadata.json
+https://ipfs.io/ipfs/bafyreihqjc6c3cpr5fxbdmiowsgmp4fwr5ddec72ashw7xb3w5qfteejo4/metadata.json
+https://ipfs.io/ipfs/bafyreie3oa5hplazxcu2gtaaaqqkwmxr2eog5ukw3nuxnllyi4vfcgsswi/metadata.json
+https://ipfs.io/ipfs/bafyreibuayurzu7xweblcwcnhelwukq7npweroxdr7k4tnxdf3ht7y2nui/metadata.json
+https://ipfs.io/ipfs/bafyreiaempo5inqqn7csljehjljr2raumlve725zvjxvm2cav2bdege2ay/metadata.json
+https://ipfs.io/ipfs/bafyreicoqjozihdorohvn2k5ldzcp66bc2skqjff4psdoqsb6sz53tmwoi/metadata.json

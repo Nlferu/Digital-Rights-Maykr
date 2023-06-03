@@ -10,7 +10,6 @@
     height: 45vh;
     top: 0vh;
     left: 0vw;
-    border: 1.5px solid #111;
 }
 
 .box {
@@ -18,6 +17,7 @@
     width: 14vw;
     height: 40vh;
     border: 1.5px solid #111;
+    margin-top: 30px;
 }
 
 .box:hover,
