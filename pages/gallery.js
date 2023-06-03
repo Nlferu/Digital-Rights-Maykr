@@ -27,7 +27,7 @@ export default function Home() {
             const imageUrls = []
 
             for (let i = 0; i <= index; i++) {
-                // i will be our tokenId, nowwe have to call tokenURI function
+                // i will be our tokenId, now we have to call tokenURI function
                 const tokenUri = {
                     abi: abi,
                     contractAddress: contractAddress,
@@ -57,7 +57,6 @@ export default function Home() {
                         console.error("Error:", error)
                     })
                 setCertificateData(imageUrls.map((imageUrl) => ({ imageUrl })))
-                console.log(`Array: ${imageUrls}`)
             }
         } catch (error) {
             console.error("Error fetching data: ", error)
@@ -75,7 +74,7 @@ export default function Home() {
             {certificateData.length === 0 ? (
                 <p className={Gallery.info}>No Certificates To Display For Now...</p>
             ) : (
-                certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} />)
+                certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
             )}
         </div>
     )

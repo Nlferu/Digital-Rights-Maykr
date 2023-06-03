@@ -68,6 +68,7 @@ export default function LendCertificate() {
             icon: "exclamation",
         })
     }
+
     const handleBlockCertificate = async () => {
         setIsLoadingB(true)
 
