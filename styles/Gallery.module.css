@@ -2,8 +2,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    float: left;
     gap: 40px;
-    margin-top: -20px;
+    margin-top: -100px;
+    position: relative;
+    left: -20%;
 }
 
 .info {

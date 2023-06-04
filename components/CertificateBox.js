@@ -119,21 +119,17 @@ export default function CertificateBox({ imageUrl, index }) {
     }, [isWeb3Enabled])
 
     return (
-        <div>
-            <div className={CertBox.objectMover}>
-                <div className={CertBox.box}>
-                    <div>
-                        <img src={imageUrl} alt="NFT Image" />
-                        <div className={CertBox.additionalHover}>
-                            {!buttonStatus[index] ? (
-                                <button className={CertBox.disabledButton}>Unbuyable</button>
-                            ) : (
-                                <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>
-                                    {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
-                                </button>
-                            )}
-                        </div>
-                    </div>
+        <div className={CertBox.box}>
+            <div>
+                <img src={imageUrl} alt="NFT Image" />
+                <div className={CertBox.additionalHover}>
+                    {!buttonStatus[index] ? (
+                        <button className={CertBox.disabledButton}>Unbuyable</button>
+                    ) : (
+                        <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>
+                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
