@@ -46,7 +46,6 @@ export default function Home() {
                     .json()
                     .then((jsonData) => {
                         // Access and work with the JSON data here
-                        console.log(jsonData)
                         // Extract specific parameters from the JSON
                         const imageUrl = jsonData.image
                         // Update url

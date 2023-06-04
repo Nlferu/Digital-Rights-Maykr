@@ -2,11 +2,12 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import CertBox from "../styles/CertBox.module.css"
+import Creation from "../styles/Creation.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
 
 export default function CertificateBox({ imageUrl, index }) {
     // Check if certificate rights are allowed to buy
-    const { isWeb3Enabled } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
     const { runContractFunction } = useWeb3Contract()
     const [buttonStatus, setButtonStatus] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -42,7 +43,6 @@ export default function CertificateBox({ imageUrl, index }) {
                     params: lendingStatus,
                 })
 
-                console.log(`Button ${i} Status: ${status}`)
                 statuses.push(status)
             }
             setButtonStatus(statuses)
@@ -54,6 +54,19 @@ export default function CertificateBox({ imageUrl, index }) {
     const handleBuyRights = async (tokenId) => {
         setIsLoading(true)
 
+        const getPrice = {
+            abi: abi,
+            contractAddress: contractAddress,
+            functionName: "getCertificatePrice",
+            params: {
+                tokenId: tokenId,
+            },
+        }
+
+        const price = await runContractFunction({
+            params: getPrice,
+        })
+
         try {
             const buyLicense = {
                 abi: abi,
@@ -61,9 +74,10 @@ export default function CertificateBox({ imageUrl, index }) {
                 functionName: "buyLicense",
                 params: {
                     tokenId: tokenId,
-                    lendingTime: "30", // hardcoding parameters for now...
-                    borrower: "0xe0c5aDdCfbd028FF4e69CDd6565efA5EedCFd743", // hardcoding parameters for now...
+                    lendingTime: 30, // hardcoding parameters for now...
+                    borrower: account, // hardcoding parameters for now...
                 },
+                msgValue: price,
             }
 
             await runContractFunction({
@@ -111,11 +125,13 @@ export default function CertificateBox({ imageUrl, index }) {
                     <div>
                         <img src={imageUrl} alt="NFT Image" />
                         <div className={CertBox.additionalHover}>
-                            {console.log(`Button ${index} Status: ${buttonStatus[index]}`)}
-                            <button className={CertBox.button} disabled={!buttonStatus[index]} onClick={() => handleBuyRights(index)}>
-                                Buy Rights {index}
-                                {buttonStatus[index] && <span> - Status: {buttonStatus[index]}</span>}
-                            </button>
+                            {!buttonStatus[index] ? (
+                                <button className={CertBox.disabledButton}>Unbuyable</button>
+                            ) : (
+                                <button className={CertBox.button} disabled={!buttonStatus[index] && isLoading} onClick={() => handleBuyRights(index)}>
+                                    {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

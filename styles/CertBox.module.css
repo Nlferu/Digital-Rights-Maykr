@@ -82,8 +82,8 @@
     top: calc(50% + 193px);
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ff0080;
-    color: #fff;
+    background-color: rgba(159, 137, 94, 0.8);
+    color: #111;
     border: none;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -91,5 +91,19 @@
 }
 
 .button:hover {
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
+}
+
+.disabledButton {
+    padding: 10px 20px;
+    position: absolute;
+    top: calc(50% + 193px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(59, 39, 7, 0.8);
+    color: #111;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
 }

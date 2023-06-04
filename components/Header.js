@@ -19,9 +19,6 @@ export default function Header() {
                     <Link className="navBar" href="/lend_certificate">
                         Lend Certificate
                     </Link>
-                    <Link className="navBar" href="/buy_rights">
-                        Buy Rights
-                    </Link>
 
                     <ConnectButton moralisAuth={false} />
                 </div>
