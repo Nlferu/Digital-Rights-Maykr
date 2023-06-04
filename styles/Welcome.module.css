@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.clause {
+    color: #9999;
+    font-size: 35px;
+}
+
+.nft {
+    color: #9999;
+    font-size: 35px;
+    margin-top: 45vh;
+}
+
+.address {
+    color: rgba(65, 55, 60, 0.8);
+    font-size: 30px;
+}
+
+.button {
+    padding: 10px 20px;
+
+    background-color: rgba(159, 137, 94, 0.8);
+    color: #111;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.button:hover {
+    box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
+    font-weight: bold;
+}

@@ -128,7 +128,7 @@ export default function CertificateBox({ imageUrl, index }) {
                             {!buttonStatus[index] ? (
                                 <button className={CertBox.disabledButton}>Unbuyable</button>
                             ) : (
-                                <button className={CertBox.button} disabled={!buttonStatus[index] && isLoading} onClick={() => handleBuyRights(index)}>
+                                <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>
                                     {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
                                 </button>
                             )}

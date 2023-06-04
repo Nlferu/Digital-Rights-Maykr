@@ -22,6 +22,7 @@ export default function LendCertificate() {
 
         try {
             var tokenId = document.getElementById("tokenId").value
+            var lendingTime = document.getElementById("lendingTime").value
             var price = document.getElementById("price").value
 
             // ETH Conversion To Wei
@@ -33,6 +34,7 @@ export default function LendCertificate() {
                 functionName: "allowLending",
                 params: {
                     tokenId: tokenId,
+                    lendingTime: lendingTime,
                     price: convPrice,
                 },
             }
@@ -120,7 +122,8 @@ export default function LendCertificate() {
         <div>
             <div className={Creation.inputsContainer}>
                 <input type="text" className={Creation.inputBox} id="tokenId" name="tokenId" placeholder="TokenId" />
-                <input type="text" className={Creation.inputBox} id="price" name="price" placeholder="Price" />
+                <input type="text" className={Creation.inputBox} id="lendingTime" name="lendingTime" placeholder="Lending Period (Days)" />
+                <input type="text" className={Creation.inputBox} id="price" name="price" placeholder="Price (ETH)" />
                 <button className={combinedSipnner} onClick={handleLendCertificate} disabled={isLoading}>
                     {isLoading ? <div className={Creation.waitSpinner}></div> : "Allow Lending"}
                 </button>

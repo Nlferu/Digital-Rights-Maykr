@@ -17,7 +17,10 @@ export default function Header() {
                         Create Certificate
                     </Link>
                     <Link className="navBar" href="/lend_certificate">
-                        Lend Certificate
+                        Manage Certificate
+                    </Link>
+                    <Link className="navBar" href="/profits">
+                        Profits
                     </Link>
 
                     <ConnectButton moralisAuth={false} />
