@@ -7,14 +7,55 @@
 }
 
 .clause {
+    position: absolute;
+    top: 13%;
     color: #9999;
     font-size: 35px;
 }
 
+.inputBox {
+    position: absolute;
+    top: 25%;
+}
+
+.clauseContainer {
+    position: relative;
+    padding: 10px;
+    width: 450px; /* Adjust the width as per your requirements */
+    font-size: 20px;
+    top: 11%;
+}
+
+.clauseImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.clauseText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 20px;
+    text-align: center;
+    /* Add any additional styling as per your requirements */
+}
+
+.chainInfo {
+    position: absolute;
+    top: 41%;
+    color: #999;
+    font-size: 20px;
+}
+
 .nft {
+    position: absolute;
+    top: 75%;
     color: #9999;
     font-size: 35px;
-    margin-top: 45vh;
+    margin-top: 15vh;
 }
 
 .address {
@@ -23,8 +64,9 @@
 }
 
 .button {
+    position: absolute;
+    top: 28%;
     padding: 10px 20px;
-
     background-color: rgba(159, 137, 94, 0.8);
     color: #111;
     border: none;
@@ -38,4 +80,5 @@
 .button:hover {
     box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
     font-weight: bold;
+    cursor: pointer;
 }

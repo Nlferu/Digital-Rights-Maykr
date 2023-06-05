@@ -8,10 +8,10 @@
 
 .box {
     position: relative;
-    width: 14vw;
-    height: 40vh;
+    width: 12.5vw;
+    height: 39vh;
     border: 1.5px solid #111;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .box:hover,
@@ -73,7 +73,7 @@
 .button {
     padding: 10px 20px;
     position: absolute;
-    top: calc(50% + 193px);
+    top: calc(50% + 179px);
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(159, 137, 94, 0.8);
@@ -93,7 +93,7 @@
 .disabledButton {
     padding: 10px 20px;
     position: absolute;
-    top: calc(50% + 193px);
+    top: calc(50% + 179px);
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(59, 39, 7, 0.8);
