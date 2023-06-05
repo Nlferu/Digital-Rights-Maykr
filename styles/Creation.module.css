@@ -26,6 +26,10 @@
     outline: 1px solid rgba(65, 55, 60, 0.8);
 }
 
+.inputBox::placeholder {
+    text-align: center;
+}
+
 .certPositioning {
     float: right;
     position: relative;
@@ -101,7 +105,6 @@
     width: 19px;
     border-bottom: 2px solid;
     border-radius: 60%;
-    /*margin-left: 250px;*/
 }
 
 .waitSpinnerCenter {

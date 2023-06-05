@@ -18,6 +18,10 @@
     top: 25%;
 }
 
+.inputBox::placeholder {
+    text-align: center;
+}
+
 .clauseContainer {
     position: relative;
     padding: 10px;
