@@ -1,21 +1,18 @@
-import { useWeb3Contract } from "react-moralis"
-import React, { useState } from "react"
+import { useWeb3Contract, useMoralis } from "react-moralis"
+import React, { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import Proceeds from "../styles/Proceeds.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
+import verseContract from "../contracts/Verse.json"
 
 export default function Profits() {
+    const { isWeb3Enabled, account } = useMoralis()
     const [isLoading, setIsLoading] = useState(false)
     const [isLoadingB, setIsLoadingB] = useState(false)
+    const [proceeds, setProceeds] = useState("")
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
-
-    // Display Proceeds Amount Based on acc connected
-    // Inpute field (amount)
-    // Add button for withdrawal
-    // Add button for Verse
-    // Add additional info about farms!
 
     const spinnerW = `${Proceeds.buttonW} ${Proceeds.waitSpinnerCenter}`
     const spinnerV = `${Proceeds.buttonV} ${Proceeds.waitSpinnerCenter}`
@@ -23,123 +20,166 @@ export default function Profits() {
     const contractAddress = contract.address
     const abi = contract.abi
 
-    const handleLendCertificate = async () => {
+    const verseContractAddress = verseContract.address
+    const verseAbi = verseContract.abi
+
+    const handleProceeds = async () => {
+        try {
+            const getProceeds = {
+                abi: abi,
+                contractAddress: contractAddress,
+                functionName: "getProceeds",
+                params: { lender: account },
+            }
+
+            const proceedsWei = await runContractFunction({
+                params: getProceeds,
+            })
+            const proceedsEth = ethers.utils.formatEther(proceedsWei)
+            if (proceedsEth > 0) {
+                setProceeds(proceedsEth)
+            } else {
+                setProceeds(0)
+            }
+        } catch (error) {
+            console.error(`Getting Proceeds Failed With Error: ${error}`)
+        }
+    }
+
+    const handleWithdraw = async () => {
         setIsLoading(true)
 
         try {
-            var tokenId = document.getElementById("tokenId").value
-            var lendingTime = document.getElementById("lendingTime").value
-            var price = document.getElementById("price").value
-
-            // ETH Conversion To Wei
-            let convPrice = ethers.utils.parseEther(price)
-
-            const allowLending = {
+            const withdrawProceeds = {
                 abi: abi,
                 contractAddress: contractAddress,
-                functionName: "allowLending",
-                params: {
-                    tokenId: tokenId,
-                    lendingTime: lendingTime,
-                    price: convPrice,
-                },
+                functionName: "withdrawProceeds",
+                params: {},
             }
 
             await runContractFunction({
-                params: allowLending,
-                onError: () => handleAllowError(),
-                onSuccess: () => handleAllowSuccess(),
+                params: withdrawProceeds,
+                onError: () => handleWithdrawError(),
+                onSuccess: () => handleWithdrawSuccess(),
             })
         } catch (error) {
-            console.error(`Allowing Certificate Lending Failed With Error: ${error}`)
+            console.error(`Withdrawing Proceeds Failed With Error: ${error}`)
         } finally {
             setIsLoading(false)
         }
     }
 
-    async function handleAllowSuccess() {
+    async function handleWithdrawSuccess() {
         dispatch({
             type: "success",
-            message: "Certificate Lending Allowed",
-            title: "Lending Allowed!",
+            message: "Proceeds Withdrew",
+            title: "Proceeds Withdrawal Success!",
             position: "bottomR",
             icon: "bell",
         })
     }
 
-    async function handleAllowError() {
+    async function handleWithdrawError() {
         dispatch({
             type: "error",
-            message: "Lending Allowance Failed",
-            title: "Allowance Error!",
+            message: "Proceeds Not Withdrew",
+            title: "Proceeds Withdrawal Failure!",
             position: "bottomR",
             icon: "exclamation",
         })
     }
 
-    const handleBlockCertificate = async () => {
+    const handleVerseStake = async () => {
         setIsLoadingB(true)
 
         try {
-            var blockTokenId = document.getElementById("blockTokenId").value
+            var amount = document.getElementById("stake").value
 
-            const blockLending = {
+            const withdrawProceeds = {
                 abi: abi,
                 contractAddress: contractAddress,
-                functionName: "blockLending",
-                params: {
-                    tokenId: blockTokenId,
-                },
+                functionName: "withdrawProceeds",
+                params: {},
             }
 
             await runContractFunction({
-                params: blockLending,
-                onError: () => handleBlockError(),
-                onSuccess: () => handleBlockSuccess(),
+                params: withdrawProceeds,
+            })
+
+            /** @dev DISCLAIMER !!! */
+            /* As Verse does not support testnets like Sepolia or Goerli below code should be taken just as an example !!! */
+
+            const verseStaking = {
+                abi: verseAbi,
+                contractAddress: verseContractAddress,
+                functionName: "verseStaking",
+                params: {},
+                msgValue: amount,
+            }
+
+            await runContractFunction({
+                params: verseStaking,
+                onError: () => handleVerseStakeError(),
+                onSuccess: () => handleVerseStakeSuccess(),
             })
         } catch (error) {
-            console.error(`Blocking Certificate Lending Failed With Error: ${error}`)
+            console.error(`Staking With Verse Failed With Error: ${error}`)
         } finally {
             setIsLoadingB(false)
         }
     }
 
-    async function handleBlockSuccess() {
+    async function handleVerseStakeSuccess() {
         dispatch({
             type: "success",
-            message: "Certificate Lending Blocked",
-            title: "Lending Blocked!",
+            message: "Verse Staking Success",
+            title: "Staking Success!",
             position: "bottomR",
             icon: "bell",
         })
     }
 
-    async function handleBlockError() {
+    async function handleVerseStakeError() {
         dispatch({
             type: "error",
-            message: "Lending Blockage Failed",
-            title: "Blockage Error!",
+            message: "Verse Staking Error",
+            title: "Staking Failure!",
             position: "bottomR",
             icon: "exclamation",
         })
     }
 
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            handleProceeds()
+        }
+    }, [isWeb3Enabled])
+
     return (
         <div>
             <div className={Proceeds.containerW}>
-                <p>Your Current Proceeds:</p>
-                <p>amount</p>
-                <button className={spinnerW} onClick={handleLendCertificate} disabled={isLoading}>
+                <p className={Proceeds.headText}>Your Current Proceeds:</p>
+                <p className={Proceeds.amountText}>
+                    Amount <span className={Proceeds.amount}>{proceeds}</span> ETH
+                </p>
+                <button className={spinnerW} onClick={handleWithdraw} disabled={isLoading}>
                     {isLoading ? <div className={Proceeds.waitSpinner}></div> : "Withdraw"}
                 </button>
             </div>
             <div className={Proceeds.containerV}>
-                <p>Stake your money with Verse</p>
+                <p className={Proceeds.headText}>Stake Your Proceeds With Verse!</p>
                 <input type="text" className={Proceeds.inputBox} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
-                <button className={spinnerV} onClick={handleBlockCertificate} disabled={isLoading}>
+                <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
                     {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}
                 </button>
-                <p>You can also put your money into farm</p>
+                <p className={Proceeds.verseInfo}>
+                    Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some Liquidity
+                    Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into Verse Farms for even
+                    more profits! You can find more details here: <br></br>
+                    <a href="https://verse.bitcoin.com/" target="_blank" rel="noopener noreferrer">
+                        Verse
+                    </a>
+                </p>
             </div>
         </div>
     )

@@ -43,7 +43,7 @@ export default function Home() {
                 setClause(wrongClause)
             }
         } catch (error) {
-            console.error(`Allowing Certificate Lending Failed With Error: ${error}`)
+            console.error(`Getting Clause Failed With Error: ${error}`)
         } finally {
             setIsLoading(false)
         }
