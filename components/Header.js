@@ -7,22 +7,22 @@ export default function Header() {
             <div className="title">
                 <h1>Digital Rights Maykr</h1>
                 <div className="navBar">
-                    <Link className="navBar" href="/">
+                    <Link className="underline" href="/">
                         Home
                     </Link>
-                    <Link className="navBar" href="/gallery">
+                    <Link className="underline" href="/gallery">
                         Gallery
                     </Link>
-                    <Link className="navBar" href="/create_certificate">
+                    <Link className="underline" href="/create_certificate">
                         Create Certificate
                     </Link>
-                    <Link className="navBar" href="/lend_certificate">
+                    <Link className="underline" href="/lend_certificate">
                         Manage Certificate
                     </Link>
-                    <Link className="navBar" href="/profits">
+                    <Link className="underline" href="/profits">
                         Profits
                     </Link>
-                    <Link className="navBar" href="/clause">
+                    <Link className="underline" href="/clause">
                         Clause
                     </Link>
 

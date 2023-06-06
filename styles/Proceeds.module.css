@@ -101,6 +101,7 @@
     cursor: pointer;
     background: rgba(39, 123, 245, 0.8);
     box-shadow: 0 5px 8px rgba(39, 191, 245, 0.8);
+    animation: none;
 }
 
 @keyframes glowing {

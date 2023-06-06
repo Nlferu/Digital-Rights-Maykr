@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import React from "react"
 import Info from "../styles/Info.module.css"
 
-export default function InformationPage({ onClick }) {
+export default function InformationPage() {
     const router = useRouter()
 
     const handleClick = () => {

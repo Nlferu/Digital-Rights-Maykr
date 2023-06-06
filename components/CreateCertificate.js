@@ -21,7 +21,6 @@ export default function CreateCertificate() {
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
-    const combinedClasses = `${Creation.generateButton} ${Creation.downloadButton}`
     const disableGlow = `${Creation.generateButton} ${Creation.downloadButton} ${Creation.disableGlow}`
     const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter}`
 
