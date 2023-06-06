@@ -4,13 +4,19 @@ import { useNotification } from "web3uikit"
 import Welcome from "../styles/Welcome.module.css"
 import Creation from "../styles/Creation.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
+import InformationPage from "./information"
 
 export default function Home() {
     const { account } = useMoralis()
     const { runContractFunction } = useWeb3Contract()
     const [isLoading, setIsLoading] = useState(false)
     const [clause, setClause] = useState("")
+    const [currentPage, setCurrentPage] = useState("information")
     const dispatch = useNotification()
+
+    const handleEnter = () => {
+        setCurrentPage("main")
+    }
 
     const combinedClasses = `${Creation.inputBox} ${Welcome.inputBox}`
     const contractAddress = contract.address
@@ -60,23 +66,29 @@ export default function Home() {
     }
 
     return (
-        <div className={Welcome.container}>
-            <p className={Welcome.clause}>Read Active Clause</p>
-            <input type="text" className={combinedClasses} id="tokenId" name="tokenId" placeholder="TokenId" />
-            <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
-                {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
-            </button>
+        <div>
+            {currentPage === "information" ? (
+                <InformationPage onClick={handleEnter} />
+            ) : (
+                <div className={Welcome.container}>
+                    <p className={Welcome.clause}>Read Active Clause</p>
+                    <input type="text" className={combinedClasses} id="tokenId" name="tokenId" placeholder="TokenId" />
+                    <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
+                        {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
+                    </button>
 
-            {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
-            <div className={Welcome.clauseContainer}>
-                {clause.includes("The Artist") && <img className={Welcome.clauseImage} src="/clause.png" alt="clause" />}
-                <div className={Welcome.clauseText}>{clause}</div>
-            </div>
+                    {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
+                    <div className={Welcome.clauseContainer}>
+                        {clause.includes("The Artist") && <img className={Welcome.clauseImage} src="/clause.png" alt="clause" />}
+                        <div className={Welcome.clauseText}>{clause}</div>
+                    </div>
 
-            <p className={Welcome.nft}>
-                {" "}
-                NFT Contract Address: <span className={Welcome.address}>{contractAddress}</span>
-            </p>
+                    <p className={Welcome.nft}>
+                        {" "}
+                        NFT Contract Address: <span className={Welcome.address}>{contractAddress}</span>
+                    </p>
+                </div>
+            )}
         </div>
     )
 }

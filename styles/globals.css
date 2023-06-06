@@ -49,7 +49,7 @@ input[type="file"]::file-selector-button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #fff;
+    color: rgb(220, 220, 220);
 }
 
 .navBar {

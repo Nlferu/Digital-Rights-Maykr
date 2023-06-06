@@ -1,5 +1,5 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -10,17 +10,19 @@ import contract from "../contracts/DigitalRightsMaykr.json"
 import hashCreator from "../utils/artHasher"
 
 export default function CreateCertificate() {
-    const { account } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
     const [art, setArt] = useState("")
     const [author, setAuthor] = useState("")
     const [co_author, setCoAuthor] = useState("")
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const [id, setId] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
     const combinedClasses = `${Creation.generateButton} ${Creation.downloadButton}`
+    const disableGlow = `${Creation.generateButton} ${Creation.downloadButton} ${Creation.disableGlow}`
     const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter}`
 
     const contractAddress = contract.address
@@ -49,6 +51,11 @@ export default function CreateCertificate() {
         }
     }
 
+    const handleCertId = async () => {
+        const getIndex = (await emittedCount()).toString()
+        setId(getIndex)
+    }
+
     const handleGenerateCertificate = async () => {
         setIsLoading(true)
         const certificateContainer = document.getElementById("certificate-container")
@@ -57,7 +64,7 @@ export default function CreateCertificate() {
         const canvas = await html2canvas(certificateContainer)
         // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
         const index = (await emittedCount()).toString()
-
+        setId(index)
         // Convert the canvas to a Blob object
         const imageBlob = await new Promise((resolve) => {
             canvas.toBlob((blob) => {
@@ -140,6 +147,12 @@ export default function CreateCertificate() {
         })
         deleteFromNftStorage(cid)
     }
+
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            handleCertId()
+        }
+    }, [isWeb3Enabled])
 
     return (
         <div>
@@ -224,6 +237,7 @@ export default function CreateCertificate() {
                                     </span>
                                 </p>
                             </p>
+                            <p className={Creation.certText}>Certificate_Id_{id}</p>
                             <p className={Creation.certText}>
                                 Description{" "}
                                 <p className={Creation.certInputText}>
@@ -232,7 +246,7 @@ export default function CreateCertificate() {
                             </p>
                         </div>
                     </div>
-                    <button className={combinedClasses} onClick={handleDownloadCertificate}>
+                    <button className={disableGlow} onClick={handleDownloadCertificate}>
                         Download Certificate
                     </button>
                 </div>

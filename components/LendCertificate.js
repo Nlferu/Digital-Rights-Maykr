@@ -12,7 +12,7 @@ export default function LendCertificate() {
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
-    const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter}`
+    const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter} ${Lending.button}`
 
     const contractAddress = contract.address
     const abi = contract.abi

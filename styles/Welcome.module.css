@@ -78,10 +78,26 @@
     margin-top: 20px;
     margin-bottom: 20px;
     font-weight: bold;
+    width: 100px;
+    height: 40px;
+    animation: glowing 2s linear infinite;
 }
 
 .button:hover {
     box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
     font-weight: bold;
     cursor: pointer;
+    animation: none;
+}
+
+@keyframes glowing {
+    0% {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
+    }
+    100% {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
 }
