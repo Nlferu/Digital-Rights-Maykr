@@ -6,7 +6,7 @@ export default function InformationPage({ onClick }) {
     const router = useRouter()
 
     const handleClick = () => {
-        router.push("/clause")
+        router.push("/create_certificate")
     }
 
     return (
