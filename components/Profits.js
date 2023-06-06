@@ -160,14 +160,14 @@ export default function Profits() {
             <div className={Proceeds.containerW}>
                 <p className={Proceeds.headText}>Your Current Proceeds:</p>
                 <p className={Proceeds.amountText}>
-                    Amount <span className={Proceeds.amount}>{proceeds}</span> ETH
+                    <span className={Proceeds.amount}>{proceeds}</span> ETH
                 </p>
                 <button className={spinnerW} onClick={handleWithdraw} disabled={isLoading}>
                     {isLoading ? <div className={Proceeds.waitSpinner}></div> : "Withdraw"}
                 </button>
             </div>
             <div className={Proceeds.containerV}>
-                <p className={Proceeds.headText}>Stake Your Proceeds With Verse!</p>
+                <p className={Proceeds.verseTxt}>Stake Your Proceeds With Verse!</p>
                 <input type="text" className={Proceeds.inputBox} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
                 <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
                     {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}

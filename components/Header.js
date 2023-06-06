@@ -22,6 +22,9 @@ export default function Header() {
                     <Link className="navBar" href="/profits">
                         Profits
                     </Link>
+                    <Link className="navBar" href="/clause">
+                        Clause
+                    </Link>
 
                     <ConnectButton moralisAuth={false} />
                 </div>

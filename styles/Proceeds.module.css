@@ -10,6 +10,12 @@
 }
 
 .headText {
+    color: rgba(159, 137, 94, 0.8);
+    font-size: 30px;
+    text-align: center;
+}
+
+.verseTxt {
     color: #999;
     font-size: 30px;
     text-align: center;
@@ -24,7 +30,6 @@
 
 .amount {
     color: #999;
-    margin-left: 20px;
     margin-right: 10px;
 }
 

@@ -9,7 +9,7 @@
 .clause {
     position: absolute;
     top: 13%;
-    color: #9999;
+    color: rgba(159, 137, 94, 0.8);
     font-size: 35px;
 }
 
@@ -56,7 +56,7 @@
 .nft {
     position: absolute;
     top: 75%;
-    color: #9999;
+    color: rgba(159, 137, 94, 0.8);
     font-size: 35px;
     margin-top: 15vh;
 }
