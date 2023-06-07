@@ -76,7 +76,7 @@ export default function Home() {
 
                 <p className={Welcome.nft}>
                     {" "}
-                    NFT Contract Address: <span className={Welcome.address}>{contractAddress}</span>
+                    DRM Contract Address: <span className={Welcome.address}>{contractAddress}</span>
                 </p>
             </div>
         </div>
