@@ -7,7 +7,7 @@
 
 #
 
-![Alt text](/readme_img/frontPage.JPG?raw=true "page")
+![Alt text](/readme_img/front.JPG?raw=true "page")
 
 # Steps To Run Locally
 
