@@ -111,11 +111,11 @@ input[type="file"]::file-selector-button:hover {
 
 /* Connect Button - Background */
 
-.sc-IeChK.kXnVII {
+.sc-IeChK {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
-.sc-IeChK.gxHkuP {
+.sc-gAigJI {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
@@ -125,10 +125,6 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .sc-hIiahf {
-    background-color: rgba(5, 5, 0, 0.3) !important;
-}
-
-.sc-hIiahf.bAPBtp {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
