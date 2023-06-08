@@ -163,7 +163,7 @@ input[type="file"]::file-selector-button:hover {
 
 /* Close Button */
 .sc-cJPUEC {
-    background-color: black !important;
+    background-color: #111 !important;
 }
 
 .sc-crozmw {
@@ -194,6 +194,18 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .sc-bhlPkD.gBEvGd:hover {
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
+    border-radius: 8px !important;
+}
+
+.sc-bhlPkD:hover {
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
+    border-radius: 8px !important;
+}
+
+.sc-fecFrY:hover {
     background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
     box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
     border-radius: 8px !important;
