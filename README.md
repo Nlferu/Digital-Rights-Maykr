@@ -5,9 +5,9 @@
 
 **Live Demo Hosted By Vercel:** https://...
 
-#
+<br />
 
-<span style="font-size: 28px; font-weight: bold; margin-bottom: 60px; color: rgba(159, 137, 94, 0.8);">Welcome To Digital Rights Maykr!</span>
+# Welcome To Digital Rights Maykr!
 
 This project is the ultimate tool for creators, an awe-inspiring sanctuary where your artistic genius flourishes and can be noticed by others!
 
@@ -24,6 +24,8 @@ you can check our <strong>Gallery</strong> tab and see if your idea is totally u
 Join us on this extraordinary adventure, and embrace the boundless possibilities that await you.
 May your journey be filled with happiness and unparalleled success!
 The possibilities are boundless!
+
+<br />
 
 # Steps To Run Locally
 
