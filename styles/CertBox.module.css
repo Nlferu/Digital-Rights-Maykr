@@ -83,11 +83,11 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     margin-bottom: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .button:hover {
     box-shadow: 0 5px 8px rgba(249, 189, 95, 0.8);
-    font-weight: bold;
 }
 
 .disabledButton {

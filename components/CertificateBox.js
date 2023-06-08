@@ -113,10 +113,8 @@ export default function CertificateBox({ imageUrl, index }) {
     }
 
     useEffect(() => {
-        if (isWeb3Enabled) {
-            handleButtonStatus()
-        }
-    }, [isWeb3Enabled])
+        handleButtonStatus()
+    }, [])
 
     return (
         <div className={CertBox.box}>

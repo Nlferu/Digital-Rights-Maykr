@@ -63,10 +63,8 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (isWeb3Enabled) {
-            handleGetCertificates()
-        }
-    }, [isWeb3Enabled])
+        handleGetCertificates()
+    }, [])
 
     return (
         <div className={Gallery.positioning}>
