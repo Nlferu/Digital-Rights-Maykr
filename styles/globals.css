@@ -220,3 +220,10 @@ input[type="file"]::file-selector-button:hover {
     bottom: 0;
     right: 0;
 }
+
+.sc-dSLLkn {
+    position: bottomR;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
