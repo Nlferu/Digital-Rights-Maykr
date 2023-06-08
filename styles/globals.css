@@ -111,35 +111,39 @@ input[type="file"]::file-selector-button:hover {
 
 /* Connect Button - Background */
 .sc-gAigJI {
-    background-color: #111 !important;
+    background-color: rgba(5, 5, 0, 0.3) !important;
+}
+
+.sc-IeChK.kXnVII {
+    background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
 /* Connected Button - Background */
 .sc-ckPVkh {
-    background-color: #111 !important;
-}
-
-.sc-IeChK {
-    background-color: #111 !important;
+    background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
 .sc-hIiahf {
-    background-color: #111 !important;
+    background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
 /* Connected Button - ETH Amount Background */
 .sc-iWxGtA {
-    background-color: #111 !important;
+    background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
 /* Connected Button - Address Background */
 .sc-gCkVGe {
-    background-color: #111 !important;
+    background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
 /* Wallet - ETH Amount Text */
 .sc-dEsUz {
-    color: white !important;
+    color: rgb(220, 220, 220) !important;
+}
+
+.sc-kNnbXp {
+    color: rgb(220, 220, 220) !important;
 }
 
 /* Connect Button And Wallet - Address Text */
@@ -159,7 +163,7 @@ input[type="file"]::file-selector-button:hover {
 
 /* Close Button */
 .sc-cJPUEC {
-    background-color: #111 !important;
+    background-color: black !important;
 }
 
 .sc-crozmw {
@@ -184,7 +188,13 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .sc-dEsUz:hover {
-    background: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
+    border-radius: 8px !important;
+}
+
+.sc-bhlPkD.gBEvGd:hover {
+    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
     box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
     border-radius: 8px !important;
 }
