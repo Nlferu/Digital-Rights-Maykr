@@ -110,11 +110,12 @@ input[type="file"]::file-selector-button:hover {
 /************************************** Connect Button Override **************************************/
 
 /* Connect Button - Background */
-.sc-gAigJI {
+
+.sc-IeChK.kXnVII {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
-.sc-IeChK.kXnVII {
+.sc-IeChK.gxHkuP {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
@@ -124,6 +125,10 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .sc-hIiahf {
+    background-color: rgba(5, 5, 0, 0.3) !important;
+}
+
+.sc-hIiahf.bAPBtp {
     background-color: rgba(5, 5, 0, 0.3) !important;
 }
 
@@ -193,12 +198,6 @@ input[type="file"]::file-selector-button:hover {
     border-radius: 8px !important;
 }
 
-.sc-bhlPkD.gBEvGd:hover {
-    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
-    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
-    border-radius: 8px !important;
-}
-
 .sc-bhlPkD:hover {
     background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
     box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
@@ -220,4 +219,5 @@ input[type="file"]::file-selector-button:hover {
 
 .sc-efvICy {
     background: linear-gradient(315deg, #485461 25%, #28313b 55%) !important;
+    position: "bottomR";
 }
