@@ -150,8 +150,10 @@ export default function Profits() {
     }
 
     useEffect(() => {
-        handleProceeds()
-    }, [])
+        if (isWeb3Enabled) {
+            handleProceeds()
+        }
+    }, [isWeb3Enabled])
 
     return (
         <div>
