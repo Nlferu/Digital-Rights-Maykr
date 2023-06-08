@@ -111,22 +111,30 @@ input[type="file"]::file-selector-button:hover {
 
 /* Connect Button - Background */
 .sc-gAigJI {
-    background-color: black !important;
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
 }
 
 /* Connected Button - Background */
 .sc-ckPVkh {
-    background-color: black !important;
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+}
+
+.sc-IeChK {
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+}
+
+.sc-hIiahf {
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
 }
 
 /* Connected Button - ETH Amount Background */
 .sc-iWxGtA {
-    background-color: black !important;
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
 }
 
 /* Connected Button - Address Background */
 .sc-gCkVGe {
-    background-color: black !important;
+    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
 }
 
 /* Wallet - ETH Amount Text */
@@ -139,6 +147,10 @@ input[type="file"]::file-selector-button:hover {
     color: rgba(159, 137, 94, 0.8) !important;
 }
 
+.sc-gAigJI {
+    color: rgba(159, 137, 94, 0.8) !important;
+}
+
 /* Wallet Logo */
 .sc-eywOmQ {
 }
@@ -147,6 +159,10 @@ input[type="file"]::file-selector-button:hover {
 
 /* Close Button */
 .sc-cJPUEC {
+    background-color: black !important;
+}
+
+.sc-crozmw {
     background-color: black !important;
 }
 
@@ -171,5 +187,9 @@ input[type="file"]::file-selector-button:hover {
 
 /* Notification Pop-up background */
 .sc-cOFUxI {
+    background: linear-gradient(315deg, #485461 25%, #28313b 55%) !important;
+}
+
+.sc-dSLLkn {
     background: linear-gradient(315deg, #485461 25%, #28313b 55%) !important;
 }

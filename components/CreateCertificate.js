@@ -200,7 +200,7 @@ export default function CreateCertificate() {
                                 color: "white",
                             }}
                         >
-                            <p className={Creation.certText} style={{ marginBottom: "0px", marginTop: "80px" }}>
+                            <p className={Creation.certText} style={{ marginBottom: "0px", marginTop: "120px" }}>
                                 Author
                             </p>
                             <p className={Creation.certInputText}>

@@ -1,6 +1,7 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
+import Link from "next/link"
 import CertBox from "../styles/CertBox.module.css"
 import Creation from "../styles/Creation.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
@@ -120,7 +121,9 @@ export default function CertificateBox({ imageUrl, index }) {
 
     return (
         <div className={CertBox.box}>
-            <img src={imageUrl} alt="NFT Image" />
+            <a href={imageUrl} target="_blank">
+                <img src={imageUrl} alt="NFT Image" />
+            </a>
             <div className={CertBox.additionalHover}>
                 {!buttonStatus[index] ? (
                     <button className={CertBox.disabledButton}>Unbuyable</button>
