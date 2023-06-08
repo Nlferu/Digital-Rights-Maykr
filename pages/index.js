@@ -23,17 +23,15 @@ export default function InformationPage() {
                 <br />
 
                 <p> Our protocol offers a cutting-edge feature that enables you to create and lend rights to your masterpiece</p>
+                <p>which also allows you to get proceeds from your work and grants you possibility</p>
+                <p>to withdraw or multiply those with our partner</p>
                 <p>
-                    which also allows you to get proceeds from your work and grants you possibility
-                    <p>to withdraw or multiply those with our partner</p>
-                    <p>
-                        <strong>Verse</strong>!
-                    </p>
+                    <strong>Verse</strong>!
                 </p>
+
                 <p> Of course others will be able to purchase rights for their own usage in their projects, but only for time specified by you.</p>
                 <p> In case you are not sure if someone have invented already artistry you are thinking or working on already</p>
                 <p>
-                    {" "}
                     you can check our <strong>Gallery</strong> tab and see if your idea is totally unique!
                 </p>
                 <br />
