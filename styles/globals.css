@@ -111,30 +111,30 @@ input[type="file"]::file-selector-button:hover {
 
 /* Connect Button - Background */
 .sc-gAigJI {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 /* Connected Button - Background */
 .sc-ckPVkh {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 .sc-IeChK {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 .sc-hIiahf {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 /* Connected Button - ETH Amount Background */
 .sc-iWxGtA {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 /* Connected Button - Address Background */
 .sc-gCkVGe {
-    background-color: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    background-color: #111 !important;
 }
 
 /* Wallet - ETH Amount Text */
@@ -159,26 +159,32 @@ input[type="file"]::file-selector-button:hover {
 
 /* Close Button */
 .sc-cJPUEC {
-    background-color: black !important;
+    background-color: #111 !important;
 }
 
 .sc-crozmw {
-    background-color: black !important;
+    background-color: #111 !important;
 }
 
 /* Upper Bar */
 .sc-bhlPkD {
-    background-color: black !important;
+    background-color: #111 !important;
 }
 
 /* Wallets Background */
 .sc-fIwssx {
-    background-color: black !important;
+    background-color: #111 !important;
 }
 
 /* Wallets On Hover */
 .sc-fwEaKe:hover {
-    background: linear-gradient(to right bottom, #524315 1%, #000000ea 60%, rgba(181, 177, 99, 0.6783088235294117) 99%) !important;
+    background: linear-gradient(147deg, #222 15%, #000000 90%) !important;
+    box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
+    border-radius: 8px !important;
+}
+
+.sc-dEsUz:hover {
+    background: linear-gradient(147deg, #222 15%, #000000 90%) !important;
     box-shadow: inset 0 0 0, 0 0 0, 0 0 5px rgb(255, 255, 255) !important;
     border-radius: 8px !important;
 }
