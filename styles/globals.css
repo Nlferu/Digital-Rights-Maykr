@@ -111,21 +111,25 @@ input[type="file"]::file-selector-button:hover {
 
 /* Connect Button - Background */
 
-.sc-IeChK {
+.sc-IeChK.ipRzSn {
     background-color: rgba(5, 5, 0, 0.3) !important;
+    border-radius: 12px;
 }
 
 .sc-gAigJI {
     background-color: rgba(5, 5, 0, 0.3) !important;
+    border-radius: 12px;
 }
 
 /* Connected Button - Background */
 .sc-ckPVkh {
     background-color: rgba(5, 5, 0, 0.3) !important;
+    border-radius: 12px;
 }
 
 .sc-hIiahf {
     background-color: rgba(5, 5, 0, 0.3) !important;
+    border-radius: 12px;
 }
 
 /* Connected Button - ETH Amount Background */
@@ -223,7 +227,7 @@ input[type="file"]::file-selector-button:hover {
 
 /* Notifications position fix */
 
-.sc-dSLLkn {
+.sc-dSLLkn.iVWNDf {
     position: bottomR;
     position: fixed;
     bottom: 0;

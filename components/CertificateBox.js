@@ -74,8 +74,7 @@ export default function CertificateBox({ imageUrl, index }) {
                 functionName: "buyLicense",
                 params: {
                     tokenId: tokenId,
-                    lendingTime: 30, // hardcoding parameters for now...
-                    borrower: account, // hardcoding parameters for now...
+                    borrower: account,
                 },
                 msgValue: price,
             }
