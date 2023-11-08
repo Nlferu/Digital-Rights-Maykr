@@ -29,7 +29,7 @@ export default function CertificateBox({ imageUrl, index }) {
             const statuses = []
 
             for (let i = 0; i <= index; i++) {
-                // i will be our tokenId, nowwe have to call tokenURI function
+                // i will be our tokenId, now we have to call tokenURI function
                 const lendingStatus = {
                     abi: abi,
                     contractAddress: contractAddress,

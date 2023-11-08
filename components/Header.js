@@ -5,7 +5,7 @@ export default function Header() {
     return (
         <nav>
             <div className="title">
-                <h1>Digital Rights Maykr</h1>
+                <h1 className="text-red-500">Digital Rights Maykr</h1>
                 <div className="navBar">
                     <Link className="underline" href="/">
                         Home

@@ -1,9 +1,11 @@
+# SWITCHING INTO TAILWIND IN PROGRESS
+
 # Digital Rights Maykr
 * Front-End
 
 **The Back-End repo is here:** https://github.com/Neftyr/Digital-Rights-Maykr
 
-#### Demo below will not allow you to create new certificates as you need nft.storage secret key and it should be taken just as example ! To test this feature run `yarn dev` and test it on local host :)
+#### To test this app locally run `yarn dev`
 **Live Demo Hosted By Vercel:** https://digital-rights-maykr.vercel.app/
 
 # Welcome To Digital Rights Maykr!
