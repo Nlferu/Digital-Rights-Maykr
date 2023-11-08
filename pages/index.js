@@ -13,7 +13,6 @@ export default function InformationPage() {
         <div>
             <div className={Info.description}>
                 <h1>Welcome To Digital Rights Maykr!</h1>
-
                 <p>
                     This project is the ultimate tool for creators, an awe-inspiring sanctuary where your artistic genius flourishes and can be noticed by
                     others!
@@ -39,7 +38,9 @@ export default function InformationPage() {
                 <p>May your journey be filled with happiness and unparalleled success!</p>
 
                 <p>The possibilities are boundless!</p>
-                <br />
+
+                <p className="text-red-500 font-extrabold mt-[2rem]">We are currently working on renovation of this page.</p>
+                <p className="text-red-500 font-extrabold mt-[2rem]">Updated version coming soon...</p>
 
                 <button className={Info.button} onClick={handleClick}>
                     Enter Maykr!
