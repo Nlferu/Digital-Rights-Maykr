@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import React from "react"
 import Info from "../styles/Info.module.css"
 
 export default function InformationPage() {

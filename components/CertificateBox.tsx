@@ -1,16 +1,22 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
-import CertBox from "../styles/CertBox.module.css"
-import Creation from "../styles/Creation.module.css"
-import contract from "../contracts/DigitalRightsMaykr.json"
+import CertBox from "@/styles/CertBox.module.css"
+import Creation from "@/styles/Creation.module.css"
+import contract from "@/contracts/DigitalRightsMaykr.json"
 
-export default function CertificateBox({ imageUrl, index }) {
+type CertificateBoxProps = {
+    imageUrl: string
+    index: number
+}
+
+export default function CertificateBox({ imageUrl, index }: CertificateBoxProps) {
     // Check if certificate rights are allowed to buy
-    const { isWeb3Enabled, account } = useMoralis()
+    const { account } = useMoralis()
+    // @ts-ignore
     const { runContractFunction } = useWeb3Contract()
-    const [buttonStatus, setButtonStatus] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [buttonStatus, setButtonStatus] = useState<boolean[] | undefined>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useNotification()
 
     const contractAddress = contract.address
@@ -25,10 +31,13 @@ export default function CertificateBox({ imageUrl, index }) {
 
     const handleButtonStatus = async () => {
         try {
-            const index = (await emittedCount()).toString()
-            const statuses = []
+            /** @ERROR POSSIBLE ERROR HERE WHILE CONVERTING EMITTEDCOUNT */
+            const emittedCerts = (await emittedCount()) as number
+            console.log(`Emitted Certs Count is: ${emittedCerts}`)
 
-            for (let i = 0; i <= index; i++) {
+            const statuses: boolean[] = []
+
+            for (let i = 0; i <= emittedCerts; i++) {
                 // i will be our tokenId, now we have to call tokenURI function
                 const lendingStatus = {
                     abi: abi,
@@ -43,7 +52,7 @@ export default function CertificateBox({ imageUrl, index }) {
                     params: lendingStatus,
                 })
 
-                statuses.push(status)
+                statuses.push(status as boolean)
             }
             setButtonStatus(statuses)
         } catch (error) {
@@ -51,7 +60,7 @@ export default function CertificateBox({ imageUrl, index }) {
         }
     }
 
-    const handleBuyRights = async (tokenId) => {
+    const handleBuyRights = async (tokenId: number) => {
         setIsLoading(true)
 
         const getPrice = {
@@ -76,7 +85,7 @@ export default function CertificateBox({ imageUrl, index }) {
                     tokenId: tokenId,
                     borrower: account,
                 },
-                msgValue: price,
+                msgValue: price as number /** @ERROR POTENTIAL ERROR HERE */,
             }
 
             await runContractFunction({
@@ -113,7 +122,8 @@ export default function CertificateBox({ imageUrl, index }) {
 
     useEffect(() => {
         handleButtonStatus()
-    }, [])
+        console.log("lama ref")
+    }, [index, imageUrl])
 
     return (
         <div className={CertBox.box}>
@@ -121,7 +131,7 @@ export default function CertificateBox({ imageUrl, index }) {
                 <img src={imageUrl} alt="NFT Image" />
             </a>
             <div className={CertBox.additionalHover}>
-                {!buttonStatus[index] ? (
+                {!buttonStatus?.[index] ? (
                     <button className={CertBox.disabledButton}>Unbuyable</button>
                 ) : (
                     <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>

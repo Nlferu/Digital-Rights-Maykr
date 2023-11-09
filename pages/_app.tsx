@@ -1,11 +1,11 @@
-import React from "react"
+import type { AppProps } from "next/app"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
-import Header from "../components/Header"
+import Header from "@/components/Header"
 import Head from "next/head"
-import "../styles/globals.css"
+import "@/styles/globals.css"
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
     return (
         <div>
             <Head>

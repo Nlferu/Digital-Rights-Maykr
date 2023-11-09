@@ -52,6 +52,7 @@ export default function CreateCertificate() {
 
     const handleCertId = async () => {
         const getIndex = (await emittedCount()).toString()
+        console.log(`Emitted Certs Count is: ${getIndex}`)
         setId(getIndex)
     }
 
@@ -207,42 +208,42 @@ export default function CreateCertificate() {
                                 <span>{author}</span>
                             </p>
                             {co_author && (
-                                <p className={Creation.certText}>
+                                <div className={Creation.certText}>
                                     Co-Author
                                     <p className={Creation.certInputText}>
                                         <span>{co_author}</span>
                                     </p>
-                                </p>
+                                </div>
                             )}
-                            <p className={Creation.certText}>
+                            <div className={Creation.certText}>
                                 Title
                                 <p className={Creation.certInputText}>
                                     <span>{title}</span>
                                 </p>
-                            </p>
-                            <p className={Creation.certText}>
+                            </div>
+                            <div className={Creation.certText}>
                                 Creator Address
                                 <p className={Creation.certInputText}>
                                     <span className={Creation.certInputText} style={{ fontSize: "15px" }}>
                                         {account}
                                     </span>
                                 </p>
-                            </p>
-                            <p className={Creation.certText}>
+                            </div>
+                            <div className={Creation.certText}>
                                 Art Hash
                                 <p className={Creation.certInputText}>
                                     <span className={Creation.certInputText} style={{ fontSize: "14px" }}>
                                         {art}
                                     </span>
                                 </p>
-                            </p>
+                            </div>
                             <p className={Creation.certText}>Certificate_Id_{id}</p>
-                            <p className={Creation.certText}>
+                            <div className={Creation.certText}>
                                 Description{" "}
                                 <p className={Creation.certInputText}>
                                     <span className={Creation.certInputText}>{description}</span>
                                 </p>
-                            </p>
+                            </div>
                         </div>
                     </div>
                     <button className={disableGlow} onClick={handleDownloadCertificate}>

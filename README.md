@@ -1,12 +1,11 @@
 # SWITCHING INTO TAILWIND IN PROGRESS
 
 # Digital Rights Maykr
-* Front-End
+## Front-End
 
-**The Back-End repo is here:** https://github.com/Neftyr/Digital-Rights-Maykr
+**Live Project:** https://digital-rights-maykr.vercel.app/
 
-#### To test this app locally run `yarn dev`
-**Live Demo Hosted By Vercel:** https://digital-rights-maykr.vercel.app/
+**The Back-End repo is here:** https://github.com/Nlferu/Digital-Rights-Maykr-Engine
 
 # Welcome To Digital Rights Maykr!
 
