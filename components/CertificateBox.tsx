@@ -13,7 +13,7 @@ type CertificateBoxProps = {
 export default function CertificateBox({ imageUrl, index }: CertificateBoxProps) {
     // Check if certificate rights are allowed to buy
     const { account } = useMoralis()
-    // @ts-ignore
+    /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const [buttonStatus, setButtonStatus] = useState<boolean[] | undefined>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -32,12 +32,13 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     const handleButtonStatus = async () => {
         try {
             /** @ERROR POSSIBLE ERROR HERE WHILE CONVERTING EMITTEDCOUNT */
-            const emittedCerts = (await emittedCount()) as number
-            console.log(`Emitted Certs Count is: ${emittedCerts}`)
+            const emittedCerts = ((await emittedCount()) as string).toString()
+            const emittedCertsInt = parseInt(emittedCerts)
+            console.log(`Emitted Certs Count is: ${emittedCertsInt}`)
 
             const statuses: boolean[] = []
 
-            for (let i = 0; i <= emittedCerts; i++) {
+            for (let i = 0; i <= emittedCertsInt; i++) {
                 // i will be our tokenId, now we have to call tokenURI function
                 const lendingStatus = {
                     abi: abi,
@@ -122,8 +123,7 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
 
     useEffect(() => {
         handleButtonStatus()
-        console.log("lama ref")
-    }, [index, imageUrl])
+    }, [])
 
     return (
         <div className={CertBox.box}>

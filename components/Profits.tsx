@@ -1,18 +1,21 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
-import Proceeds from "../styles/Proceeds.module.css"
-import contract from "../contracts/DigitalRightsMaykr.json"
-import verseContract from "../contracts/Verse.json"
+import Proceeds from "@/styles/Proceeds.module.css"
+import contract from "@/contracts/DigitalRightsMaykr.json"
+import verseContract from "@/contracts/Verse.json"
 
 export default function Profits() {
     const { isWeb3Enabled, account } = useMoralis()
-    const [isLoading, setIsLoading] = useState(false)
-    const [isLoadingB, setIsLoadingB] = useState(false)
-    const [proceeds, setProceeds] = useState("")
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
+    const [proceeds, setProceeds] = useState<number>()
+    /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
+
+    const stakeRef = useRef<HTMLInputElement | null>(null)
 
     const spinnerW = `${Proceeds.buttonW} ${Proceeds.waitSpinnerCenter}`
     const spinnerV = `${Proceeds.buttonV} ${Proceeds.waitSpinnerCenter}`
@@ -35,9 +38,9 @@ export default function Profits() {
             const proceedsWei = await runContractFunction({
                 params: getProceeds,
             })
-            const proceedsEth = ethers.utils.formatEther(proceedsWei)
-            if (proceedsEth > 0) {
-                setProceeds(proceedsEth)
+            const proceedsEth = ethers.utils.formatEther(proceedsWei as number)
+            if (parseFloat(proceedsEth) > 0) {
+                setProceeds(parseFloat(proceedsEth))
             } else {
                 setProceeds(0)
             }
@@ -93,7 +96,7 @@ export default function Profits() {
         setIsLoadingB(true)
 
         try {
-            var amount = document.getElementById("stake").value
+            var amount = stakeRef.current?.value
 
             const withdrawProceeds = {
                 abi: abi,
@@ -168,7 +171,7 @@ export default function Profits() {
             </div>
             <div className={Proceeds.containerV}>
                 <p className={Proceeds.verseTxt}>Stake Your Proceeds With Verse!</p>
-                <input type="text" className={Proceeds.inputBox} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
+                <input type="text" className={Proceeds.inputBox} ref={stakeRef} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
                 <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
                     {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}
                 </button>
