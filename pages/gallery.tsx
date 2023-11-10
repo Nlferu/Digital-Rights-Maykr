@@ -1,14 +1,21 @@
-import { useWeb3Contract, useMoralis } from "react-moralis"
+import { useWeb3Contract } from "react-moralis"
 import { useState, useEffect } from "react"
 import CertificateBox from "../components/CertificateBox"
 import Gallery from "../styles/Gallery.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
 
-// Positioning of certificates to be fixed
+interface CertificateItem {
+    imageUrl: string
+}
+
+interface JsonData {
+    image: string
+}
 
 export default function Home() {
-    const { isWeb3Enabled } = useMoralis()
-    const [certificateData, setCertificateData] = useState([])
+    const [certificateData, setCertificateData] = useState<CertificateItem[]>([])
+
+    /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
 
     const contractAddress = contract.address
@@ -23,10 +30,12 @@ export default function Home() {
 
     const handleGetCertificates = async () => {
         try {
-            const index = (await emittedCount()).toString()
-            const imageUrls = []
+            const emittedCerts = (await emittedCount()) as string
+            const emittedCertsInt = parseInt(emittedCerts)
 
-            for (let i = 0; i <= index; i++) {
+            const imageUrls: string[] = []
+
+            for (let i = 0; i <= emittedCertsInt - 1; i++) {
                 // i will be our tokenId, now we have to call tokenURI function
                 const tokenUri = {
                     abi: abi,
@@ -41,29 +50,39 @@ export default function Home() {
                     params: tokenUri,
                 })
 
-                const response = await fetch(getMetadata)
-                response
-                    .json()
-                    .then((jsonData) => {
-                        // Access and work with the JSON data here
-                        // Extract specific parameters from the JSON
-                        const imageUrl = jsonData.image
-                        // Update url
-                        const updatedUrl = imageUrl.replace("ipfs://", "https://ipfs.io/ipfs/")
-                        imageUrls.push(updatedUrl)
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error)
-                    })
-                setCertificateData(imageUrls.map((imageUrl) => ({ imageUrl })))
+                const response = await fetch(getMetadata as string)
+
+                const jsonData: JsonData = await response.json()
+
+                const imageUrl = jsonData.image
+                console.log(`image: ${imageUrl}`)
+                const updatedUrl = imageUrl.replace("ipfs://", "https://ipfs.io/ipfs/")
+
+                imageUrls.push(updatedUrl)
             }
+            const updatedCertificateData = imageUrls.map((imageUrl) => ({ imageUrl }))
+            setCertificateData(updatedCertificateData)
+            localStorage.setItem("certificateData", JSON.stringify(updatedCertificateData))
         } catch (error) {
             console.error("Error fetching data: ", error)
         }
     }
 
     useEffect(() => {
-        handleGetCertificates()
+        const storedData = localStorage.getItem("certificateData")
+
+        if (storedData) {
+            const certificateData = JSON.parse(storedData) as CertificateItem[]
+
+            const updatedCertificateData = certificateData.map((item) => ({
+                imageUrl: item.imageUrl,
+            }))
+
+            setCertificateData(updatedCertificateData)
+        } else {
+            console.log("No data found in local storage")
+            handleGetCertificates()
+        }
     }, [])
 
     return (

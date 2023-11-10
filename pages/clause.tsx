@@ -1,5 +1,5 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { useNotification } from "web3uikit"
 import Welcome from "../styles/Welcome.module.css"
 import Creation from "../styles/Creation.module.css"
@@ -7,10 +7,13 @@ import contract from "../contracts/DigitalRightsMaykr.json"
 
 export default function Home() {
     const { account } = useMoralis()
+    /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const [isLoading, setIsLoading] = useState(false)
     const [clause, setClause] = useState("")
     const dispatch = useNotification()
+
+    const tokenRef = useRef<HTMLInputElement | null>(null)
 
     const combinedClasses = `${Creation.inputBox} ${Welcome.inputBox}`
     const contractAddress = contract.address
@@ -19,7 +22,7 @@ export default function Home() {
     const handleGetClause = async () => {
         setIsLoading(true)
         try {
-            var tokenId = document.getElementById("tokenId").value
+            var tokenId = tokenRef.current?.value
 
             const getClause = {
                 abi: abi,
@@ -37,7 +40,7 @@ export default function Home() {
             })
 
             if (clauseOutput) {
-                setClause(clauseOutput)
+                setClause(clauseOutput as string)
             } else {
                 const wrongClause = "Clause Not Detected"
                 setClause(wrongClause)
@@ -63,7 +66,7 @@ export default function Home() {
         <div>
             <div className={Welcome.container}>
                 <p className={Welcome.clause}>Read Active Clause</p>
-                <input type="text" className={combinedClasses} id="tokenId" name="tokenId" placeholder="TokenId" />
+                <input type="text" className={combinedClasses} ref={tokenRef} id="tokenId" name="tokenId" placeholder="TokenId" />
                 <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
                     {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
                 </button>

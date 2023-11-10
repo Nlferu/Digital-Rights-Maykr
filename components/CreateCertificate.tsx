@@ -16,7 +16,7 @@ export default function CreateCertificate() {
     const [co_author, setCoAuthor] = useState<string>("")
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
-    const [id, setId] = useState<string>("")
+    const [amount, setAmount] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
@@ -53,10 +53,11 @@ export default function CreateCertificate() {
         }
     }
 
-    const handleCertId = async () => {
-        const getIndex = ((await emittedCount()) as string).toString()
-        console.log(`Emitted Certs Count is: ${getIndex}`)
-        setId(getIndex)
+    const handleEmittedCertsCounter = async () => {
+        /** @dev Wallet has to be connected to get below associated with -> isWeb3Enabled check */
+        const getAmount = ((await emittedCount()) as string).toString()
+        console.log(`Emitted Certs Count is: ${getAmount}`)
+        setAmount(getAmount)
     }
 
     const handleGenerateCertificate = async () => {
@@ -67,9 +68,7 @@ export default function CreateCertificate() {
             certificateContainer.style.boxShadow = "none"
 
             const canvas = await html2canvas(certificateContainer)
-            // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
-            const index = ((await emittedCount()) as string).toString()
-            setId(index)
+
             // Convert the canvas to a Blob object
             const imageBlob = await new Promise((resolve) => {
                 canvas.toBlob((blob) => {
@@ -81,7 +80,7 @@ export default function CreateCertificate() {
             certificateContainer.style.boxShadow = "0 0 20px 6px rgba(100, 79, 46, 0.96)"
             // Pass the image blob to the upload function
             try {
-                const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, index)
+                const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, amount)
                 console.log("NFT.storage response:", metadata)
 
                 console.log("Minting NFT...")
@@ -99,7 +98,7 @@ export default function CreateCertificate() {
                     onError: () => handleMintError(cid),
                     onSuccess: () => handleMintSuccess(),
                 })
-                console.log("NFT Minted Successfully!", metadata, "NFT: ", index)
+                console.log("NFT Minted Successfully!", metadata, "NFT: ", amount)
             } catch (error) {
                 console.error("Error uploading to NFT.storage:", error)
             } finally {
@@ -110,9 +109,6 @@ export default function CreateCertificate() {
 
     const handleDownloadCertificate = async () => {
         const container = containerRef.current
-        // To run below wallet has to be connected ERROR HANDLER TO BE ADDED
-        const index = ((await emittedCount()) as string).toString()
-
         // Remove the box shadow temporarily before generating the image
         if (container) {
             container.style.boxShadow = "none"
@@ -124,7 +120,7 @@ export default function CreateCertificate() {
 
                     canvas.toBlob((blob) => {
                         if (blob) {
-                            download(blob, `Certificate_Id_${index}`)
+                            download(blob, `Certificate_Id_${amount}`)
                         } else {
                             console.error("Error generating certificate image: Blob is null")
                         }
@@ -161,10 +157,14 @@ export default function CreateCertificate() {
     }
 
     useEffect(() => {
-        if (isWeb3Enabled) {
-            handleCertId()
+        const fetchData = async () => {
+            if (isWeb3Enabled) {
+                await handleEmittedCertsCounter()
+            }
         }
-    }, [isWeb3Enabled])
+
+        fetchData()
+    }, [isWeb3Enabled, amount])
 
     return (
         <div>
@@ -250,7 +250,7 @@ export default function CreateCertificate() {
                                     </span>
                                 </p>
                             </div>
-                            <p className={Creation.certText}>Certificate_Id_{id}</p>
+                            <p className={Creation.certText}>Certificate_Id_{amount}</p>
                             <div className={Creation.certText}>
                                 Description{" "}
                                 <p className={Creation.certInputText}>

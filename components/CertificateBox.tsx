@@ -11,12 +11,12 @@ type CertificateBoxProps = {
 }
 
 export default function CertificateBox({ imageUrl, index }: CertificateBoxProps) {
-    // Check if certificate rights are allowed to buy
-    const { account } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const [buttonStatus, setButtonStatus] = useState<boolean[] | undefined>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [amount, setAmount] = useState<string>("")
     const dispatch = useNotification()
 
     const contractAddress = contract.address
@@ -29,36 +29,34 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
         params: {},
     })
 
-    const handleButtonStatus = async () => {
-        try {
-            /** @ERROR POSSIBLE ERROR HERE WHILE CONVERTING EMITTEDCOUNT */
-            const emittedCerts = ((await emittedCount()) as string).toString()
-            const emittedCertsInt = parseInt(emittedCerts)
-            console.log(`Emitted Certs Count is: ${emittedCertsInt}`)
+    const handleEmittedCertsCounter = async () => {
+        /** @dev Wallet has to be connected to get below associated with -> isWeb3Enabled check */
+        const getAmount = ((await emittedCount()) as string).toString()
 
-            const statuses: boolean[] = []
+        setAmount(getAmount)
+    }
 
-            for (let i = 0; i <= emittedCertsInt; i++) {
-                // i will be our tokenId, now we have to call tokenURI function
-                const lendingStatus = {
-                    abi: abi,
-                    contractAddress: contractAddress,
-                    functionName: "getLendingStatus",
-                    params: {
-                        tokenId: i,
-                    },
-                }
+    const handleButtonStatus = async (id: number) => {
+        const statuses: boolean[] = []
 
-                let status = await runContractFunction({
-                    params: lendingStatus,
-                })
-
-                statuses.push(status as boolean)
+        for (let i = 0; i <= id; i++) {
+            // Index i will be our tokenId, now we have to call tokenURI function
+            const lendingStatus = {
+                abi: abi,
+                contractAddress: contractAddress,
+                functionName: "getLendingStatus",
+                params: {
+                    tokenId: i,
+                },
             }
-            setButtonStatus(statuses)
-        } catch (error) {
-            console.error("Error fetching data: ", error)
+
+            let status = await runContractFunction({
+                params: lendingStatus,
+            })
+
+            statuses.push(status as boolean)
         }
+        setButtonStatus(statuses)
     }
 
     const handleBuyRights = async (tokenId: number) => {
@@ -86,7 +84,7 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
                     tokenId: tokenId,
                     borrower: account,
                 },
-                msgValue: price as number /** @ERROR POTENTIAL ERROR HERE */,
+                msgValue: price as number,
             }
 
             await runContractFunction({
@@ -122,8 +120,15 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }
 
     useEffect(() => {
-        handleButtonStatus()
-    }, [])
+        const fetchData = async () => {
+            if (isWeb3Enabled) {
+                await handleEmittedCertsCounter()
+                await handleButtonStatus(parseInt(amount))
+            }
+        }
+
+        fetchData()
+    }, [isWeb3Enabled, amount])
 
     return (
         <div className={CertBox.box}>
