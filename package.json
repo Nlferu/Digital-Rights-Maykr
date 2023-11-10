@@ -23,6 +23,7 @@
     "web3uikit": "^0.0.133"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.1",
     "@types/downloadjs": "^1.4.6",
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
