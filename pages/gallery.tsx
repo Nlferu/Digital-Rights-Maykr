@@ -1,4 +1,4 @@
-import { useWeb3Contract } from "react-moralis"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import CertificateBox from "../components/CertificateBox"
 import Gallery from "../styles/Gallery.module.css"
@@ -13,8 +13,9 @@ interface JsonData {
 }
 
 export default function Home() {
+    const { isWeb3Enabled } = useMoralis()
     const [certificateData, setCertificateData] = useState<CertificateItem[]>([])
-
+    const [amount, setAmount] = useState<string>("")
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
 
@@ -28,14 +29,18 @@ export default function Home() {
         params: {},
     })
 
-    const handleGetCertificates = async () => {
-        try {
-            const emittedCerts = (await emittedCount()) as string
-            const emittedCertsInt = parseInt(emittedCerts)
+    const handleEmittedCertsCounter = async () => {
+        /** @dev Wallet has to be connected to get below associated with -> isWeb3Enabled check */
+        const getAmount = ((await emittedCount()) as string).toString()
+        console.log(`Emitted Certs Count is: ${getAmount}`)
+        setAmount(getAmount)
+    }
 
+    const handleGetCertificates = async (amount: number) => {
+        try {
             const imageUrls: string[] = []
 
-            for (let i = 0; i <= emittedCertsInt - 1; i++) {
+            for (let i = 0; i <= amount - 1; i++) {
                 // i will be our tokenId, now we have to call tokenURI function
                 const tokenUri = {
                     abi: abi,
@@ -62,28 +67,21 @@ export default function Home() {
             }
             const updatedCertificateData = imageUrls.map((imageUrl) => ({ imageUrl }))
             setCertificateData(updatedCertificateData)
-            localStorage.setItem("certificateData", JSON.stringify(updatedCertificateData))
         } catch (error) {
             console.error("Error fetching data: ", error)
         }
     }
 
     useEffect(() => {
-        const storedData = localStorage.getItem("certificateData")
-
-        if (storedData) {
-            const certificateData = JSON.parse(storedData) as CertificateItem[]
-
-            const updatedCertificateData = certificateData.map((item) => ({
-                imageUrl: item.imageUrl,
-            }))
-
-            setCertificateData(updatedCertificateData)
-        } else {
-            console.log("No data found in local storage")
-            handleGetCertificates()
+        const fetchData = async () => {
+            if (isWeb3Enabled) {
+                await handleEmittedCertsCounter()
+                await handleGetCertificates(parseInt(amount))
+            }
         }
-    }, [])
+
+        fetchData()
+    }, [isWeb3Enabled, amount])
 
     return (
         <div className={Gallery.positioning}>
