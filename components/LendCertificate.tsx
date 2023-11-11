@@ -1,12 +1,14 @@
-import { useWeb3Contract } from "react-moralis"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState, useRef } from "react"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import Creation from "@/styles/Creation.module.css"
 import Lending from "@/styles/Lending.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
+import Gallery from "../styles/Gallery.module.css"
 
 export default function LendCertificate() {
+    const { isWeb3Enabled } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
     /* @ts-ignore */
@@ -127,20 +129,33 @@ export default function LendCertificate() {
 
     return (
         <div>
-            <div className={Creation.inputsContainer}>
-                <input type="text" className={Creation.inputBox} ref={tokenIdRef} id="tokenId" name="tokenId" placeholder="TokenId" />
-                <input type="text" className={Creation.inputBox} ref={lendingTimeRef} id="lendingTime" name="lendingTime" placeholder="Lending Period (Days)" />
-                <input type="text" className={Creation.inputBox} ref={priceRef} id="price" name="price" placeholder="Price (ETH)" />
-                <button className={combinedSipnner} onClick={handleLendCertificate} disabled={isLoading}>
-                    {isLoading ? <div className={Creation.waitSpinner}></div> : "Allow Lending"}
-                </button>
-            </div>
-            <div className={Lending.blockSpacing}>
-                <input type="text" className={Creation.inputBox} ref={blockTokenIdRef} id="blockTokenId" name="tokenId" placeholder="TokenId" />
-                <button className={combinedSipnner} onClick={handleBlockCertificate} disabled={isLoading}>
-                    {isLoadingB ? <div className={Creation.waitSpinner}></div> : "Block Lending"}
-                </button>
-            </div>
+            {!isWeb3Enabled ? (
+                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+            ) : (
+                <div>
+                    <div className={Creation.inputsContainer}>
+                        <input type="text" className={Creation.inputBox} ref={tokenIdRef} id="tokenId" name="tokenId" placeholder="TokenId" />
+                        <input
+                            type="text"
+                            className={Creation.inputBox}
+                            ref={lendingTimeRef}
+                            id="lendingTime"
+                            name="lendingTime"
+                            placeholder="Lending Period (Days)"
+                        />
+                        <input type="text" className={Creation.inputBox} ref={priceRef} id="price" name="price" placeholder="Price (ETH)" />
+                        <button className={combinedSipnner} onClick={handleLendCertificate} disabled={isLoading}>
+                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Allow Lending"}
+                        </button>
+                    </div>
+                    <div className={Lending.blockSpacing}>
+                        <input type="text" className={Creation.inputBox} ref={blockTokenIdRef} id="blockTokenId" name="tokenId" placeholder="TokenId" />
+                        <button className={combinedSipnner} onClick={handleBlockCertificate} disabled={isLoading}>
+                            {isLoadingB ? <div className={Creation.waitSpinner}></div> : "Block Lending"}
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

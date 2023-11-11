@@ -23,3 +23,4 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
     )
 }
+// {!isWeb3Enabled ? <p className={Gallery.info}>Connect Your Wallet To See Certificates</p> :

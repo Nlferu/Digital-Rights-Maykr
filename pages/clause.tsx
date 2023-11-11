@@ -4,9 +4,10 @@ import { useNotification } from "web3uikit"
 import Welcome from "../styles/Welcome.module.css"
 import Creation from "../styles/Creation.module.css"
 import contract from "../contracts/DigitalRightsMaykr.json"
+import Gallery from "../styles/Gallery.module.css"
 
 export default function Home() {
-    const { account } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const [isLoading, setIsLoading] = useState(false)
@@ -65,17 +66,23 @@ export default function Home() {
     return (
         <div>
             <div className={Welcome.container}>
-                <p className={Welcome.clause}>Read Active Clause</p>
-                <input type="text" className={combinedClasses} ref={tokenRef} id="tokenId" name="tokenId" placeholder="TokenId" />
-                <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
-                    {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
-                </button>
+                {!isWeb3Enabled ? (
+                    <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+                ) : (
+                    <div>
+                        <p className={Welcome.clause}>Read Active Clause</p>
+                        <input type="text" className={combinedClasses} ref={tokenRef} id="tokenId" name="tokenId" placeholder="TokenId" />
+                        <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
+                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
+                        </button>
 
-                {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
-                <div className={Welcome.clauseContainer}>
-                    {clause.includes("The Artist") && <img className={Welcome.clauseImage} src="/clause.png" alt="clause" />}
-                    <div className={Welcome.clauseText}>{clause}</div>
-                </div>
+                        {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
+                        <div className={Welcome.clauseContainer}>
+                            {clause.includes("The Artist") && <img className={Welcome.clauseImage} src="/clause.png" alt="clause" />}
+                            <div className={Welcome.clauseText}>{clause}</div>
+                        </div>
+                    </div>
+                )}
 
                 <p className={Welcome.nft}>
                     {" "}

@@ -5,6 +5,7 @@ import { ethers } from "ethers"
 import Proceeds from "@/styles/Proceeds.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import verseContract from "@/contracts/Verse.json"
+import Gallery from "../styles/Gallery.module.css"
 
 export default function Profits() {
     const { isWeb3Enabled, account } = useMoralis()
@@ -160,30 +161,36 @@ export default function Profits() {
 
     return (
         <div>
-            <div className={Proceeds.containerW}>
-                <p className={Proceeds.headText}>Your Current Proceeds:</p>
-                <p className={Proceeds.amountText}>
-                    <span className={Proceeds.amount}>{proceeds}</span> ETH
-                </p>
-                <button className={spinnerW} onClick={handleWithdraw} disabled={isLoading}>
-                    {isLoading ? <div className={Proceeds.waitSpinner}></div> : "Withdraw"}
-                </button>
-            </div>
-            <div className={Proceeds.containerV}>
-                <p className={Proceeds.verseTxt}>Stake Your Proceeds With Verse!</p>
-                <input type="text" className={Proceeds.inputBox} ref={stakeRef} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
-                <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
-                    {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}
-                </button>
-                <p className={Proceeds.verseInfo}>
-                    Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some Liquidity
-                    Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into Verse Farms for even
-                    more profits! You can find more details here: <br></br>
-                    <a href="https://verse.bitcoin.com/" target="_blank" rel="noopener noreferrer">
-                        Verse
-                    </a>
-                </p>
-            </div>
+            {!isWeb3Enabled ? (
+                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+            ) : (
+                <div>
+                    <div className={Proceeds.containerW}>
+                        <p className={Proceeds.headText}>Your Current Proceeds:</p>
+                        <p className={Proceeds.amountText}>
+                            <span className={Proceeds.amount}>{proceeds}</span> ETH
+                        </p>
+                        <button className={spinnerW} onClick={handleWithdraw} disabled={isLoading}>
+                            {isLoading ? <div className={Proceeds.waitSpinner}></div> : "Withdraw"}
+                        </button>
+                    </div>
+                    <div className={Proceeds.containerV}>
+                        <p className={Proceeds.verseTxt}>Stake Your Proceeds With Verse!</p>
+                        <input type="text" className={Proceeds.inputBox} ref={stakeRef} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
+                        <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
+                            {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}
+                        </button>
+                        <p className={Proceeds.verseInfo}>
+                            Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some
+                            Liquidity Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into
+                            Verse Farms for even more profits! You can find more details here: <br></br>
+                            <a href="https://verse.bitcoin.com/" target="_blank" rel="noopener noreferrer">
+                                Verse
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -85,7 +85,9 @@ export default function Home() {
 
     return (
         <div className={Gallery.positioning}>
-            {certificateData.length === 0 ? (
+            {!isWeb3Enabled ? (
+                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+            ) : certificateData.length === 0 ? (
                 <p className={Gallery.info}>No Certificates To Display For Now...</p>
             ) : (
                 certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)

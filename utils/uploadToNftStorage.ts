@@ -1,10 +1,27 @@
 import { NFTStorage, File } from "nft.storage"
 
-export default async function uploadToNftStorage(author, title, description, art, imageBlob, index) {
-    const NFT_STORAGE_KEY = process.env.NFT_STORAGE_KEY
+declare global {
+    interface Window {
+        ethereum?: {
+            request: (args: { method: string }) => Promise<any>
+        }
+    }
+}
+
+type NftStorageProps = (
+    author: string,
+    title: string,
+    description: string,
+    art: string,
+    imageBlob: Blob,
+    index: string
+) => Promise<{ metadata: string; cid: string }>
+
+export const uploadToNftStorage: NftStorageProps = async (author, title, description, art, imageBlob, index) => {
+    const NFT_STORAGE_KEY = process.env.NFT_STORAGE_KEY || ""
     const client = new NFTStorage({ token: NFT_STORAGE_KEY })
 
-    const accounts = await ethereum.request({ method: "eth_accounts" })
+    const accounts = await window.ethereum?.request({ method: "eth_accounts" })
     const address = accounts.toString()
 
     const timeStamp = new Date()
