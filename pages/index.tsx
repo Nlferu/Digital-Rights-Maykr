@@ -1,15 +1,15 @@
 import { useRouter } from "next/router"
 import Info from "@/styles/Info.module.css"
 
-export default function InformationPage() {
+export default function Home() {
     const router = useRouter()
 
     const handleClick = () => {
-        router.push("/create-certificate")
+        router.push("/maykr")
     }
 
     return (
-        <div className="text-center bg-darkGreen text-white pt-[2rem] h-[53rem]">
+        <section className="py-[8rem] text-center text-white">
             <h1>Welcome To Digital Rights Maykr!</h1>
             <p>
                 This project is the ultimate tool for creators, an awe-inspiring sanctuary where your artistic genius flourishes and can be noticed by others!
@@ -42,6 +42,6 @@ export default function InformationPage() {
             <button className={Info.button} onClick={handleClick}>
                 Enter Maykr!
             </button>
-        </div>
+        </section>
     )
 }
