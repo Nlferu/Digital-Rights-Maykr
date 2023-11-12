@@ -1,13 +1,13 @@
-import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState, useRef } from "react"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import Creation from "@/styles/Creation.module.css"
 import Lending from "@/styles/Lending.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
-import Gallery from "../styles/Gallery.module.css"
+import Gallery from "@/styles/Gallery.module.css"
 
-export default function LendCertificate() {
+export default function Home() {
     const { isWeb3Enabled } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)

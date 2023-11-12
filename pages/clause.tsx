@@ -1,10 +1,10 @@
-import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState, useRef } from "react"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
-import Welcome from "../styles/Welcome.module.css"
-import Creation from "../styles/Creation.module.css"
-import contract from "../contracts/DigitalRightsMaykr.json"
-import Gallery from "../styles/Gallery.module.css"
+import Welcome from "@/styles/Welcome.module.css"
+import Creation from "@/styles/Creation.module.css"
+import contract from "@/contracts/DigitalRightsMaykr.json"
+import Gallery from "@/styles/Gallery.module.css"
 
 export default function Home() {
     const { isWeb3Enabled, account } = useMoralis()

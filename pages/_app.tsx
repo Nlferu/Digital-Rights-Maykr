@@ -1,13 +1,13 @@
 import type { AppProps } from "next/app"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
-import Header from "@/components/Header"
+import Header from "@/components/header"
 import Head from "next/head"
 import "@/styles/globals.css"
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <div>
+        <div className="">
             <Head>
                 <title>Digital Rights Maykr</title>
                 <meta name="description" content="Digital Rights Maykr" />
@@ -23,4 +23,3 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
     )
 }
-// {!isWeb3Enabled ? <p className={Gallery.info}>Connect Your Wallet To See Certificates</p> :

@@ -1,8 +1,8 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
-import CertificateBox from "../components/CertificateBox"
-import Gallery from "../styles/Gallery.module.css"
-import contract from "../contracts/DigitalRightsMaykr.json"
+import CertificateBox from "@/components/certificateBox"
+import Gallery from "@/styles/Gallery.module.css"
+import contract from "@/contracts/DigitalRightsMaykr.json"
 
 interface CertificateItem {
     imageUrl: string

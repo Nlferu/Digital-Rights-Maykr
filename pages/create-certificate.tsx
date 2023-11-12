@@ -1,5 +1,5 @@
-import { useWeb3Contract, useMoralis } from "react-moralis"
 import React, { useState, useEffect, useRef } from "react"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
@@ -8,9 +8,9 @@ import download from "downloadjs"
 import Creation from "@/styles/Creation.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import hashCreator from "@/utils/artHasher"
-import Gallery from "../styles/Gallery.module.css"
+import Gallery from "@/styles/Gallery.module.css"
 
-export default function CreateCertificate() {
+export default function Home() {
     const { isWeb3Enabled, account } = useMoralis()
     const [art, setArt] = useState<string>("")
     const [author, setAuthor] = useState<string>("")
