@@ -13,6 +13,8 @@ module.exports = {
 
                 lightPurple: "rgba(94, 23, 235, 0.6)",
                 darkPurple: "rgba(94, 23, 235, 1)",
+
+                pinky: "rgb(206,77,187)",
             },
         },
     },

@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import Info from "@/styles/Info.module.css"
 
 export default function Home() {
     const router = useRouter()
@@ -10,14 +9,12 @@ export default function Home() {
 
     return (
         <section className="w-full py-[6rem] text-center text-white">
-            <h1>Welcome To Digital Rights Maykr!</h1>
-            <div className="pt-[2rem] flex justify-center">
+            <h1 className="font-bold text-4xl text-purple-200">Welcome To Digital Rights Maykr!</h1>
+            <div className="pt-[2rem] flex justify-center mb-[2rem]">
                 <iframe width="640" height="360" src="https://www.youtube.com/embed/LLAGgFATvGY" allowFullScreen></iframe>
             </div>
 
-            <p className="text-purple-200 font-extrabold mt-[2rem]">We are currently working on renovation of this page.</p>
-            <p className="text-purple-200 font-extrabold mt-[1rem]">Updated version coming soon...</p>
-            <button className={Info.button} onClick={handleClick}>
+            <button className="btn-hover-effect h-[3.5rem] w-[8rem] bg-black rounded-full" onClick={handleClick}>
                 Enter Maykr!
             </button>
         </section>
