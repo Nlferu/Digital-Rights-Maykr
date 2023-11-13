@@ -1,7 +1,7 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import CertificateBox from "@/components/certificateBox"
-import Gallery from "@/styles/Gallery.module.css"
+import gal from "@/styles/Gallery.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 
 interface CertificateItem {
@@ -12,7 +12,7 @@ interface JsonData {
     image: string
 }
 
-export default function Home() {
+export default function Gallery() {
     const { isWeb3Enabled } = useMoralis()
     const [certificateData, setCertificateData] = useState<CertificateItem[]>([])
     const [amount, setAmount] = useState<string>("")
@@ -84,11 +84,11 @@ export default function Home() {
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className={Gallery.positioning}>
+        <div className={gal.positioning}>
             {!isWeb3Enabled ? (
-                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+                <p className={gal.info}>Connect Your Wallet To See Certificates</p>
             ) : certificateData.length === 0 ? (
-                <p className={Gallery.info}>No Certificates To Display For Now...</p>
+                <p className={gal.info}>No Certificates To Display For Now...</p>
             ) : (
                 certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
             )}

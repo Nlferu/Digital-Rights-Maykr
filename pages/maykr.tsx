@@ -10,7 +10,7 @@ import contract from "@/contracts/DigitalRightsMaykr.json"
 import hashCreator from "@/utils/artHasher"
 import Gallery from "@/styles/Gallery.module.css"
 
-export default function Home() {
+export default function Maykr() {
     const { isWeb3Enabled, account } = useMoralis()
     const [art, setArt] = useState<string>("")
     const [author, setAuthor] = useState<string>("")

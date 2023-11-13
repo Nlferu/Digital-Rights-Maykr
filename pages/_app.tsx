@@ -7,11 +7,11 @@ import "@/styles/globals.css"
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <div className="flex-col min-h-[100vh] items-center bg-gradient-to-br from-darkGreen via-green-950 to-green-700">
+        <div className="flex-col min-h-[100vh] items-center bg-[url('/digital.png')] bg-cover">
             <Head>
                 <title>Digital Rights Maykr</title>
                 <meta name="description" content="Digital Rights Maykr" />
-                <link rel="icon" href="/favicon.png" />
+                <link rel="icon" href="/icon.png" />
             </Head>
 
             <MoralisProvider initializeOnMount={false}>

@@ -23,4 +23,8 @@ export const links = [
         name: "Clause",
         hash: "/clause",
     },
+    {
+        name: "About",
+        hash: "/about",
+    },
 ] as const

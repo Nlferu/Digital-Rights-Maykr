@@ -6,7 +6,7 @@ import Creation from "@/styles/Creation.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import Gallery from "@/styles/Gallery.module.css"
 
-export default function Home() {
+export default function Clause() {
     const { isWeb3Enabled, account } = useMoralis()
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()

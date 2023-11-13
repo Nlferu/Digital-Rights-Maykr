@@ -7,7 +7,7 @@ import contract from "@/contracts/DigitalRightsMaykr.json"
 import verseContract from "@/contracts/Verse.json"
 import Gallery from "@/styles/Gallery.module.css"
 
-export default function Home() {
+export default function Profits() {
     const { isWeb3Enabled, account } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
