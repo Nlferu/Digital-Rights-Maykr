@@ -110,7 +110,7 @@ export default function Profits() {
                 params: withdrawProceeds,
             })
 
-            /** @dev DISCLAIMER !!! */
+            /** @DISCLAIMER */
             /* As Verse does not support testnets like Sepolia or Goerli below code should be taken just as an example !!! */
 
             const verseStaking = {

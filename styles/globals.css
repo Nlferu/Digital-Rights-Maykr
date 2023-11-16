@@ -31,7 +31,7 @@ input[type="file"]::file-selector-button:hover {
     .btn-hover-effect::after,
     .btn-hover-effect-border::before,
     .btn-hover-effect-border::after {
-        @apply absolute inset-0 border-pinky content-[''] duration-200 rounded-full;
+        @apply absolute inset-0 border-cosm content-[''] duration-200 rounded-full;
     }
 
     /* Setup Top */

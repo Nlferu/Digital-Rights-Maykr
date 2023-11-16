@@ -1,0 +1,293 @@
+```js
+
+const pre = document.querySelector(".holy");
+
+ 
+
+document.addEventListener("mousemove", (e) => {
+
+ 
+
+    rotateElement(e, pre);
+
+ 
+
+});
+
+ 
+
+function rotateElement(event, element) {
+
+  // get mouse position
+
+  const x = event.clientX;
+
+  const y = event.clientY;
+
+  // console.log(x, y)
+
+ 
+
+  // find the middle
+
+  const middleX = window.innerWidth / 2;
+
+  const middleY = window.innerHeight / 2;
+
+  // console.log(middleX, middleY)
+
+ 
+
+  // get offset from middle as a percentage
+
+  // and tone it down a little
+
+  const offsetX = ((x - middleX) / middleX) * 45;
+
+  const offsetY = ((y - middleY) / middleY) * 45;
+
+  // console.log(offsetX, offsetY);
+
+ 
+
+  // set rotation
+
+  if(document.elementFromPoint(event.clientX, event.clientY).id === ("lama")){
+
+  element.style.setProperty("--rotateX", offsetX + "deg");
+
+  element.style.setProperty("--rotateY", -1 * offsetY + "deg");
+
+  } else {
+
+    element.style.setProperty("--rotateX", offsetX);
+
+    element.style.setProperty("--rotateY", offsetY);
+
+  }
+
+}
+
+```
+
+```css
+
+:root {
+
+  --pink: hsl(338, 70%, 55%);
+
+  --teal: hsl(183, 70%, 62%);
+
+  --white: hsl(334, 7%, 95%);
+
+}
+
+ 
+
+body {
+
+  background: hsl(224, 32%, 12%);
+
+  background-image: conic-gradient(
+
+    from 0deg at 50% 50%,
+
+    blue,
+
+    purple,
+
+    purple,
+
+    blue
+
+  );
+
+  background-blend-mode: multiply;
+
+  min-block-size: 10dvh;
+
+  display: grid;
+
+  place-items: center;
+
+  min-height: 100vh;
+
+}
+
+ 
+
+pre {
+
+  --selector: var(--pink);
+
+  --property: var(--teal);
+
+  --punctuation: var(--white);
+
+  --undefined: var(--white);
+
+ 
+
+ 
+
+  font-weight: bold;
+
+  color: var(--undefined);
+
+  background: hsl(222, 45%, 7%);
+
+  padding: 5rem;
+
+  border-radius: 1rem;
+
+ 
+
+  position: relative;
+
+ 
+
+  transform-style: preserve-3d;
+
+  transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+
+}
+
+ 
+
+pre > * {
+
+  text-shadow: 0 0 0.3em currentColor;
+
+}
+
+ 
+
+pre::before,
+
+pre::after {
+
+  content: "";
+
+  position: absolute;
+
+  border-radius: inherit;
+
+}
+
+ 
+
+/* shadow */
+
+pre::before {
+
+  inset: 0.75rem;
+
+  border-radius: inherit;
+
+  background: black;
+
+  z-index: -1;
+
+  transform: translateZ(-50px);
+
+  filter: blur(15px);
+
+  opacity: 0.5;
+
+}
+
+ 
+
+/* gradient thingy */
+
+pre::after {
+
+  z-index: -2;
+
+  inset: -1rem;
+
+  background: linear-gradient(-45deg, red, blue);
+
+  transform: translateZ(-50px);
+
+}
+
+ 
+
+.selector {
+
+  color: var(--selector);
+
+}
+
+ 
+
+.property {
+
+  color: var(--property);
+
+}
+
+ 
+
+.punctuation {
+
+  color: var(--punctuation);
+
+}
+
+ 
+
+.property + .punctuation {
+
+  color: var(--property);
+
+}
+
+ 
+
+.pre-container {
+
+  position: relative;
+
+  display: grid;
+
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+
+}
+
+ 
+
+.dingo {
+
+  height: 10rem;
+
+  width: 10rem;
+
+  background: black;
+
+  color: white;
+
+}
+
+```
+
+ 
+
+```html
+
+ 
+
+<body>
+
+<!-- <p class="myClass" >Hello</p> -->
+
+ 
+
+<div class="dingo" id="lama">xx
+
+  </div>
+
+<pre class="holy" id="lama">Token</pre>
+
+</body>
