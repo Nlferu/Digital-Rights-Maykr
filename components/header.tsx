@@ -16,7 +16,7 @@ export default function Header() {
                 {links.map((link) => (
                     <li key={link.hash}>
                         <Link
-                            className="inline-block text-xl uppercase after:duration-1000 ease-out after:block after:h-0.5 after:w-full after:origin-bottom-right after:scale-x-0 after:bg-purple-400 after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100"
+                            className="inline-block hover:text-lightB text-xl uppercase after:duration-1000 ease-out after:block after:h-[0.15rem] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slider after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100"
                             href={link.hash}
                         >
                             {link.name}

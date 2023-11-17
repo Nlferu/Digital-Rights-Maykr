@@ -7,6 +7,7 @@ module.exports = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
                 "linear-gradient": "linear-gradient(0, #5ddcff 10%, #3c67e3 40%, #ce4dbb)",
+                slider: "linear-gradient(316deg, #3e187a 0%, #994ecc 74%)",
             },
             transitionTimingFunction: {
                 customBezier: "cubic-bezier(0.4,2.1,0.7,1)",
@@ -17,18 +18,22 @@ module.exports = {
             },
             boxShadow: {
                 sun: "0px 0px 5px rgba(253, 186, 116, 0.8)",
+                dark: "0 0 15px 5px rgba(0, 0, 0, 1)",
             },
             colors: {
                 lightGreen: "rgb(23,166,28)",
                 darkGreen: "rgb(2,17,24)",
 
-                lightPurple: "rgba(94, 23, 235, 0.6)",
-                darkPurple: "rgba(94, 23, 235, 1)",
+                lightB: "#5ddcff",
+                darkB: "#3c67e3",
 
                 pinky: "rgb(206,77,187)",
-                devil: "#0c0909",
+                devil: "rgba(12, 9, 9, 1)",
                 tblack: "rgba(0, 0, 0, 0.75)",
-                cosm: "linear-gradient(0, #5ddcff 10%, #3c67e3 40%, #ce4dbb)",
+                impale: "rgba(12, 9, 9, 0.6)",
+                hpale: "rgba(12, 9, 9, 0.35)",
+                certL: "rgba(200, 179, 137, 0.8)",
+                certH: "rgba(159, 137, 94, 0.8)",
             },
             keyframes: {
                 fullSpin: {

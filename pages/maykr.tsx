@@ -3,12 +3,11 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
+import contract from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
-import Creation from "@/styles/Creation.module.css"
-import contract from "@/contracts/DigitalRightsMaykr.json"
 import hashCreator from "@/utils/artHasher"
-import Gallery from "@/styles/Gallery.module.css"
+import Button from "@/components/button"
 
 export default function Maykr() {
     const { isWeb3Enabled, account } = useMoralis()
@@ -24,9 +23,6 @@ export default function Maykr() {
     const dispatch = useNotification()
 
     const containerRef = useRef<HTMLInputElement | null>(null)
-
-    const disableGlow = `${Creation.generateButton} ${Creation.downloadButton} ${Creation.disableGlow}`
-    const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter}`
 
     const contractAddress = contract.address
     const abi = contract.abi
@@ -83,7 +79,7 @@ export default function Maykr() {
             })
 
             // Restore the box shadow after generating the image
-            certificateContainer.style.boxShadow = "0 0 20px 6px rgba(100, 79, 46, 0.96)"
+            certificateContainer.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
             // Pass the image blob to the upload function
             try {
                 const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, amount)
@@ -122,7 +118,7 @@ export default function Maykr() {
             html2canvas(container)
                 .then((canvas) => {
                     // Restore the box shadow after generating the image
-                    container.style.boxShadow = "0 0 20px 6px rgba(100, 79, 46, 0.96)"
+                    container.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
 
                     canvas.toBlob((blob) => {
                         if (blob) {
@@ -175,50 +171,82 @@ export default function Maykr() {
     return (
         <div>
             {!isWeb3Enabled ? (
-                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+                <div className="flex flex-col text-center mt-[20rem]">
+                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
+                        Connect Your Wallet To Create Certificate
+                    </p>
+                </div>
             ) : (
-                <div>
-                    <div className={Creation.inputsContainer}>
-                        <input
-                            type="file"
-                            style={{ color: "white" }}
-                            className={Creation.inputBox}
-                            id="art"
-                            name="art"
-                            placeholder="Art Hash"
-                            onChange={() => hashCreator(setArt)}
-                        />
-                        <input type="text" className={Creation.inputBox} id="author" name="author" placeholder="Author" onChange={handleInputChange} />
-                        <input type="text" className={Creation.inputBox} id="co_author" name="co_author" placeholder="Co-Author" onChange={handleInputChange} />
-                        <input type="text" className={Creation.inputBox} id="title" name="title" placeholder="Title" onChange={handleInputChange} />
-                        <input
-                            type="text"
-                            className={Creation.inputBox}
-                            id="description"
-                            name="description"
-                            placeholder="Description"
-                            onChange={handleInputChange}
-                        />
-                        <button className={combinedSipnner} onClick={handleGenerateCertificate} disabled={isLoading}>
-                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Mint NFT"}
-                        </button>
+                <div className="flex justify-center items-center ml-[10rem] gap-[5rem]">
+                    <div className="w-1/2 mt-[15rem]">
+                        <div className="flex flex-col gap-3 w-[16rem]">
+                            <input
+                                type="file"
+                                style={{ color: "white" }}
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer"
+                                id="art"
+                                name="art"
+                                placeholder="Art Hash"
+                                onChange={() => hashCreator(setArt)}
+                            />
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                id="author"
+                                name="author"
+                                placeholder="Author"
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                id="co_author"
+                                name="co_author"
+                                placeholder="Co-Author"
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                id="title"
+                                name="title"
+                                placeholder="Title"
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                id="description"
+                                name="description"
+                                placeholder="Description"
+                                onChange={handleInputChange}
+                            />
+
+                            <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isLoading} />
+                        </div>
                     </div>
                     {/* Certificate will show only if we have "art" field filled */}
-                    {!art && <p className={Creation.magicText}>Magic Will Be Happening Here...</p>}
+                    {!art && (
+                        <div className="flex text-center justify-end h-[10rem] mr-[6rem] mt-auto">
+                            <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-4xl font-bold">
+                                Magic Will Be Happening Here...
+                            </p>
+                        </div>
+                    )}
                     {art && (
-                        <div className={Creation.certPositioning}>
+                        <div className="flex flex-col text-center justify-end mr-[6rem] mt-[4rem]">
                             <div
                                 ref={containerRef}
                                 id="certificate-container"
                                 style={{
                                     position: "relative",
-                                    width: "504px",
-                                    height: "712.8px",
+                                    width: "28.28rem",
+                                    height: "40rem",
                                     background: `url('/certificate-template.png')`,
                                     backgroundSize: "contain",
                                     backgroundPosition: "center",
                                     backgroundRepeat: "no-repeat",
-                                    boxShadow: "0 0 20px 6px rgba(100, 79, 46, 0.96)",
+                                    boxShadow: "0px 0px 25px rgba(253, 253, 253, 0.8)",
                                 }}
                             >
                                 <div
@@ -231,54 +259,46 @@ export default function Maykr() {
                                         color: "white",
                                     }}
                                 >
-                                    <p className={Creation.certText} style={{ marginBottom: "0px", marginTop: "120px" }}>
-                                        Author
-                                    </p>
-                                    <p className={Creation.certInputText}>
+                                    <p className="text-certH text-xl mt-3">Author</p>
+                                    <p className="text-certL text-sm mt-1">
                                         <span>{author}</span>
                                     </p>
                                     {co_author && (
-                                        <div className={Creation.certText}>
+                                        <div className="text-certH text-xl">
                                             Co-Author
-                                            <p className={Creation.certInputText}>
+                                            <p className="text-certL text-sm mt-1">
                                                 <span>{co_author}</span>
                                             </p>
                                         </div>
                                     )}
-                                    <div className={Creation.certText}>
+                                    <div className="text-certH text-xl">
                                         Title
-                                        <p className={Creation.certInputText}>
+                                        <p className="text-certL text-sm mt-1">
                                             <span>{title}</span>
                                         </p>
                                     </div>
-                                    <div className={Creation.certText}>
+                                    <div className="text-certH text-xl">
                                         Creator Address
-                                        <p className={Creation.certInputText}>
-                                            <span className={Creation.certInputText} style={{ fontSize: "15px" }}>
-                                                {account}
-                                            </span>
+                                        <p className="text-certL text-sm mt-1">
+                                            <span className="text-certL text-sm mt-1">{account}</span>
                                         </p>
                                     </div>
-                                    <div className={Creation.certText}>
+                                    <div className="text-certH text-xl">
                                         Art Hash
-                                        <p className={Creation.certInputText}>
-                                            <span className={Creation.certInputText} style={{ fontSize: "14px" }}>
-                                                {art}
-                                            </span>
+                                        <p className="text-certL text-sm mt-1">
+                                            <span className="text-certL text-sm mt-1">{art}</span>
                                         </p>
                                     </div>
-                                    <p className={Creation.certText}>Certificate_Id_{amount}</p>
-                                    <div className={Creation.certText}>
+                                    <p className="text-certH text-xl">Certificate_Id_{amount}</p>
+                                    <div className="text-certH text-xl">
                                         Description{" "}
-                                        <p className={Creation.certInputText}>
-                                            <span className={Creation.certInputText}>{description}</span>
+                                        <p className="text-certL text-sm mt-1">
+                                            <span className="text-certL text-sm mt-1">{description}</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <button className={disableGlow} onClick={handleDownloadCertificate}>
-                                Download Certificate
-                            </button>
+                            <Button name="Download Certificate" onClick={handleDownloadCertificate} />
                         </div>
                     )}
                 </div>

@@ -7,7 +7,7 @@ import "@/styles/globals.css"
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <div className="flex-col min-h-[100vh] items-center bg-[url('/digital.jpg')] bg-cover">
+        <div className="flex-col min-h-[100vh] jsutify-center items-center bg-[url('/digital.jpg')] bg-cover">
             <Head>
                 <title>Digital Rights Maykr</title>
                 <meta name="description" content="Digital Rights Maykr" />

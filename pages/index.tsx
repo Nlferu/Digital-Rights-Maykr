@@ -10,14 +10,17 @@ export default function Index() {
 
     return (
         <section className="w-full py-[6rem] text-center text-purple-200">
-            <h1 className="font-bold text-4xl ">Welcome To Digital Rights Maykr!</h1>
-            <div className="pt-[2rem] flex justify-center mb-[2rem]">
+            <div className="flex flex-col text-center">
+                <h1 className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block h-[10rem] text-transparent bg-clip-text text-6xl font-bold">
+                    Welcome To Digital Rights Maykr!
+                </h1>
+            </div>
+
+            <div className="flex justify-center mb-[2rem]">
                 <iframe width="640" height="360" src="https://www.youtube.com/embed/LLAGgFATvGY" allowFullScreen></iframe>
             </div>
 
-            <div onClick={handleClick}>
-                <Button name="Enter Maykr!" />
-            </div>
+            <Button name="Enter Maykr!" onClick={handleClick} />
         </section>
     )
 }
