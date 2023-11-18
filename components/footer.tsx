@@ -4,7 +4,10 @@ export default function Footer() {
             <small className="mb-2 block text-xs">&copy; 2023 Niferu. All rights reserved.</small>
             <p className="text-xs">
                 <span className="font-semibold">About this website:</span> built with React & Next.js (App Router & Server Actions), TypeScript, Tailwind CSS,
-                Framer Motion, React Email & Resend, Vercel hosting.
+                Framer Motion, Vercel hosting.
+            </p>
+            <p className="text-xs">
+                <span className="font-semibold">Backend built with:</span> Solidity, Hardhat & Typescript. Data straight from blockchain.
             </p>
         </footer>
     )
