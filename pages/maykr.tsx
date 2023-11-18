@@ -178,7 +178,7 @@ export default function Maykr() {
                     </p>
                 </div>
             ) : (
-                <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem]">
+                <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0">
                     <div className="flex mt-[4.5rem] justify-center">
                         <div className="flex flex-col gap-3 w-[16rem] self-center">
                             <input
