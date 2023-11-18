@@ -177,7 +177,7 @@ export default function Maykr() {
                     </p>
                 </div>
             ) : (
-                <div className="flex items-center lg:ml-[10rem] h-[50rem]">
+                <div className="flex items-center lg:ml-[4rem] h-[50rem]">
                     <div className="flex lg:w-1/2 w-full mt-[4.5rem] justify-center">
                         <div className="flex flex-col gap-3 w-[16rem] self-center">
                             <input
@@ -234,14 +234,14 @@ export default function Maykr() {
                         </div>
                     )}
                     {art && (
-                        <div className="lg:flex hidden flex-col text-center justify-end xl:ml-[5rem] ml:[2rem] mr-[1rem] mt-[2rem]">
+                        <div className="lg:flex hidden flex-col text-center justify-end xl:ml-[5rem] ml:[2rem] mr-[25rem] mt-[2rem]">
                             <div
                                 ref={containerRef}
                                 id="certificate-container"
                                 style={{
                                     position: "relative",
-                                    width: "31rem",
-                                    height: "43.847rem",
+                                    width: "28rem",
+                                    height: "39.6rem",
                                     background: `url('/certificate-template.png')`,
                                     backgroundSize: "contain",
                                     backgroundPosition: "center",
@@ -286,7 +286,7 @@ export default function Maykr() {
                                     <div className="text-certH text-xl">
                                         Art Hash
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1">{art}</span>
+                                            <span className="text-certL text-xs mt-1">{art}</span>
                                         </p>
                                     </div>
                                     <p className="text-certH text-xl">Certificate_Id_{amount}</p>
