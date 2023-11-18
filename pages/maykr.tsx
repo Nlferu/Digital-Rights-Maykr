@@ -173,7 +173,7 @@ export default function Maykr() {
         <div>
             {!isWeb3Enabled ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
-                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>
@@ -209,7 +209,7 @@ export default function Maykr() {
                     {/* Certificate will show only if we have "art" field filled */}
                     {!art && (
                         <div className="lg:flex hidden text-center justify-end mr-[10rem] mt-[4.5rem]">
-                            <p className="h-[10rem] bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
+                            <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
                                 Magic Will Be Happening Here...
                             </p>
                         </div>

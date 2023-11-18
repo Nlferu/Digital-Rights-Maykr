@@ -130,14 +130,14 @@ export default function Manage() {
         <div>
             {!isWeb3Enabled ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
-                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
                         Connect Your Wallet To Manage Certificates
                     </p>
                 </div>
             ) : (
                 <div>
                     <div className="flex mt-[4.5rem] justify-center">
-                        <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
                             Lend Certificate
                         </h4>
                     </div>
@@ -158,7 +158,7 @@ export default function Manage() {
                             <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
                         </div>
                         <div className="flex mt-[5rem] justify-center">
-                            <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
                                 Block Certificate
                             </h4>
                         </div>
