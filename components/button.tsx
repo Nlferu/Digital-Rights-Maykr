@@ -18,7 +18,7 @@ export default function Button({ name, onClick, disabled }: ButtonProps) {
                 group-hover:bg-black group-hover:scale-[1.03] duration-custom ease-customBezier
                 group-active-scale[1.01] group-hover:text-white"
             >
-                {disabled ? <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-lord dark:border-god"></div> : <>{name}</>}
+                {disabled ? <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-lightB"></div> : <>{name}</>}
             </span>
         </button>
     )

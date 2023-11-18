@@ -11,12 +11,12 @@ export default function Index() {
     return (
         <section className="w-full py-[6rem] text-center text-purple-200">
             <div className="flex flex-col text-center">
-                <h1 className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block h-[10rem] text-transparent bg-clip-text text-6xl font-bold">
+                <h1 className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block h-[10rem] text-transparent bg-clip-text text-5xl sm:text-6xl font-bold">
                     Welcome To Digital Rights Maykr!
                 </h1>
             </div>
 
-            <div className="flex justify-center mb-[2rem]">
+            <div className="flex justify-center mb-[2rem] mx-8">
                 <iframe width="640" height="360" src="https://www.youtube.com/embed/LLAGgFATvGY" allowFullScreen></iframe>
             </div>
 

@@ -171,15 +171,15 @@ export default function Maykr() {
     return (
         <div>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center mt-[20rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem]">
                     <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>
             ) : (
-                <div className="flex justify-center items-center ml-[10rem] gap-[5rem]">
-                    <div className="w-1/2 mt-[15rem]">
-                        <div className="flex flex-col gap-3 w-[16rem]">
+                <div className="flex items-center lg:ml-[10rem] h-[50rem]">
+                    <div className="flex lg:w-1/2 w-full mt-[4.5rem] justify-center">
+                        <div className="flex flex-col gap-3 w-[16rem] self-center">
                             <input
                                 type="file"
                                 style={{ color: "white" }}
@@ -227,21 +227,21 @@ export default function Maykr() {
                     </div>
                     {/* Certificate will show only if we have "art" field filled */}
                     {!art && (
-                        <div className="flex text-center justify-end h-[10rem] mr-[6rem] mt-auto">
-                            <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-4xl font-bold">
+                        <div className="lg:flex hidden text-center justify-end mr-[10rem] mt-[4.5rem]">
+                            <p className="h-[10rem] bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
                                 Magic Will Be Happening Here...
                             </p>
                         </div>
                     )}
                     {art && (
-                        <div className="flex flex-col text-center justify-end mr-[6rem] mt-[4rem]">
+                        <div className="lg:flex hidden flex-col text-center justify-end xl:ml-[5rem] ml:[2rem] mr-[1rem] mt-[2rem]">
                             <div
                                 ref={containerRef}
                                 id="certificate-container"
                                 style={{
                                     position: "relative",
-                                    width: "28.28rem",
-                                    height: "40rem",
+                                    width: "31rem",
+                                    height: "43.847rem",
                                     background: `url('/certificate-template.png')`,
                                     backgroundSize: "contain",
                                     backgroundPosition: "center",
@@ -298,7 +298,7 @@ export default function Maykr() {
                                     </div>
                                 </div>
                             </div>
-                            <Button name="Download Certificate" onClick={handleDownloadCertificate} />
+                            <Button name="Download" onClick={handleDownloadCertificate} />
                         </div>
                     )}
                 </div>
