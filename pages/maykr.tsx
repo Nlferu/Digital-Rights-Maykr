@@ -3,6 +3,7 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
+import { inputs } from "@/lib/data"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -189,38 +190,18 @@ export default function Maykr() {
                                 placeholder="Art Hash"
                                 onChange={() => hashCreator(setArt)}
                             />
-                            <input
-                                type="text"
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                id="author"
-                                name="author"
-                                placeholder="Author"
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                id="co_author"
-                                name="co_author"
-                                placeholder="Co-Author"
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                id="title"
-                                name="title"
-                                placeholder="Title"
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                id="description"
-                                name="description"
-                                placeholder="Description"
-                                onChange={handleInputChange}
-                            />
+
+                            {inputs.map((input) => (
+                                <input
+                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                    key={input.name}
+                                    type={input.type}
+                                    name={input.name}
+                                    id={input.name}
+                                    placeholder={input.placeholder}
+                                    onChange={handleInputChange}
+                                ></input>
+                            ))}
 
                             <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isLoading} />
                         </div>
