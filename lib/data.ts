@@ -35,3 +35,9 @@ export const inputs = [
     { type: "text", name: "title", placeholder: "Title" },
     { type: "text", name: "description", placeholder: "Description" },
 ] as const
+
+export const manageInputs = [
+    { type: "text", name: "tokenId", ref: "tokenIdRef", placeholder: "Token Id" },
+    { type: "text", name: "lendingTime", ref: "lendingTimeRef", placeholder: "Lending Period (Days)" },
+    { type: "text", name: "price", ref: "priceRef", placeholder: "Price (ETH)" },
+] as const

@@ -2,10 +2,9 @@ import React, { useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
-import Creation from "@/styles/Creation.module.css"
-import Lending from "@/styles/Lending.module.css"
+import { manageInputs } from "@/lib/data"
 import contract from "@/contracts/DigitalRightsMaykr.json"
-import Gallery from "@/styles/Gallery.module.css"
+import Button from "@/components/button"
 
 export default function Manage() {
     const { isWeb3Enabled } = useMoralis()
@@ -15,12 +14,12 @@ export default function Manage() {
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
-    const tokenIdRef = useRef<HTMLInputElement | null>(null)
-    const lendingTimeRef = useRef<HTMLInputElement | null>(null)
-    const priceRef = useRef<HTMLInputElement | null>(null)
-    const blockTokenIdRef = useRef<HTMLInputElement | null>(null)
-
-    const combinedSipnner = `${Creation.generateButton} ${Creation.waitSpinnerCenter} ${Lending.button}`
+    const refs = {
+        tokenIdRef: useRef<HTMLInputElement | null>(null),
+        lendingTimeRef: useRef<HTMLInputElement | null>(null),
+        priceRef: useRef<HTMLInputElement | null>(null),
+        blockTokenIdRef: useRef<HTMLInputElement | null>(null),
+    }
 
     const contractAddress = contract.address
     const abi = contract.abi
@@ -29,9 +28,9 @@ export default function Manage() {
         setIsLoading(true)
 
         try {
-            var tokenId = tokenIdRef.current?.value
-            var lendingTime = lendingTimeRef.current?.value
-            var price = priceRef.current?.value
+            var tokenId = refs.tokenIdRef.current?.value
+            var lendingTime = refs.lendingTimeRef.current?.value
+            var price = refs.priceRef.current?.value
             console.log(`TokenId: ${tokenId} LendingTime: ${lendingTime} Price: ${price}`)
 
             // ETH Conversion To Wei
@@ -84,7 +83,7 @@ export default function Manage() {
         setIsLoadingB(true)
 
         try {
-            var blockTokenId = blockTokenIdRef.current?.value
+            var blockTokenId = refs.blockTokenIdRef.current?.value
 
             const blockLending = {
                 abi: abi,
@@ -130,29 +129,51 @@ export default function Manage() {
     return (
         <div>
             {!isWeb3Enabled ? (
-                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem]">
+                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        Connect Your Wallet To Manage Certificates
+                    </p>
+                </div>
             ) : (
                 <div>
-                    <div className={Creation.inputsContainer}>
-                        <input type="text" className={Creation.inputBox} ref={tokenIdRef} id="tokenId" name="tokenId" placeholder="TokenId" />
-                        <input
-                            type="text"
-                            className={Creation.inputBox}
-                            ref={lendingTimeRef}
-                            id="lendingTime"
-                            name="lendingTime"
-                            placeholder="Lending Period (Days)"
-                        />
-                        <input type="text" className={Creation.inputBox} ref={priceRef} id="price" name="price" placeholder="Price (ETH)" />
-                        <button className={combinedSipnner} onClick={handleLendCertificate} disabled={isLoading}>
-                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Allow Lending"}
-                        </button>
+                    <div className="flex mt-[7rem] justify-center">
+                        <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            Lend Certificate
+                        </h4>
                     </div>
-                    <div className={Lending.blockSpacing}>
-                        <input type="text" className={Creation.inputBox} ref={blockTokenIdRef} id="blockTokenId" name="tokenId" placeholder="TokenId" />
-                        <button className={combinedSipnner} onClick={handleBlockCertificate} disabled={isLoading}>
-                            {isLoadingB ? <div className={Creation.waitSpinner}></div> : "Block Lending"}
-                        </button>
+                    <div className="flex flex-col text-center">
+                        <div className="flex flex-col gap-3 w-[16rem] self-center">
+                            {manageInputs.map((input) => (
+                                <input
+                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                    key={input.name}
+                                    type={input.type}
+                                    name={input.name}
+                                    id={input.name}
+                                    ref={refs[input.ref]}
+                                    placeholder={input.placeholder}
+                                ></input>
+                            ))}
+
+                            <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
+                        </div>
+                        <div className="flex mt-[5rem] justify-center">
+                            <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                                Block Certificate
+                            </h4>
+                        </div>
+                        <div className="flex flex-col gap-3 w-[16rem] self-center">
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                ref={refs.blockTokenIdRef}
+                                id="blockTokenId"
+                                name="tokenId"
+                                placeholder="TokenId"
+                            />
+
+                            <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
+                        </div>
                     </div>
                 </div>
             )}
