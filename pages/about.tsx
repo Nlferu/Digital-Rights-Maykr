@@ -49,7 +49,7 @@ export default function About() {
                     <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Gallery </strong>
 
                     <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap px-[10rem]">
-                        If you're unsure whether someone has already created artistry similar to what you're working on to ensure your idea is unique!
+                        If you&apos;re unsure whether someone has already created artistry similar to what you&apos;re working on to ensure your idea is unique!
                     </p>
                 </p>
             </div>

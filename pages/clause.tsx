@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
+import Image from "next/image"
 import Welcome from "@/styles/Welcome.module.css"
 import Creation from "@/styles/Creation.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
@@ -78,7 +79,7 @@ export default function Clause() {
 
                         {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
                         <div className={Welcome.clauseContainer}>
-                            {clause.includes("The Artist") && <img className={Welcome.clauseImage} src="/clause.png" alt="clause" />}
+                            {clause.includes("The Artist") && <Image className={Welcome.clauseImage} height="200" width="200" src="/clause.png" alt="clause" />}
                             <div className={Welcome.clauseText}>{clause}</div>
                         </div>
                     </div>
