@@ -2,6 +2,7 @@ import type { AppProps } from "next/app"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
 import Header from "@/components/header"
+import Footer from "@/components/footer"
 import Head from "next/head"
 import "@/styles/globals.css"
 
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <NotificationProvider>
                     <Header />
                     <Component {...pageProps} />
+                    <Footer />
                 </NotificationProvider>
             </MoralisProvider>
         </div>

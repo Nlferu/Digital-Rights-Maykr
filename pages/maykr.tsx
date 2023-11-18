@@ -172,13 +172,13 @@ export default function Maykr() {
     return (
         <div>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem]">
-                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
+                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>
             ) : (
-                <div className="flex items-center lg:ml-[4rem] h-[50rem]">
+                <div className="flex items-center lg:ml-[4rem] h-[45rem]">
                     <div className="flex lg:w-1/2 w-full mt-[4.5rem] justify-center">
                         <div className="flex flex-col gap-3 w-[16rem] self-center">
                             <input

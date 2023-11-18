@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
-import Proceeds from "@/styles/Proceeds.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import verseContract from "@/contracts/Verse.json"
+import Button from "@/components/button"
+
 import Gallery from "@/styles/Gallery.module.css"
+import Proceeds from "@/styles/Proceeds.module.css"
 
 export default function Profits() {
     const { isWeb3Enabled, account } = useMoralis()
@@ -162,25 +164,43 @@ export default function Profits() {
     return (
         <div>
             {!isWeb3Enabled ? (
-                <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
+                    <p className="bg-gradient-to-r from-pink-400 via-pink-500 to-indigo-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        Connect Your Wallet To Manage Certificates
+                    </p>
+                </div>
             ) : (
                 <div>
-                    <div className={Proceeds.containerW}>
-                        <p className={Proceeds.headText}>Your Current Proceeds:</p>
-                        <p className={Proceeds.amountText}>
-                            <span className={Proceeds.amount}>{proceeds}</span> ETH
-                        </p>
-                        <button className={spinnerW} onClick={handleWithdraw} disabled={isLoading}>
-                            {isLoading ? <div className={Proceeds.waitSpinner}></div> : "Withdraw"}
-                        </button>
+                    <div className="flex mt-[7rem] justify-center">
+                        <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            Your Current Proceeds
+                        </h4>
                     </div>
-                    <div className={Proceeds.containerV}>
-                        <p className={Proceeds.verseTxt}>Stake Your Proceeds With Verse!</p>
-                        <input type="text" className={Proceeds.inputBox} ref={stakeRef} id="stake" name="stake" placeholder="Stake Amount (ETH)" />
-                        <button className={spinnerV} onClick={handleVerseStake} disabled={isLoading}>
-                            {isLoadingB ? <div className={Proceeds.waitSpinner}></div> : "Verse Stake"}
-                        </button>
-                        <p className={Proceeds.verseInfo}>
+                    <div className="flex flex-col text-center justify-center items-center">
+                        <div className="flex flex-col gap-3 w-[16rem] self-center">
+                            <p className="font-bold text-red-600 text-3xl">
+                                <span className="text-white">{proceeds}</span> ETH
+                            </p>
+
+                            <Button name="Withdraw" onClick={handleWithdraw} disabled={isLoading} />
+                        </div>
+                        <div className="flex mt-[4rem] justify-center">
+                            <h4 className="bg-gradient-to-r from-pink-400 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                                Stake Your Proceeds With Verse
+                            </h4>
+                        </div>
+                        <div className="flex flex-col gap-3 w-[16rem] self-center">
+                            <input
+                                type="text"
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                id="stake"
+                                name="stake"
+                                placeholder="Stake Amount (ETH)"
+                            />
+
+                            <Button name="Verse Stake" onClick={handleVerseStake} disabled={isLoadingB} />
+                        </div>
+                        <p className="w-[40rem] mt-[2rem] text-gray-400 text-xs">
                             Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some
                             Liquidity Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into
                             Verse Farms for even more profits! You can find more details here: <br></br>
