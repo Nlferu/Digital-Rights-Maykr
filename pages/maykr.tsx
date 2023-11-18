@@ -178,8 +178,8 @@ export default function Maykr() {
                     </p>
                 </div>
             ) : (
-                <div className="flex items-center lg:ml-[4rem] h-[45rem]">
-                    <div className="flex lg:w-1/2 w-full mt-[4.5rem] justify-center">
+                <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem]">
+                    <div className="flex mt-[4.5rem] justify-center">
                         <div className="flex flex-col gap-3 w-[16rem] self-center">
                             <input
                                 type="file"
@@ -208,14 +208,14 @@ export default function Maykr() {
                     </div>
                     {/* Certificate will show only if we have "art" field filled */}
                     {!art && (
-                        <div className="lg:flex hidden text-center justify-end mr-[10rem] mt-[4.5rem]">
+                        <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
                             <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
                                 Magic Will Be Happening Here...
                             </p>
                         </div>
                     )}
                     {art && (
-                        <div className="lg:flex hidden flex-col text-center justify-end xl:ml-[5rem] ml:[2rem] mr-[25rem] mt-[2rem]">
+                        <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
                             <div
                                 ref={containerRef}
                                 id="certificate-container"

@@ -31,7 +31,7 @@ export default function Header() {
     }, [])
 
     return (
-        <header className="flex w-full h-[4.5rem] bg-transparent">
+        <header className="flex fixed w-full h-[4.5rem] bg-transparent z-10">
             <Image className="pl-[2rem] xl:ml-[3rem]" src="/icon.png" alt="DigitalRightsMaykr" height="100" width="100" quality="95" priority={true}></Image>
             <h1 className={`${montserrat.className} fixed mt-[1.25rem] ml-[6rem] xl:ml-[9rem] text-center w-[20rem] text-3xl text-white font-bold`}>
                 Digital Rights Maykr
