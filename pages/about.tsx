@@ -61,9 +61,9 @@ export default function About() {
             <div className="mt-[3rem] text-3xl lg:text-4xl text-red-400">
                 <p>The possibilities are boundless!</p>
             </div>
-            <p className="">
-                {" "}
-                DRM Contract Address: <span className="">{contractAddress}</span>
+            <p className="flex flex-col pt-[3rem] font-bold">
+                <p className="text-2xl text-[#6d075b] underline">DRM Contract Address: </p>
+                <span className="text-xl pt-[1rem] text-pink-200">{contractAddress}</span>
             </p>
         </section>
     )
