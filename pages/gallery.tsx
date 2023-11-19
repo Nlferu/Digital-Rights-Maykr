@@ -84,11 +84,19 @@ export default function Gallery() {
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className={gal.positioning}>
+        <div className="flex flex-wrap min-h-[40rem] gap-10 mt-[8rem] p-[1rem] border-2 border-black justify-center">
             {!isWeb3Enabled ? (
-                <p className={gal.info}>Connect Your Wallet To See Certificates</p>
+                <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[18rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        Connect Your Wallet To View Certificates
+                    </p>
+                </div>
             ) : certificateData.length === 0 ? (
-                <p className={gal.info}>No Certificates To Display For Now...</p>
+                <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[18rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        No Certificates To Display For Now...
+                    </p>
+                </div>
             ) : (
                 certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
             )}

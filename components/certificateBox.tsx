@@ -132,13 +132,23 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className={CertBox.box}>
+        <div className="border-2 border-white relative">
             <a href={imageUrl} target="_blank">
-                <Image src={imageUrl} height={200} width={200} alt="NFT Image" />
+                <Image
+                    className="w-[17rem] h-[24.04rem] border-2 border-black object-cover"
+                    src={imageUrl}
+                    height={400}
+                    width={400}
+                    quality="95"
+                    priority={true}
+                    alt="NFT Image"
+                />
             </a>
-            <div className={CertBox.additionalHover}>
+            <div className="">
                 {!buttonStatus?.[index] ? (
-                    <button className={CertBox.disabledButton}>Unbuyable</button>
+                    <button className={CertBox.disabledButton} disabled={true}>
+                        Unbuyable
+                    </button>
                 ) : (
                     <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>
                         {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
