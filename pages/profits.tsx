@@ -6,9 +6,6 @@ import contract from "@/contracts/DigitalRightsMaykr.json"
 import verseContract from "@/contracts/Verse.json"
 import Button from "@/components/button"
 
-import Gallery from "@/styles/Gallery.module.css"
-import Proceeds from "@/styles/Proceeds.module.css"
-
 export default function Profits() {
     const { isWeb3Enabled, account } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -19,9 +16,6 @@ export default function Profits() {
     const dispatch = useNotification()
 
     const stakeRef = useRef<HTMLInputElement | null>(null)
-
-    const spinnerW = `${Proceeds.buttonW} ${Proceeds.waitSpinnerCenter}`
-    const spinnerV = `${Proceeds.buttonV} ${Proceeds.waitSpinnerCenter}`
 
     const contractAddress = contract.address
     const abi = contract.abi

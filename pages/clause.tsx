@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
-import Image from "next/image"
-import Welcome from "@/styles/Welcome.module.css"
-import Creation from "@/styles/Creation.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
-import Gallery from "@/styles/Gallery.module.css"
+import Button from "@/components/button"
+import clsx from "clsx"
 
 export default function Clause() {
     const { isWeb3Enabled, account } = useMoralis()
@@ -17,7 +15,6 @@ export default function Clause() {
 
     const tokenRef = useRef<HTMLInputElement | null>(null)
 
-    const combinedClasses = `${Creation.inputBox} ${Welcome.inputBox}`
     const contractAddress = contract.address
     const abi = contract.abi
 
@@ -38,14 +35,17 @@ export default function Clause() {
 
             const clauseOutput = await runContractFunction({
                 params: getClause,
-                onError: () => handleClauseError(),
             })
 
             if (clauseOutput) {
                 setClause(clauseOutput as string)
-            } else {
+            } else if (tokenRef.current?.value === "") {
+                setClause("")
+                await handleClauseError()
+            } else if (tokenRef.current?.value !== "") {
                 const wrongClause = "Clause Not Detected"
                 setClause(wrongClause)
+                await handleClauseError()
             }
         } catch (error) {
             console.error(`Getting Clause Failed With Error: ${error}`)
@@ -66,30 +66,55 @@ export default function Clause() {
 
     return (
         <div>
-            <div className={Welcome.container}>
-                {!isWeb3Enabled ? (
-                    <p className={Gallery.info}>Connect Your Wallet To See Certificates</p>
-                ) : (
-                    <div>
-                        <p className={Welcome.clause}>Read Active Clause</p>
-                        <input type="text" className={combinedClasses} ref={tokenRef} id="tokenId" name="tokenId" placeholder="TokenId" />
-                        <button className={Welcome.button} onClick={handleGetClause} disabled={isLoading}>
-                            {isLoading ? <div className={Creation.waitSpinner}></div> : "Read"}
-                        </button>
-
-                        {clause.includes("The Artist") && <div className={Welcome.chainInfo}>Delivered Directly From Blockchain:</div>}
-                        <div className={Welcome.clauseContainer}>
-                            {clause.includes("The Artist") && <Image className={Welcome.clauseImage} height="200" width="200" src="/clause.png" alt="clause" />}
-                            <div className={Welcome.clauseText}>{clause}</div>
-                        </div>
+            {!isWeb3Enabled ? (
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        Connect Your Wallet To Read Clause
+                    </p>
+                </div>
+            ) : (
+                <div
+                    className={clsx("text-center flex-wrap justify-center items-center mb-[23rem]", {
+                        "!mb-[1rem]": clause.includes("The Artist") || clause === "Clause Not Detected",
+                    })}
+                >
+                    <div className="flex mt-[12rem] justify-center px-4">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            Read Active Clause
+                        </h4>
                     </div>
-                )}
+                    <input
+                        type="text"
+                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                        ref={tokenRef}
+                        id="tokenId"
+                        name="tokenId"
+                        placeholder="TokenId"
+                    />
 
-                <p className={Welcome.nft}>
-                    {" "}
-                    DRM Contract Address: <span className={Welcome.address}>{contractAddress}</span>
-                </p>
-            </div>
+                    <Button name={"Read"} onClick={handleGetClause} disabled={isLoading} />
+
+                    <div>
+                        {clause.includes("The Artist") && (
+                            <div className="flex flex-col justify-center items-center ">
+                                <div className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                                    Delivered Directly From Blockchain
+                                </div>
+                                <div className="border-0 shadow-dark w-[30rem] h-[15rem] text-white bg-dev rounded-lg bg-opacity-80">
+                                    <div className="py-[0.5rem] px-[2rem] text-center leading-8">{clause}</div>
+                                </div>
+                            </div>
+                        )}
+                        {clause === "Clause Not Detected" ? (
+                            <div className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                                {clause}
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

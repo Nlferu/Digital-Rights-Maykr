@@ -1,4 +1,8 @@
+import contract from "@/contracts/DigitalRightsMaykr.json"
+
 export default function About() {
+    const contractAddress = contract.address
+
     return (
         <section className="flex flex-col mt-[6rem] text-center text-white">
             <div className="text-center">
@@ -57,6 +61,10 @@ export default function About() {
             <div className="mt-[3rem] text-3xl lg:text-4xl text-red-400">
                 <p>The possibilities are boundless!</p>
             </div>
+            <p className="">
+                {" "}
+                DRM Contract Address: <span className="">{contractAddress}</span>
+            </p>
         </section>
     )
 }

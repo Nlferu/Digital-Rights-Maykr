@@ -8,7 +8,7 @@ export default function Button({ name, onClick, disabled }: ButtonProps) {
     return (
         <button
             className="group relative text-purple-200 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack rounded-full
-                after:content=[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-gradient after:animate-fullSpin
+                after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-gradient after:animate-fullSpin
                 hover:scale-[1.03] active:scale-[1.01]"
             onClick={onClick}
             disabled={disabled}

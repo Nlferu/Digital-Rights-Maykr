@@ -29,6 +29,7 @@ module.exports = {
 
                 pinky: "rgb(206,77,187)",
                 devil: "rgba(12, 9, 9, 1)",
+                dev: "rgb(12, 9, 9)",
                 tblack: "rgba(0, 0, 0, 0.75)",
                 impale: "rgba(12, 9, 9, 0.6)",
                 hpale: "rgba(12, 9, 9, 0.35)",
