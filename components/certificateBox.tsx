@@ -1,7 +1,9 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
+import Tilt from "react-parallax-tilt"
 import Image from "next/image"
+
 import CertBox from "@/styles/CertBox.module.css"
 import Creation from "@/styles/Creation.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
@@ -132,19 +134,23 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className="border-2 border-white relative">
-            <a href={imageUrl} target="_blank">
-                <Image
-                    className="w-[17rem] h-[24.04rem] border-2 border-black object-cover"
-                    src={imageUrl}
-                    height={400}
-                    width={400}
-                    quality="95"
-                    priority={true}
-                    alt="NFT Image"
-                />
-            </a>
-            <div className="">
+        <div className="relative">
+            <div className="hover:scale-110 duration-500">
+                <a href={imageUrl} target="_blank">
+                    <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
+                        <Image
+                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark"
+                            src={imageUrl}
+                            height={400}
+                            width={400}
+                            quality="95"
+                            priority={true}
+                            alt="NFT Image"
+                        />
+                    </Tilt>
+                </a>
+            </div>
+            <div className="mt-[5rem]">
                 {!buttonStatus?.[index] ? (
                     <button className={CertBox.disabledButton} disabled={true}>
                         Unbuyable

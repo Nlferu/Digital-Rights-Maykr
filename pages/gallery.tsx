@@ -1,8 +1,7 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
-import CertificateBox from "@/components/certificateBox"
-import gal from "@/styles/Gallery.module.css"
 import contract from "@/contracts/DigitalRightsMaykr.json"
+import CertificateBox from "@/components/certificateBox"
 
 interface CertificateItem {
     imageUrl: string
@@ -84,22 +83,24 @@ export default function Gallery() {
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className="flex flex-wrap min-h-[40rem] gap-10 mt-[8rem] p-[1rem] border-2 border-black justify-center">
-            {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[18rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
-                        Connect Your Wallet To View Certificates
-                    </p>
-                </div>
-            ) : certificateData.length === 0 ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[18rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
-                        No Certificates To Display For Now...
-                    </p>
-                </div>
-            ) : (
-                certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
-            )}
+        <div className="min-h-[48.5rem]">
+            <div className="flex flex-wrap gap-10 mt-[8rem] p-[1rem] justify-center">
+                {!isWeb3Enabled ? (
+                    <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                            Connect Your Wallet To View Certificates
+                        </p>
+                    </div>
+                ) : certificateData.length === 0 ? (
+                    <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                            No Certificates To Display For Now...
+                        </p>
+                    </div>
+                ) : (
+                    certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
+                )}
+            </div>
         </div>
     )
 }
