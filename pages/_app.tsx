@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
+import ActiveSectionContextProvider from "@/context/active-section-context"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Head from "next/head"
@@ -17,9 +18,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
             <MoralisProvider initializeOnMount={false}>
                 <NotificationProvider>
-                    <Header />
-                    <Component {...pageProps} />
-                    <Footer />
+                    <ActiveSectionContextProvider>
+                        <Header />
+                        <Component {...pageProps} />
+                        <Footer />
+                    </ActiveSectionContextProvider>
                 </NotificationProvider>
             </MoralisProvider>
         </div>

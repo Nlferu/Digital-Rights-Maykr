@@ -5,12 +5,14 @@ import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
 import { Button } from "@/components/button"
 import { inputs } from "@/lib/data"
+import { useSectionInView } from "@/lib/hooks"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
 
 export default function Maykr() {
+    const { ref } = useSectionInView("Maykr", 0.5)
     const { isWeb3Enabled, account } = useMoralis()
     const [art, setArt] = useState<string>("")
     const [author, setAuthor] = useState<string>("")
@@ -170,7 +172,7 @@ export default function Maykr() {
     }, [isWeb3Enabled, amount])
 
     return (
-        <div>
+        <div ref={ref}>
             {!isWeb3Enabled ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
                     <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">

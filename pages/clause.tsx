@@ -2,10 +2,12 @@ import React, { useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { Button } from "@/components/button"
+import { useSectionInView } from "@/lib/hooks"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import clsx from "clsx"
 
 export default function Clause() {
+    const { ref } = useSectionInView("Clause", 0.5)
     const { isWeb3Enabled, account } = useMoralis()
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
@@ -65,7 +67,7 @@ export default function Clause() {
     }
 
     return (
-        <div>
+        <div ref={ref}>
             {!isWeb3Enabled ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
                     <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">

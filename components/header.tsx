@@ -3,12 +3,15 @@ import { ConnectButton } from "web3uikit"
 import { links } from "@/lib/data"
 import { Space_Grotesk } from "next/font/google"
 import { FaBars, FaTimes } from "react-icons/fa"
+import { useActiveSectionContext } from "@/context/active-section-context"
 import Link from "next/link"
 import Image from "next/image"
+import clsx from "clsx"
 
 const montserrat = Space_Grotesk({ subsets: ["latin"] })
 
 export default function Header() {
+    const { activeSection, setActiveSection } = useActiveSectionContext()
     const [navBtn, setNavBtn] = useState(false)
 
     /** @dev Always set value opposite to current one */
@@ -42,9 +45,15 @@ export default function Header() {
                 {links.map((link) => (
                     <li key={link.hash}>
                         <Link
-                            className="inline-block hover:text-lightB text-xl uppercase after:duration-1000 ease-out after:block after:h-[0.15rem] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slider after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100"
+                            className={clsx(
+                                "inline-block hover:text-lightB text-xl uppercase after:duration-1000 ease-out after:block after:h-[0.15rem] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slider after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100",
+                                {
+                                    "text-lightB": activeSection === link.name,
+                                }
+                            )}
                             href={link.hash}
                             onClick={() => {
+                                setActiveSection(link.name)
                                 setNavBtn(false)
                             }}
                         >
@@ -66,9 +75,15 @@ export default function Header() {
                     {links.map((link) => (
                         <li className="" key={link.hash}>
                             <Link
-                                className="my-[0.2rem] inline-block hover:text-lightB text-xl uppercase after:duration-1000 ease-out after:block after:h-[0.15rem] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slider after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100"
+                                className={clsx(
+                                    "inline-block hover:text-lightB text-xl uppercase after:duration-1000 ease-out after:block after:h-[0.15rem] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slider after:transition-transform after:hover:origin-bottom-left after:hover:scale-x-100",
+                                    {
+                                        "text-lightB": activeSection === link.name,
+                                    }
+                                )}
                                 href={link.hash}
                                 onClick={() => {
+                                    setActiveSection(link.name)
                                     setNavBtn(false)
                                 }}
                             >

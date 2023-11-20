@@ -4,9 +4,11 @@ import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import { manageInputs } from "@/lib/data"
 import { Button } from "@/components/button"
+import { useSectionInView } from "@/lib/hooks"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 
 export default function Manage() {
+    const { ref } = useSectionInView("Manage", 0.5)
     const { isWeb3Enabled } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
@@ -127,7 +129,7 @@ export default function Manage() {
     }
 
     return (
-        <div>
+        <div ref={ref}>
             {!isWeb3Enabled ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[18rem]">
                     <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">

@@ -1,5 +1,6 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
+import { useSectionInView } from "@/lib/hooks"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
 
@@ -12,6 +13,7 @@ interface JsonData {
 }
 
 export default function Gallery() {
+    const { ref } = useSectionInView("Gallery", 0.5)
     const { isWeb3Enabled } = useMoralis()
     const [certificateData, setCertificateData] = useState<CertificateItem[]>([])
     const [amount, setAmount] = useState<string>("")
@@ -83,7 +85,7 @@ export default function Gallery() {
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className="min-h-[48.5rem]">
+        <section className="min-h-[48.5rem]" ref={ref}>
             <div className="flex flex-wrap gap-10 mt-[8rem] p-[1rem] justify-center">
                 {!isWeb3Enabled ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
@@ -101,6 +103,6 @@ export default function Gallery() {
                     certificateData.map((certificate, index) => <CertificateBox key={index} imageUrl={certificate.imageUrl} index={index} />)
                 )}
             </div>
-        </div>
+        </section>
     )
 }
