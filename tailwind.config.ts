@@ -7,6 +7,8 @@ module.exports = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
                 "linear-gradient": "linear-gradient(0, #5ddcff 10%, #3c67e3 40%, #ce4dbb)",
+                "linear-light": "linear-gradient(0, #5ddcff 0%, #3c67e3 10%, #ce4dbb)",
+                "linear-black": "linear-gradient(0, #000000 30%, #a4a4a4 250%, #ffffff)",
                 slider: "linear-gradient(316deg, #3e187a 0%, #994ecc 74%)",
             },
             transitionTimingFunction: {

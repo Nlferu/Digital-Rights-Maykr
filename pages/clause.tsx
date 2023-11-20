@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
+import { Button } from "@/components/button"
 import contract from "@/contracts/DigitalRightsMaykr.json"
-import Button from "@/components/button"
 import clsx from "clsx"
 
 export default function Clause() {

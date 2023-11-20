@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import Button from "@/components/button"
+import { Button } from "@/components/button"
 
 export default function Index() {
     const router = useRouter()

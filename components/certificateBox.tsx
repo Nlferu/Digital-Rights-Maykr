@@ -1,12 +1,10 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
+import { RightsButton, DisabledButton } from "@/components/button"
+import contract from "@/contracts/DigitalRightsMaykr.json"
 import Tilt from "react-parallax-tilt"
 import Image from "next/image"
-
-import CertBox from "@/styles/CertBox.module.css"
-import Creation from "@/styles/Creation.module.css"
-import contract from "@/contracts/DigitalRightsMaykr.json"
 
 type CertificateBoxProps = {
     imageUrl: string
@@ -134,7 +132,7 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }, [isWeb3Enabled, amount])
 
     return (
-        <div className="relative">
+        <div className="">
             <div className="hover:scale-110 duration-500">
                 <a href={imageUrl} target="_blank">
                     <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
@@ -150,15 +148,11 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
                     </Tilt>
                 </a>
             </div>
-            <div className="mt-[5rem]">
+            <div className="">
                 {!buttonStatus?.[index] ? (
-                    <button className={CertBox.disabledButton} disabled={true}>
-                        Unbuyable
-                    </button>
+                    <DisabledButton name="Unbuyable" />
                 ) : (
-                    <button className={CertBox.button} disabled={isLoading} onClick={() => handleBuyRights(index)}>
-                        {isLoading ? <div className={Creation.waitSpinner}></div> : "Buy Rights"}
-                    </button>
+                    <RightsButton name="Buy Rights" onClick={() => handleBuyRights(index)} disabled={isLoading} />
                 )}
             </div>
         </div>

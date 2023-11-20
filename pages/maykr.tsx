@@ -3,12 +3,12 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
+import { Button } from "@/components/button"
 import { inputs } from "@/lib/data"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
-import Button from "@/components/button"
 
 export default function Maykr() {
     const { isWeb3Enabled, account } = useMoralis()

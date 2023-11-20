@@ -3,8 +3,8 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import { manageInputs } from "@/lib/data"
+import { Button } from "@/components/button"
 import contract from "@/contracts/DigitalRightsMaykr.json"
-import Button from "@/components/button"
 
 export default function Manage() {
     const { isWeb3Enabled } = useMoralis()
