@@ -69,8 +69,8 @@ export default function Clause() {
     return (
         <div ref={ref}>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[11rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To Read Clause
                     </p>
                 </div>
@@ -81,7 +81,7 @@ export default function Clause() {
                     })}
                 >
                     <div className="flex mt-[12rem] justify-center px-4">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
                             Read Active Clause
                         </h4>
                     </div>

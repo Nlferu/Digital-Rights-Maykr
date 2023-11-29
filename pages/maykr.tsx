@@ -174,8 +174,8 @@ export default function Maykr() {
     return (
         <div ref={ref}>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[11rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>

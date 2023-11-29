@@ -88,14 +88,14 @@ export default function Gallery() {
         <section className="min-h-[48.5rem]" ref={ref}>
             <div className="flex flex-wrap gap-10 mt-[8rem] p-[1rem] justify-center">
                 {!isWeb3Enabled ? (
-                    <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[15rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[11rem]">
+                    <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-0 sm:mb-[15rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                             Connect Your Wallet To View Certificates
                         </p>
                     </div>
                 ) : certificateData.length === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[10rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem] sm:h-[10rem]">
                             No Certificates To Display For Now...
                         </p>
                     </div>

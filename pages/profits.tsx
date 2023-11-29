@@ -160,15 +160,15 @@ export default function Profits() {
     return (
         <div ref={ref}>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[11rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To View Profits
                     </p>
                 </div>
             ) : (
                 <div className="text-center flex-wrap">
                     <div className="flex mt-[7rem] justify-center px-4">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
                             Your Current Proceeds
                         </h4>
                     </div>
@@ -181,7 +181,7 @@ export default function Profits() {
                             <Button name="Withdraw" onClick={handleWithdraw} disabled={isLoading} />
                         </div>
                         <div className="flex mt-[4rem] justify-center px-20 lg:px-1 mb-[1.5rem] lg:mb-0">
-                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
                                 Stake Your Proceeds With Verse
                             </h4>
                         </div>
@@ -196,7 +196,7 @@ export default function Profits() {
 
                             <Button name="Verse Stake" onClick={handleVerseStake} disabled={isLoadingB} />
                         </div>
-                        <p className="w-[40rem] mt-[2rem] text-gray-400 text-xs mb-[4rem] px-24 lg:px-1">
+                        <p className="max-w-[40rem] mt-[2rem] text-gray-400 text-xs mb-[4rem] px-24 lg:px-1">
                             Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some
                             Liquidity Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into
                             Verse Farms for even more profits! You can find more details here: <br></br>

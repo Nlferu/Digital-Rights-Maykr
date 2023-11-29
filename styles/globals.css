@@ -22,6 +22,28 @@ input[type="file"]::file-selector-button:hover {
     color: black;
 }
 
+html {
+    scroll-behavior: smooth !important;
+}
+
+html ::-webkit-scrollbar-track {
+    background: rgba(12, 9, 9, 1);
+}
+
+/* Scroll Bar Width */
+::-webkit-scrollbar {
+    width: 0.35rem;
+}
+
+html ::-webkit-scrollbar-thumb {
+    background: rgb(85, 17, 172);
+    border-radius: 0.2rem;
+}
+
+html ::-webkit-scrollbar-thumb:hover {
+    background: rgb(115, 54, 255);
+}
+
 @layer components {
     .btn-hover-effect {
         @apply relative;

@@ -1,6 +1,4 @@
 1. Add motion
-2. Modify Scroll Bar
-3. Change Certificates Template and redeploy mother along with all certs
-4. Fix Wallet Issues
-5. Edit Wallet theme
-6. Fix SMALL RESOLUTION FORMATS For all pages < 350px width
+2. Change Certificates Template and redeploy mother along with all certs
+3. Fix Wallet Issues
+4. Edit Wallet theme

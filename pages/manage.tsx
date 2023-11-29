@@ -131,15 +131,15 @@ export default function Manage() {
     return (
         <div ref={ref}>
             {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[11rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To Manage Certificates
                     </p>
                 </div>
             ) : (
                 <div>
                     <div className="flex mt-[7rem] justify-center mb-[1rem]">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
                             Lend Certificate
                         </h4>
                     </div>
@@ -160,7 +160,7 @@ export default function Manage() {
                             <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
                         </div>
                         <div className="flex mt-[5rem] justify-center">
-                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
+                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
                                 Block Certificate
                             </h4>
                         </div>
