@@ -11,6 +11,8 @@ import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
 
+import { useConnectionStatus } from "@thirdweb-dev/react"
+
 export default function Maykr() {
     const { ref } = useSectionInView("Maykr", 0.5)
     const { isWeb3Enabled, account } = useMoralis()
@@ -24,6 +26,8 @@ export default function Maykr() {
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
+
+    const connectionStatus = useConnectionStatus()
 
     const containerRef = useRef<HTMLInputElement | null>(null)
 
@@ -163,17 +167,17 @@ export default function Maykr() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (isWeb3Enabled) {
+            if (connectionStatus === "connected") {
                 await handleEmittedCertsCounter()
             }
         }
-
+        console.log("Connected?: ", connectionStatus)
         fetchData()
-    }, [isWeb3Enabled, amount])
+    }, [connectionStatus === "connected", amount])
 
     return (
         <div ref={ref}>
-            {!isWeb3Enabled ? (
+            {connectionStatus !== "connected" ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
                     <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To Create Certificate

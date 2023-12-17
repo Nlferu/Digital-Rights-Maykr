@@ -22,6 +22,10 @@ input[type="file"]::file-selector-button:hover {
     color: black;
 }
 
+body {
+    background: #1d063a;
+}
+
 html {
     scroll-behavior: smooth !important;
 }
@@ -87,4 +91,12 @@ html ::-webkit-scrollbar-thumb:hover {
     .btn-hover-effect:hover .btn-hover-effect-border::after {
         @apply scale-y-100;
     }
+}
+
+.bRJoYx {
+    background: #4d0dab !important;
+}
+
+.eZbzsH {
+    background: #20093d !important;
 }

@@ -4,6 +4,7 @@ import { links } from "@/lib/data"
 import { Space_Grotesk } from "next/font/google"
 import { FaBars, FaTimes } from "react-icons/fa"
 import { useActiveSectionContext } from "@/context/active-section-context"
+import { ConnectWallet } from "@thirdweb-dev/react"
 import Link from "next/link"
 import Image from "next/image"
 import clsx from "clsx"
@@ -104,11 +105,11 @@ export default function Header() {
                     ))}
                 </div>
                 <div className="flex justify-center items-center mt-[0.5rem] mb-[1rem]">
-                    <ConnectButton moralisAuth={false} />
+                    <ConnectWallet theme={"dark"} modalSize={"wide"} />
                 </div>
             </nav>
-            <div className="hidden lg:flex absolute right-0 top-[4.5rem]">
-                <ConnectButton moralisAuth={false} />
+            <div className="hidden lg:flex absolute right-[0.5rem] top-[4.5rem]">
+                <ConnectWallet theme={"dark"} modalSize={"wide"} />
             </div>
             <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer"}>
                 {navBtn ? <FaTimes onClick={handleNavBtn} /> : <FaBars onClick={handleNavBtn} />}
