@@ -6,40 +6,52 @@ import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
 import { Button } from "@/components/button"
 import { inputs } from "@/lib/data"
 import { useSectionInView } from "@/lib/hooks"
-import contract from "@/contracts/DigitalRightsMaykr.json"
+import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
+import { BigNumber, ethers } from "ethers"
+import { useAddress, useContract, useContractRead, useContractWrite, Web3Button } from "@thirdweb-dev/react"
 
 import { useConnectionStatus } from "@thirdweb-dev/react"
 
 export default function Maykr() {
     const { ref } = useSectionInView("Maykr", 0.5)
-    const { isWeb3Enabled, account } = useMoralis()
+    //const { isWeb3Enabled, account } = useMoralis()
+    // Create object for below
     const [art, setArt] = useState<string>("")
     const [author, setAuthor] = useState<string>("")
     const [co_author, setCoAuthor] = useState<string>("")
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
-    const [amount, setAmount] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isMinting, setIsMinting] = useState<boolean>(false)
     /* @ts-ignore */
     const { runContractFunction } = useWeb3Contract()
+    // This to be replaced
     const dispatch = useNotification()
 
+    const account = useAddress()
     const connectionStatus = useConnectionStatus()
 
     const containerRef = useRef<HTMLInputElement | null>(null)
 
-    const contractAddress = contract.address
-    const abi = contract.abi
+    const contractAddress = maykr.address
+    const abi = maykr.abi
 
-    const { runContractFunction: emittedCount } = useWeb3Contract({
-        abi: abi,
-        contractAddress: contractAddress,
-        functionName: "emittedCount",
-        params: {},
-    })
+    const { contract } = useContract(contractAddress, abi)
+    //const { data, isLoading, error } = useContractRead(contract, "emittedCount")
+    const emitted = useContractRead(contract, "emittedCount")
+    const proceeds = useContractRead(contract, "getProceeds", [account])
+    if (emitted.error) {
+        console.error("Failed to read contract", emitted.error)
+    }
+    if (emitted.data) {
+        console.log("Emitted Certs Amount: ", emitted.data.toNumber(), emitted.isLoading)
+        console.log("Proceeds ", parseFloat(ethers.utils.formatEther(proceeds.data as BigNumber)))
+    }
+
+    //const { mutateAsync, isLoading, error } = useContractWrite(contract, "mintNFT")
+    const handleMint = useContractWrite(contract, "mintNFT")
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
@@ -57,15 +69,8 @@ export default function Maykr() {
         }
     }
 
-    const handleEmittedCertsCounter = async () => {
-        /** @dev Wallet has to be connected to get below associated with -> isWeb3Enabled check */
-        const getAmount = ((await emittedCount()) as string).toString()
-        console.log(`Emitted Certs Count is: ${getAmount}`)
-        setAmount(getAmount)
-    }
-
     const handleGenerateCertificate = async () => {
-        setIsLoading(true)
+        setIsMinting(true)
         const certificateContainer = containerRef.current
         // Reset the box shadow before generating the image
         if (certificateContainer) {
@@ -88,31 +93,57 @@ export default function Maykr() {
             // Restore the box shadow after generating the image
             certificateContainer.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
             // Pass the image blob to the upload function
-            try {
-                const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, amount)
+            //try {
+            if (author && title && description && art && imageBlob && emitted.data.toNumber()) {
+                const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, emitted.data.toNumber())
                 console.log("NFT.storage response:", metadata)
 
-                console.log("Minting NFT...")
-                const mintNft = {
-                    abi: abi,
-                    contractAddress: contractAddress,
-                    functionName: "mintNFT",
-                    params: {
-                        createdTokenURI: metadata,
-                    },
+                if (metadata) {
+                    await handleMint.mutateAsync({ args: [metadata] })
+                } else {
+                    console.log("Nosferatu")
                 }
-
-                await runContractFunction({
-                    params: mintNft,
-                    onError: () => handleMintError(cid),
-                    onSuccess: () => handleMintSuccess(),
-                })
-                console.log("NFT Minted Successfully!", metadata, "NFT: ", amount)
-            } catch (error) {
-                console.error("Error uploading to NFT.storage:", error)
-            } finally {
-                setIsLoading(false)
+                if (handleMint.error) {
+                    console.log("Following Error Occured While Minting: ", handleMint.error)
+                    handleMintError(cid)
+                }
+            } else {
+                console.log("ERROR")
+                return
             }
+
+            ///////////////////////////////////////////////////////////
+            // console.log("Minting NFT...")
+            // const mintNft = {
+            //     abi: abi,
+            //     contractAddress: contractAddress,
+            //     functionName: "mintNFT",
+            //     params: {
+            //         createdTokenURI: metadata,
+            //     },
+            // }
+
+            // await runContractFunction({
+            //     params: mintNft,
+            //     onError: () => handleMintError(cid),
+            //     onSuccess: () => handleMintSuccess(),
+            // })
+            ///////////////////////////////////////////////////////////
+
+            // const handleMint = useContractWrite(contract, "mintNFT")
+            // await handleMint.mutateAsync({ args: [metadata] })
+
+            //     if (handleMint.error) {
+            //         console.log("Following Error Occured While Minting: ", handleMint.error)
+            //         handleMintError(cid)
+            //     }
+
+            //     console.log("NFT Minted Successfully!", metadata, "NFT: ", emitted.data.toNumber())
+            // } catch (mintingError) {
+            //     console.error("Error uploading to NFT.storage:", mintingError)
+            // } finally {
+            //     setIsMinting(false)
+            // }
         }
     }
 
@@ -129,7 +160,7 @@ export default function Maykr() {
 
                     canvas.toBlob((blob) => {
                         if (blob) {
-                            download(blob, `Certificate_Id_${amount}`)
+                            download(blob, `Certificate_Id_${emitted.data.toNumber()}`)
                         } else {
                             console.error("Error generating certificate image: Blob is null")
                         }
@@ -165,16 +196,6 @@ export default function Maykr() {
         deleteFromNftStorage(cid)
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (connectionStatus === "connected") {
-                await handleEmittedCertsCounter()
-            }
-        }
-        console.log("Connected?: ", connectionStatus)
-        fetchData()
-    }, [connectionStatus === "connected", amount])
-
     return (
         <div ref={ref}>
             {connectionStatus !== "connected" ? (
@@ -208,8 +229,7 @@ export default function Maykr() {
                                     onChange={handleInputChange}
                                 ></input>
                             ))}
-
-                            <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isLoading} />
+                            <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
                         </div>
                     </div>
                     {/* Certificate will show only if we have "art" field filled */}
@@ -276,7 +296,7 @@ export default function Maykr() {
                                             <span className="text-certL text-xs mt-1">{art}</span>
                                         </p>
                                     </div>
-                                    <p className="text-certH text-xl">Certificate_Id_{amount}</p>
+                                    <p className="text-certH text-xl">Certificate_Id_{emitted.data.toNumber()}</p>
                                     <div className="text-certH text-xl">
                                         Description{" "}
                                         <p className="text-certL text-sm mt-1">

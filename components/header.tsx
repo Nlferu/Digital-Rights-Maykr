@@ -105,11 +105,11 @@ export default function Header() {
                     ))}
                 </div>
                 <div className="flex justify-center items-center mt-[0.5rem] mb-[1rem]">
-                    <ConnectWallet theme={"dark"} modalSize={"wide"} />
+                    <ConnectWallet theme={"dark"} modalSize={"wide"} switchToActiveChain={true} />
                 </div>
             </nav>
             <div className="hidden lg:flex absolute right-[0.5rem] top-[4.5rem]">
-                <ConnectWallet theme={"dark"} modalSize={"wide"} />
+                <ConnectWallet theme={"dark"} modalSize={"wide"} switchToActiveChain={true} />
             </div>
             <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer"}>
                 {navBtn ? <FaTimes onClick={handleNavBtn} /> : <FaBars onClick={handleNavBtn} />}
