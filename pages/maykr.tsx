@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
-import { useWeb3Contract, useMoralis } from "react-moralis"
+import React, { useState, useRef } from "react"
 import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
@@ -11,13 +10,12 @@ import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
 import { BigNumber, ethers } from "ethers"
-import { useAddress, useContract, useContractRead, useContractWrite, Web3Button } from "@thirdweb-dev/react"
+import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
 
 import { useConnectionStatus } from "@thirdweb-dev/react"
 
 export default function Maykr() {
     const { ref } = useSectionInView("Maykr", 0.5)
-    //const { isWeb3Enabled, account } = useMoralis()
     // Create object for below
     const [art, setArt] = useState<string>("")
     const [author, setAuthor] = useState<string>("")
@@ -25,8 +23,6 @@ export default function Maykr() {
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const [isMinting, setIsMinting] = useState<boolean>(false)
-    /* @ts-ignore */
-    const { runContractFunction } = useWeb3Contract()
     // This to be replaced
     const dispatch = useNotification()
 
@@ -71,6 +67,7 @@ export default function Maykr() {
 
     const handleGenerateCertificate = async () => {
         setIsMinting(true)
+
         const certificateContainer = containerRef.current
         // Reset the box shadow before generating the image
         if (certificateContainer) {
@@ -99,51 +96,21 @@ export default function Maykr() {
                 console.log("NFT.storage response:", metadata)
 
                 if (metadata) {
-                    await handleMint.mutateAsync({ args: [metadata] })
+                    try {
+                        await handleMint.mutateAsync({ args: [metadata] })
+                        handleMintSuccess()
+                    } catch (error) {
+                        console.log("Holy Lama Occured")
+                        handleMintError(cid)
+                    } finally {
+                        setIsMinting(false)
+                    }
                 } else {
-                    console.log("Nosferatu")
-                }
-                if (handleMint.error) {
-                    console.log("Following Error Occured While Minting: ", handleMint.error)
-                    handleMintError(cid)
+                    console.log("No metadata available")
                 }
             } else {
-                console.log("ERROR")
-                return
+                console.log("Fill all the fields")
             }
-
-            ///////////////////////////////////////////////////////////
-            // console.log("Minting NFT...")
-            // const mintNft = {
-            //     abi: abi,
-            //     contractAddress: contractAddress,
-            //     functionName: "mintNFT",
-            //     params: {
-            //         createdTokenURI: metadata,
-            //     },
-            // }
-
-            // await runContractFunction({
-            //     params: mintNft,
-            //     onError: () => handleMintError(cid),
-            //     onSuccess: () => handleMintSuccess(),
-            // })
-            ///////////////////////////////////////////////////////////
-
-            // const handleMint = useContractWrite(contract, "mintNFT")
-            // await handleMint.mutateAsync({ args: [metadata] })
-
-            //     if (handleMint.error) {
-            //         console.log("Following Error Occured While Minting: ", handleMint.error)
-            //         handleMintError(cid)
-            //     }
-
-            //     console.log("NFT Minted Successfully!", metadata, "NFT: ", emitted.data.toNumber())
-            // } catch (mintingError) {
-            //     console.error("Error uploading to NFT.storage:", mintingError)
-            // } finally {
-            //     setIsMinting(false)
-            // }
         }
     }
 
