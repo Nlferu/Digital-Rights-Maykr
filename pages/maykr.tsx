@@ -5,24 +5,24 @@ import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
 import { Button } from "@/components/button"
 import { inputs } from "@/lib/data"
 import { useSectionInView } from "@/lib/hooks"
+import { useConnectionStatus } from "@thirdweb-dev/react"
+import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
 import hashCreator from "@/utils/artHasher"
-import { BigNumber, ethers } from "ethers"
-import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
-
-import { useConnectionStatus } from "@thirdweb-dev/react"
 
 export default function Maykr() {
     const { ref } = useSectionInView("Maykr", 0.5)
-    // Create object for below
-    const [art, setArt] = useState<string>("")
-    const [author, setAuthor] = useState<string>("")
-    const [co_author, setCoAuthor] = useState<string>("")
-    const [title, setTitle] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
+    const [form, setForm] = useState({
+        art: "",
+        author: "",
+        co_author: "",
+        title: "",
+        description: "",
+    })
     const [isMinting, setIsMinting] = useState<boolean>(false)
+
     // This to be replaced
     const dispatch = useNotification()
 
@@ -37,13 +37,12 @@ export default function Maykr() {
     const { contract } = useContract(contractAddress, abi)
     //const { data, isLoading, error } = useContractRead(contract, "emittedCount")
     const emitted = useContractRead(contract, "emittedCount")
-    const proceeds = useContractRead(contract, "getProceeds", [account])
+
     if (emitted.error) {
         console.error("Failed to read contract", emitted.error)
     }
     if (emitted.data) {
         console.log("Emitted Certs Amount: ", emitted.data.toNumber(), emitted.isLoading)
-        console.log("Proceeds ", parseFloat(ethers.utils.formatEther(proceeds.data as BigNumber)))
     }
 
     //const { mutateAsync, isLoading, error } = useContractWrite(contract, "mintNFT")
@@ -52,17 +51,10 @@ export default function Maykr() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
 
-        if (name === "art") {
-            setArt(value)
-        } else if (name === "author") {
-            setAuthor(value)
-        } else if (name === "co_author") {
-            setCoAuthor(value)
-        } else if (name === "title") {
-            setTitle(value)
-        } else if (name === "description") {
-            setDescription(value)
-        }
+        setForm({
+            ...form,
+            [name]: value,
+        })
     }
 
     const handleGenerateCertificate = async () => {
@@ -90,9 +82,8 @@ export default function Maykr() {
             // Restore the box shadow after generating the image
             certificateContainer.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
             // Pass the image blob to the upload function
-            //try {
-            if (author && title && description && art && imageBlob && emitted.data.toNumber()) {
-                const { metadata, cid } = await uploadToNftStorage(author, title, description, art, imageBlob, emitted.data.toNumber())
+            if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber()) {
+                const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
                 console.log("NFT.storage response:", metadata)
 
                 if (metadata) {
@@ -100,7 +91,7 @@ export default function Maykr() {
                         await handleMint.mutateAsync({ args: [metadata] })
                         handleMintSuccess()
                     } catch (error) {
-                        console.log("Holy Lama Occured")
+                        console.log("Following error occurred:", error)
                         handleMintError(cid)
                     } finally {
                         setIsMinting(false)
@@ -126,7 +117,7 @@ export default function Maykr() {
                     container.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
 
                     canvas.toBlob((blob) => {
-                        if (blob) {
+                        if (blob && emitted.data) {
                             download(blob, `Certificate_Id_${emitted.data.toNumber()}`)
                         } else {
                             console.error("Error generating certificate image: Blob is null")
@@ -182,7 +173,7 @@ export default function Maykr() {
                                 id="art"
                                 name="art"
                                 placeholder="Art Hash"
-                                onChange={() => hashCreator(setArt)}
+                                onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
                             />
 
                             {inputs.map((input) => (
@@ -200,14 +191,14 @@ export default function Maykr() {
                         </div>
                     </div>
                     {/* Certificate will show only if we have "art" field filled */}
-                    {!art && (
+                    {!form.art && (
                         <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
                             <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
                                 Magic Will Be Happening Here...
                             </p>
                         </div>
                     )}
-                    {art && (
+                    {form.art && (
                         <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
                             <div
                                 ref={containerRef}
@@ -235,20 +226,20 @@ export default function Maykr() {
                                 >
                                     <p className="text-certH text-xl mt-3">Author</p>
                                     <p className="text-certL text-sm mt-1">
-                                        <span>{author}</span>
+                                        <span>{form.author}</span>
                                     </p>
-                                    {co_author && (
+                                    {form.co_author && (
                                         <div className="text-certH text-xl">
                                             Co-Author
                                             <p className="text-certL text-sm mt-1">
-                                                <span>{co_author}</span>
+                                                <span>{form.co_author}</span>
                                             </p>
                                         </div>
                                     )}
                                     <div className="text-certH text-xl">
                                         Title
                                         <p className="text-certL text-sm mt-1">
-                                            <span>{title}</span>
+                                            <span>{form.title}</span>
                                         </p>
                                     </div>
                                     <div className="text-certH text-xl">
@@ -260,14 +251,14 @@ export default function Maykr() {
                                     <div className="text-certH text-xl">
                                         Art Hash
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-xs mt-1">{art}</span>
+                                            <span className="text-certL text-xs mt-1">{form.art}</span>
                                         </p>
                                     </div>
                                     <p className="text-certH text-xl">Certificate_Id_{emitted.data.toNumber()}</p>
                                     <div className="text-certH text-xl">
                                         Description{" "}
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1">{description}</span>
+                                            <span className="text-certL text-sm mt-1">{form.description}</span>
                                         </p>
                                     </div>
                                 </div>

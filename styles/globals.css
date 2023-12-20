@@ -11,6 +11,7 @@ input[type="file"]::file-selector-button {
     background: rgba(5, 5, 0, 0.3);
     transition: 2s;
     font-family: "Orbitron", sans-serif;
+    font-weight: bold;
     cursor: pointer;
     color: grey;
 }
