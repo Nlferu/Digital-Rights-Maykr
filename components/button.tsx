@@ -1,10 +1,10 @@
-interface ButtonProps {
+type ButtonProps = {
     name: string
     onClick: () => void
     disabled?: boolean
 }
 
-interface DisabledButtonProps {
+type DisabledButtonProps = {
     name: string
 }
 

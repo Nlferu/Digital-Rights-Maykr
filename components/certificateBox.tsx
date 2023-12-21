@@ -1,8 +1,9 @@
-import { useWeb3Contract, useMoralis } from "react-moralis"
+import { BigNumber } from "ethers"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import { RightsButton, DisabledButton } from "@/components/button"
-import contract from "@/contracts/DigitalRightsMaykr.json"
+import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
+import maykr from "@/contracts/DigitalRightsMaykr.json"
 import Tilt from "react-parallax-tilt"
 import Image from "next/image"
 
@@ -12,91 +13,55 @@ type CertificateBoxProps = {
 }
 
 export default function CertificateBox({ imageUrl, index }: CertificateBoxProps) {
-    const { isWeb3Enabled, account } = useMoralis()
-    /* @ts-ignore */
-    const { runContractFunction } = useWeb3Contract()
     const [buttonStatus, setButtonStatus] = useState<boolean[] | undefined>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [amount, setAmount] = useState<string>("")
     const dispatch = useNotification()
 
-    const contractAddress = contract.address
-    const abi = contract.abi
+    const contractAddress = maykr.address
+    const abi = maykr.abi
 
-    const { runContractFunction: emittedCount } = useWeb3Contract({
-        abi: abi,
-        contractAddress: contractAddress,
-        functionName: "emittedCount",
-        params: {},
-    })
-
-    const handleEmittedCertsCounter = async () => {
-        /** @dev Wallet has to be connected to get below associated with -> isWeb3Enabled check */
-        const getAmount = ((await emittedCount()) as string).toString()
-
-        setAmount(getAmount)
-    }
+    const { contract } = useContract(contractAddress, abi)
+    const account = useAddress()
+    const emitted = useContractRead(contract, "emittedCount")
+    const handleBuy = useContractWrite(contract, "buyLicense")
 
     const handleButtonStatus = async (id: number) => {
-        const statuses: boolean[] = []
+        if (contract) {
+            try {
+                const statuses: boolean[] = []
 
-        for (let i = 0; i <= id; i++) {
-            // Index i will be our tokenId, now we have to call tokenURI function
-            const lendingStatus = {
-                abi: abi,
-                contractAddress: contractAddress,
-                functionName: "getLendingStatus",
-                params: {
-                    tokenId: i,
-                },
+                for (let i = 0; i <= id; i++) {
+                    const lendingStatus = await contract.call("getLendingStatus", [i])
+                    console.log(`Lending status for token: ${i} is: ${lendingStatus}`)
+
+                    statuses.push(lendingStatus as boolean)
+                }
+
+                setButtonStatus(statuses)
+            } catch (error) {
+                console.log("FOllowing Error Ocurred! ", error)
             }
-
-            let status = await runContractFunction({
-                params: lendingStatus,
-            })
-
-            statuses.push(status as boolean)
         }
-        setButtonStatus(statuses)
     }
 
     const handleBuyRights = async (tokenId: number) => {
         setIsLoading(true)
 
-        const getPrice = {
-            abi: abi,
-            contractAddress: contractAddress,
-            functionName: "getCertificatePrice",
-            params: {
-                tokenId: tokenId,
-            },
-        }
+        if (contract) {
+            const price = await contract.call("getCertificatePrice", [tokenId])
+            console.log("Price: ", price as number)
 
-        const price = await runContractFunction({
-            params: getPrice,
-        })
-
-        try {
-            const buyLicense = {
-                abi: abi,
-                contractAddress: contractAddress,
-                functionName: "buyLicense",
-                params: {
-                    tokenId: tokenId,
-                    borrower: account,
-                },
-                msgValue: price as number,
+            try {
+                await handleBuy.mutateAsync({ args: [tokenId, account], overrides: { value: price as BigNumber } })
+                handleBuyRightsSuccess()
+            } catch (error) {
+                handleBuyRightsError()
+                console.error(`Buying Rights To Use Certified Art Failed With Error: ${error}`)
+            } finally {
+                setIsLoading(false)
             }
-
-            await runContractFunction({
-                params: buyLicense,
-                onError: () => handleBuyRightsError(),
-                onSuccess: () => handleBuyRightsSuccess(),
-            })
-        } catch (error) {
-            console.error(`Buying Rights To Use Certified Art Failed With Error: ${error}`)
-        } finally {
-            setIsLoading(false)
+        } else {
+            console.log("Contract does not exists")
         }
     }
 
@@ -121,15 +86,8 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (isWeb3Enabled) {
-                await handleEmittedCertsCounter()
-                await handleButtonStatus(parseInt(amount))
-            }
-        }
-
-        fetchData()
-    }, [isWeb3Enabled, amount])
+        handleButtonStatus(emitted.data.toNumber())
+    }, [emitted.data])
 
     return (
         <div className="">

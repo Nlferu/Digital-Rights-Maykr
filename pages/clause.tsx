@@ -1,58 +1,52 @@
 import React, { useState, useRef } from "react"
-import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { Button } from "@/components/button"
 import { useSectionInView } from "@/lib/hooks"
-import contract from "@/contracts/DigitalRightsMaykr.json"
+import { useAddress, useContract, useConnectionStatus } from "@thirdweb-dev/react"
+import maykr from "@/contracts/DigitalRightsMaykr.json"
 import clsx from "clsx"
 
 export default function Clause() {
     const { ref } = useSectionInView("Clause", 0.5)
-    const { isWeb3Enabled, account } = useMoralis()
-    /* @ts-ignore */
-    const { runContractFunction } = useWeb3Contract()
     const [isLoading, setIsLoading] = useState(false)
     const [clause, setClause] = useState("")
     const dispatch = useNotification()
 
     const tokenRef = useRef<HTMLInputElement | null>(null)
 
-    const contractAddress = contract.address
-    const abi = contract.abi
+    const contractAddress = maykr.address
+    const abi = maykr.abi
+
+    const { contract } = useContract(contractAddress, abi)
+    const account = useAddress()
+    const connectionStatus = useConnectionStatus()
 
     const handleGetClause = async () => {
         setIsLoading(true)
-        try {
-            var tokenId = tokenRef.current?.value
 
-            const getClause = {
-                abi: abi,
-                contractAddress: contractAddress,
-                functionName: "getClause",
-                params: {
-                    tokenId: tokenId,
-                    borrower: account,
-                },
-            }
+        if (contract) {
+            try {
+                var tokenId = tokenRef.current?.value
 
-            const clauseOutput = await runContractFunction({
-                params: getClause,
-            })
+                const clause = await contract.call("getClause", [tokenId, account])
+                console.log(`Clause from tokenId: ${tokenId} is: ${clause}`)
 
-            if (clauseOutput) {
-                setClause(clauseOutput as string)
-            } else if (tokenRef.current?.value === "") {
+                if (clause !== "") {
+                    setClause(clause)
+                } else if (clause === "") {
+                    const wrongClause = "Clause Not Detected"
+                    setClause(wrongClause)
+                    //handleClauseError()
+                }
+            } catch (error) {
+                console.error(`Getting Clause Failed With Error: ${error}`)
                 setClause("")
-                await handleClauseError()
-            } else if (tokenRef.current?.value !== "") {
-                const wrongClause = "Clause Not Detected"
-                setClause(wrongClause)
-                await handleClauseError()
+                handleClauseError()
+            } finally {
+                setIsLoading(false)
             }
-        } catch (error) {
-            console.error(`Getting Clause Failed With Error: ${error}`)
-        } finally {
-            setIsLoading(false)
+        } else {
+            console.log("Contract does not exists")
         }
     }
 
@@ -68,7 +62,7 @@ export default function Clause() {
 
     return (
         <div ref={ref}>
-            {!isWeb3Enabled ? (
+            {connectionStatus !== "connected" ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
                     <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
                         Connect Your Wallet To Read Clause
@@ -97,7 +91,7 @@ export default function Clause() {
                     <Button name={"Read"} onClick={handleGetClause} disabled={isLoading} />
 
                     <div>
-                        {clause.includes("The Artist") && (
+                        {clause.includes("The Artist") ? (
                             <div className="flex flex-col justify-center items-center ">
                                 <div className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">
                                     Delivered Directly From Blockchain
@@ -106,6 +100,8 @@ export default function Clause() {
                                     <div className="py-[0.5rem] px-[2rem] text-center leading-8">{clause}</div>
                                 </div>
                             </div>
+                        ) : (
+                            <div></div>
                         )}
                         {clause === "Clause Not Detected" ? (
                             <div className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold">

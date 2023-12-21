@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSectionInView } from "@/lib/hooks"
-import { useConnectionStatus } from "@thirdweb-dev/react"
-import { useContract, useContractRead } from "@thirdweb-dev/react"
+import { useContract, useContractRead, useConnectionStatus } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
 
@@ -41,6 +40,7 @@ export default function Gallery() {
 
                     imageUrls.push(updatedUrl)
                 }
+
                 setCertificateData(imageUrls.map((imageUrl) => ({ imageUrl })))
             } catch (error) {
                 console.log("Following Error Occurred! ", error)
@@ -50,7 +50,7 @@ export default function Gallery() {
 
     useEffect(() => {
         handleGetCertificates()
-    }, [connectionStatus === "connected", emitted.data])
+    }, [connectionStatus, emitted.data])
 
     return (
         <section className="min-h-[48.5rem]" ref={ref}>
