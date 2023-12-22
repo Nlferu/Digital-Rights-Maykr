@@ -1,19 +1,16 @@
 import React, { useState, useRef } from "react"
-import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import { manageInputs } from "@/lib/data"
 import { Button } from "@/components/button"
 import { useSectionInView } from "@/lib/hooks"
-import contract from "@/contracts/DigitalRightsMaykr.json"
+import { useContract, useConnectionStatus, useContractWrite } from "@thirdweb-dev/react"
+import maykr from "@/contracts/DigitalRightsMaykr.json"
 
 export default function Manage() {
     const { ref } = useSectionInView("Manage", 0.5)
-    const { isWeb3Enabled } = useMoralis()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
-    /* @ts-ignore */
-    const { runContractFunction } = useWeb3Contract()
     const dispatch = useNotification()
 
     const refs = {
@@ -23,41 +20,37 @@ export default function Manage() {
         blockTokenIdRef: useRef<HTMLInputElement | null>(null),
     }
 
-    const contractAddress = contract.address
-    const abi = contract.abi
+    const contractAddress = maykr.address
+    const abi = maykr.abi
+
+    const { contract } = useContract(contractAddress, abi)
+    const connectionStatus = useConnectionStatus()
+    const handleLend = useContractWrite(contract, "allowLending")
+    const handleBlock = useContractWrite(contract, "blockLending")
 
     const handleLendCertificate = async () => {
-        setIsLoading(true)
+        if (connectionStatus === "connected") {
+            setIsLoading(true)
 
-        try {
-            var tokenId = refs.tokenIdRef.current?.value
-            var lendingTime = refs.lendingTimeRef.current?.value
-            var price = refs.priceRef.current?.value
-            console.log(`TokenId: ${tokenId} LendingTime: ${lendingTime} Price: ${price}`)
+            try {
+                var tokenId = refs.tokenIdRef.current?.value
+                var lendingTime = refs.lendingTimeRef.current?.value
+                var price = refs.priceRef.current?.value
+                console.log(`TokenId: ${tokenId} LendingTime: ${lendingTime} Price: ${price}`)
 
-            // ETH Conversion To Wei
-            let convPrice = ethers.utils.parseEther(price as string)
+                // ETH Conversion To Wei
+                let convPrice = ethers.utils.parseEther(price as string)
 
-            const allowLending = {
-                abi: abi,
-                contractAddress: contractAddress,
-                functionName: "allowLending",
-                params: {
-                    tokenId: tokenId,
-                    lendingTime: lendingTime,
-                    price: convPrice,
-                },
+                await handleLend.mutateAsync({ args: [tokenId, lendingTime, convPrice] })
+                handleAllowSuccess()
+            } catch (error) {
+                console.error(`Allowing Certificate Lending Failed With Error: ${error}`)
+                handleAllowError("Lending Allowance Failed")
+            } finally {
+                setIsLoading(false)
             }
-
-            await runContractFunction({
-                params: allowLending,
-                onError: () => handleAllowError(),
-                onSuccess: () => handleAllowSuccess(),
-            })
-        } catch (error) {
-            console.error(`Allowing Certificate Lending Failed With Error: ${error}`)
-        } finally {
-            setIsLoading(false)
+        } else {
+            handleAllowError("Wallet Not Connected")
         }
     }
 
@@ -71,10 +64,10 @@ export default function Manage() {
         })
     }
 
-    async function handleAllowError() {
+    async function handleAllowError(error: string) {
         dispatch({
             type: "error",
-            message: "Lending Allowance Failed",
+            message: error,
             title: "Allowance Error!",
             position: "bottomR",
             icon: "exclamation",
@@ -82,29 +75,22 @@ export default function Manage() {
     }
 
     const handleBlockCertificate = async () => {
-        setIsLoadingB(true)
+        if (connectionStatus === "connected") {
+            setIsLoadingB(true)
 
-        try {
-            var blockTokenId = refs.blockTokenIdRef.current?.value
+            try {
+                var blockTokenId = refs.blockTokenIdRef.current?.value
 
-            const blockLending = {
-                abi: abi,
-                contractAddress: contractAddress,
-                functionName: "blockLending",
-                params: {
-                    tokenId: blockTokenId,
-                },
+                await handleBlock.mutateAsync({ args: [blockTokenId] })
+                handleBlockSuccess()
+            } catch (error) {
+                console.error(`Blocking Certificate Lending Failed With Error: ${error}`)
+                handleBlockError("Lending Blockage Failed")
+            } finally {
+                setIsLoadingB(false)
             }
-
-            await runContractFunction({
-                params: blockLending,
-                onError: () => handleBlockError(),
-                onSuccess: () => handleBlockSuccess(),
-            })
-        } catch (error) {
-            console.error(`Blocking Certificate Lending Failed With Error: ${error}`)
-        } finally {
-            setIsLoadingB(false)
+        } else {
+            handleAllowError("Wallet Not Connected")
         }
     }
 
@@ -118,10 +104,10 @@ export default function Manage() {
         })
     }
 
-    async function handleBlockError() {
+    async function handleBlockError(error: string) {
         dispatch({
             type: "error",
-            message: "Lending Blockage Failed",
+            message: error,
             title: "Blockage Error!",
             position: "bottomR",
             icon: "exclamation",
@@ -130,55 +116,47 @@ export default function Manage() {
 
     return (
         <div ref={ref}>
-            {!isWeb3Enabled ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
-                        Connect Your Wallet To Manage Certificates
-                    </p>
+            <div>
+                <div className="flex mt-[7rem] justify-center mb-[1rem]">
+                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
+                        Lend Certificate
+                    </h4>
                 </div>
-            ) : (
-                <div>
-                    <div className="flex mt-[7rem] justify-center mb-[1rem]">
+                <div className="flex flex-col text-center">
+                    <div className="flex flex-col gap-3 w-[16rem] self-center">
+                        {manageInputs.map((input) => (
+                            <input
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                key={input.name}
+                                type={input.type}
+                                name={input.name}
+                                id={input.name}
+                                ref={refs[input.ref]}
+                                placeholder={input.placeholder}
+                            ></input>
+                        ))}
+
+                        <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
+                    </div>
+                    <div className="flex mt-[5rem] justify-center">
                         <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
-                            Lend Certificate
+                            Block Certificate
                         </h4>
                     </div>
-                    <div className="flex flex-col text-center">
-                        <div className="flex flex-col gap-3 w-[16rem] self-center">
-                            {manageInputs.map((input) => (
-                                <input
-                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                    key={input.name}
-                                    type={input.type}
-                                    name={input.name}
-                                    id={input.name}
-                                    ref={refs[input.ref]}
-                                    placeholder={input.placeholder}
-                                ></input>
-                            ))}
+                    <div className="flex flex-col gap-3 w-[16rem] self-center">
+                        <input
+                            type="text"
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                            ref={refs.blockTokenIdRef}
+                            id="blockTokenId"
+                            name="tokenId"
+                            placeholder="TokenId"
+                        />
 
-                            <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
-                        </div>
-                        <div className="flex mt-[5rem] justify-center">
-                            <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
-                                Block Certificate
-                            </h4>
-                        </div>
-                        <div className="flex flex-col gap-3 w-[16rem] self-center">
-                            <input
-                                type="text"
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                ref={refs.blockTokenIdRef}
-                                id="blockTokenId"
-                                name="tokenId"
-                                placeholder="TokenId"
-                            />
-
-                            <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
-                        </div>
+                        <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
                     </div>
                 </div>
-            )}
+            </div>
         </div>
     )
 }

@@ -47,7 +47,7 @@ module.exports = {
             },
             animation: {
                 fullSpin: "fullSpin 3s linear infinite",
-                delayedSpin: "fullSpin 3s linear infinite 1500ms",
+                delayedSpin: "fullSpin 6s linear infinite 1500ms",
             },
         },
     },

@@ -34,7 +34,7 @@ export default function Maykr() {
     const abi = maykr.abi
 
     const { contract } = useContract(contractAddress, abi)
-    //const { data, isLoading, error } = useContractRead(contract, "emittedCount")
+    //const { data: emitted, isLoading, error } = useContractRead(contract, "emittedCount")
     const emitted = useContractRead(contract, "emittedCount")
 
     if (emitted.error) {
@@ -156,8 +156,8 @@ export default function Maykr() {
     return (
         <div ref={ref}>
             {connectionStatus !== "connected" ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[20rem] mb-0 sm:mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
+                <div className="flex flex-col text-center items-center justify-center mt-[21rem] mb-0 sm:mb-[17.5rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[10rem]">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>

@@ -38,7 +38,7 @@ export function RightsButton({ name, onClick, disabled }: ButtonProps) {
             disabled={disabled}
         >
             <span
-                className="absolute flex font-bold justify-center items-center inset-[0.2rem] bg-purple-950 bg-opacity-60 rounded-full z-[1]
+                className="absolute flex font-bold justify-center items-center inset-[0.2rem] bg-black/40 rounded-full z-[1]
                 group-hover:scale-[1.03] duration-custom ease-customBezier
                 group-active-scale[1.01] group-hover:text-white"
             >
@@ -52,7 +52,7 @@ export function DisabledButton({ name }: DisabledButtonProps) {
     return (
         <button
             className="group relative text-gray-700 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack rounded-full
-                after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-black after:animate-fullSpin
+                after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-black after:animate-delayedSpin
                 active:scale-[1.01]"
         >
             <span
