@@ -8,12 +8,11 @@ import Tilt from "react-parallax-tilt"
 import Image from "next/image"
 
 type CertificateBoxProps = {
-    imageUrl: string
-    index: number
+    certificateId: number
 }
 
-export default function CertificateBox({ imageUrl, index }: CertificateBoxProps) {
-    const [buttonStatus, setButtonStatus] = useState<boolean[] | undefined>([])
+export default function CertificateBox({ certificateId }: CertificateBoxProps) {
+    const [updatedUrl, setUpdatedUrl] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useNotification()
 
@@ -22,37 +21,36 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
 
     const { contract } = useContract(contractAddress, abi)
     const account = useAddress()
-    const emitted = useContractRead(contract, "emittedCount")
+    const lendingStatus = useContractRead(contract, "getLendingStatus", [certificateId])
+    const metadataURI = useContractRead(contract, "tokenURI", [certificateId])
     const handleBuy = useContractWrite(contract, "buyLicense")
 
-    const handleButtonStatus = async (id: number) => {
-        if (contract) {
-            try {
-                const statuses: boolean[] = []
+    const getCorrectImageUrl = async () => {
+        metadataURI.data
+        //console.log("Metadata: ", metadataURI)
 
-                for (let i = 0; i <= id; i++) {
-                    const lendingStatus = await contract.call("getLendingStatus", [i])
-                    console.log(`Lending status for token: ${i} is: ${lendingStatus}`)
+        const response = await fetch(metadataURI.data)
+        const metadata = await response.json()
+        //console.log("Metadata for token", certificateId, ": ", metadata)
 
-                    statuses.push(lendingStatus as boolean)
-                }
+        const imageUrl = metadata.image
+        //console.log("Image URL for token", certificateId, ": ", imageUrl)
 
-                setButtonStatus(statuses)
-            } catch (error) {
-                console.log("FOllowing Error Ocurred! ", error)
-            }
-        }
+        const correctImage = imageUrl.replace("ipfs://", "https://ipfs.io/ipfs/")
+        console.log(`Cprrect Image Link For Token ${certificateId} is: ${correctImage}`)
+
+        return correctImage
     }
 
-    const handleBuyRights = async (tokenId: number) => {
+    const handleBuyRights = async () => {
         setIsLoading(true)
 
         if (contract) {
-            const price = await contract.call("getCertificatePrice", [tokenId])
+            const price = await contract.call("getCertificatePrice", [certificateId])
             console.log("Price: ", price as number)
 
             try {
-                await handleBuy.mutateAsync({ args: [tokenId, account], overrides: { value: price as BigNumber } })
+                await handleBuy.mutateAsync({ args: [certificateId, account], overrides: { value: price as BigNumber } })
                 handleBuyRightsSuccess()
             } catch (error) {
                 handleBuyRightsError()
@@ -86,31 +84,42 @@ export default function CertificateBox({ imageUrl, index }: CertificateBoxProps)
     }
 
     useEffect(() => {
-        handleButtonStatus(emitted.data.toNumber())
-    }, [emitted.data])
+        async function fetchData() {
+            if (metadataURI.data) {
+                const url = await getCorrectImageUrl()
+                setUpdatedUrl(url)
+            }
+        }
+
+        fetchData()
+    }, [metadataURI.data])
 
     return (
         <div className="">
             <div className="hover:scale-110 duration-500">
-                <a href={imageUrl} target="_blank">
-                    <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
-                        <Image
-                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark"
-                            src={imageUrl}
-                            height={400}
-                            width={400}
-                            quality="95"
-                            priority={true}
-                            alt="NFT Image"
-                        />
-                    </Tilt>
-                </a>
+                {updatedUrl && updatedUrl.toString() !== "" ? (
+                    <a href={updatedUrl} target="_blank">
+                        <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
+                            <Image
+                                className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark"
+                                src={updatedUrl}
+                                height={400}
+                                width={400}
+                                quality="95"
+                                priority={true}
+                                alt="NFT Image"
+                            />
+                        </Tilt>
+                    </a>
+                ) : (
+                    <div>There is no image</div>
+                )}
             </div>
             <div className="">
-                {!buttonStatus?.[index] ? (
+                {!lendingStatus.data ? (
                     <DisabledButton name="Unbuyable" />
                 ) : (
-                    <RightsButton name="Buy Rights" onClick={() => handleBuyRights(index)} disabled={isLoading} />
+                    <RightsButton name="Buy Rights" onClick={() => handleBuyRights()} disabled={isLoading} />
                 )}
             </div>
         </div>

@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
-import { metamaskWallet, ThirdwebProvider } from "@thirdweb-dev/react"
+import { ThirdwebProvider } from "@thirdweb-dev/react"
 import { Sepolia } from "@thirdweb-dev/chains"
 import ActiveSectionContextProvider from "@/context/active-section-context"
 import Header from "@/components/header"
@@ -21,16 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Head>
 
             <MoralisProvider initializeOnMount={false}>
-                <ThirdwebProvider
-                    clientId="your-client-id"
-                    activeChain={activeChain}
-                    supportedChains={[activeChain]}
-                    supportedWallets={[
-                        metamaskWallet({
-                            projectId: "your-wallet-connect-project-id", // optional but we recommend you get your own for production
-                        }),
-                    ]}
-                >
+                <ThirdwebProvider clientId="your-client-id" activeChain={activeChain} supportedChains={[activeChain]}>
                     <NotificationProvider>
                         <ActiveSectionContextProvider>
                             <Header />
