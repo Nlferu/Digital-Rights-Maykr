@@ -35,7 +35,7 @@ export default function Header() {
     }, [])
 
     return (
-        <header className="flex fixed w-full h-[4.5rem] bg-transparent z-10">
+        <header className="flex fixed w-full h-[4.5rem] bg-transparent z-10 drop-shadow-shady">
             <Image
                 className="pl-[2rem] xl:ml-[3rem] h-[57.6px] w-[80px] sm:h-[72px] sm:w-[100px] mt-[0.3rem] sm:mt-[0]"
                 src="/icon.png"

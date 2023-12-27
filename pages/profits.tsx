@@ -134,7 +134,7 @@ export default function Profits() {
         <div ref={ref}>
             <div className="text-center flex-wrap">
                 <div className="flex mt-[7rem] justify-center px-4">
-                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
+                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                         Your Current Proceeds
                     </h4>
                 </div>
@@ -142,18 +142,18 @@ export default function Profits() {
                     <div className="flex flex-col gap-3 w-[16rem] self-center">
                         <div className="font-bold text-red-600 text-3xl">
                             {handleGetProceeds.data ? (
-                                <div>
+                                <div className="drop-shadow-shady">
                                     <span className="text-white">{parseFloat(ethers.utils.formatEther(handleGetProceeds.data as BigNumber))}</span> ETH{" "}
                                 </div>
                             ) : (
-                                <div className="text-2xl">Wallet Not Connected</div>
+                                <div className="text-2xl drop-shadow-shady">Wallet Not Connected</div>
                             )}
                         </div>
 
                         <Button name="Withdraw" onClick={handleWithdraw} disabled={isLoading} />
                     </div>
                     <div className="flex mt-[4rem] justify-center px-20 lg:px-1 mb-[1.5rem] lg:mb-0">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                             Stake Your Proceeds With Verse
                         </h4>
                     </div>

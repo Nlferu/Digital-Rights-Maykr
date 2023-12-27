@@ -20,7 +20,10 @@ module.exports = {
             },
             boxShadow: {
                 sun: "0px 0px 5px rgba(253, 186, 116, 0.8)",
-                dark: "0 0 15px 5px rgba(0, 0, 0, 1)",
+                dark: "4px 4px 15px 10px rgba(0, 0, 0, 1)",
+            },
+            dropShadow: {
+                shady: "5px 5px 3px rgba(0, 0, 0, 0.9)",
             },
             colors: {
                 lightGreen: "rgb(23,166,28)",
@@ -35,8 +38,9 @@ module.exports = {
                 tblack: "rgba(0, 0, 0, 0.75)",
                 impale: "rgba(12, 9, 9, 0.6)",
                 hpale: "rgba(12, 9, 9, 0.35)",
-                certL: "rgba(200, 179, 137, 0.8)",
-                certH: "rgba(159, 137, 94, 0.8)",
+                certL: "rgb(221 214 254)",
+                certH: "#8a2cb2",
+                rami: "rgba(47, 21, 71, 1)",
             },
             keyframes: {
                 fullSpin: {

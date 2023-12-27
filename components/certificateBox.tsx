@@ -112,7 +112,7 @@ export default function CertificateBox({ certificateId }: CertificateBoxProps) {
                         </Tilt>
                     </a>
                 ) : (
-                    <div>There is no image</div>
+                    <div className="text-[#5acdf1] font-bold">Image not available for this NFT yet...</div>
                 )}
             </div>
             <div className="">

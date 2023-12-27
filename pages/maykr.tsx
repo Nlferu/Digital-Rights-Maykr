@@ -79,9 +79,9 @@ export default function Maykr() {
             })
 
             // Restore the box shadow after generating the image
-            certificateContainer.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
+            certificateContainer.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
             // Pass the image blob to the upload function
-            if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber()) {
+            if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber() >= 0) {
                 const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
                 console.log("NFT.storage response:", metadata)
 
@@ -100,7 +100,12 @@ export default function Maykr() {
                 }
             } else {
                 console.log("Fill all the fields")
+                handleGenerateError("Fill all the fields")
+                setIsMinting(false)
             }
+        } else {
+            handleGenerateError("Fill all the fields")
+            setIsMinting(false)
         }
     }
 
@@ -113,7 +118,7 @@ export default function Maykr() {
             html2canvas(container)
                 .then((canvas) => {
                     // Restore the box shadow after generating the image
-                    container.style.boxShadow = "0px 0px 25px rgba(253, 253, 253, 0.8)"
+                    container.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
 
                     canvas.toBlob((blob) => {
                         if (blob && emitted.data) {
@@ -153,11 +158,21 @@ export default function Maykr() {
         deleteFromNftStorage(cid)
     }
 
+    async function handleGenerateError(error: string) {
+        dispatch({
+            type: "error",
+            message: error,
+            title: "NFT Creation Error",
+            position: "bottomR",
+            icon: "exclamation",
+        })
+    }
+
     return (
         <div ref={ref}>
             {connectionStatus !== "connected" ? (
                 <div className="flex flex-col text-center items-center justify-center mt-[21rem] mb-0 sm:mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[10rem]">
+                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[10rem] drop-shadow-shady">
                         Connect Your Wallet To Create Certificate
                     </p>
                 </div>
@@ -192,7 +207,7 @@ export default function Maykr() {
                     {/* Certificate will show only if we have "art" field filled */}
                     {!form.art && (
                         <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
-                            <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center">
+                            <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
                                 Magic Will Be Happening Here...
                             </p>
                         </div>
@@ -204,13 +219,13 @@ export default function Maykr() {
                                 id="certificate-container"
                                 style={{
                                     position: "relative",
-                                    width: "28rem",
-                                    height: "39.6rem",
-                                    background: `url('/certificate-template.png')`,
+                                    width: "25.4rem",
+                                    height: "35.9rem",
+                                    background: `url('/certificate.png')`,
                                     backgroundSize: "contain",
                                     backgroundPosition: "center",
                                     backgroundRepeat: "no-repeat",
-                                    boxShadow: "0px 0px 25px rgba(253, 253, 253, 0.8)",
+                                    boxShadow: "0px 0px 25px 15px rgba(3, 3, 3, 1)",
                                 }}
                             >
                                 <div
@@ -223,41 +238,45 @@ export default function Maykr() {
                                         color: "white",
                                     }}
                                 >
-                                    <p className="text-certH text-xl mt-3">Author</p>
-                                    <p className="text-certL text-sm mt-1">
+                                    <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                        Author
+                                    </p>
+                                    <p className="text-certL text-sm mt-1" style={{ textShadow: "2px 2px #000" }}>
                                         <span>{form.author}</span>
                                     </p>
                                     {form.co_author && (
-                                        <div className="text-certH text-xl">
+                                        <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
                                             Co-Author
-                                            <p className="text-certL text-sm mt-1">
+                                            <p className="text-certL text-sm mt-1 font-normal">
                                                 <span>{form.co_author}</span>
                                             </p>
                                         </div>
                                     )}
-                                    <div className="text-certH text-xl">
+                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
                                         Title
-                                        <p className="text-certL text-sm mt-1">
+                                        <p className="text-certL text-sm mt-1 font-normal">
                                             <span>{form.title}</span>
                                         </p>
                                     </div>
-                                    <div className="text-certH text-xl">
+                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
                                         Creator Address
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1">{account}</span>
+                                            <span className="text-certL text-sm mt-1 font-normal">{account}</span>
                                         </p>
                                     </div>
-                                    <div className="text-certH text-xl">
+                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
                                         Art Hash
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-xs mt-1">{form.art}</span>
+                                            <span className="text-certL text-[0.72rem] mt-1 font-normal">{form.art}</span>
                                         </p>
                                     </div>
-                                    <p className="text-certH text-xl">Certificate_Id_{emitted.data.toNumber()}</p>
-                                    <div className="text-certH text-xl">
+                                    <p className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                        Certificate_Id_{emitted.data.toNumber()}
+                                    </p>
+                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
                                         Description{" "}
                                         <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1">{form.description}</span>
+                                            <span className="text-certL text-sm mt-1 font-normal">{form.description}</span>
                                         </p>
                                     </div>
                                 </div>

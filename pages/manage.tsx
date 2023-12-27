@@ -118,7 +118,7 @@ export default function Manage() {
         <div ref={ref}>
             <div>
                 <div className="flex mt-[7rem] justify-center mb-[1rem]">
-                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
+                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                         Lend Certificate
                     </h4>
                 </div>
@@ -139,7 +139,7 @@ export default function Manage() {
                         <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
                     </div>
                     <div className="flex mt-[5rem] justify-center">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold">
+                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                             Block Certificate
                         </h4>
                     </div>

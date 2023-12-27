@@ -19,13 +19,13 @@ export default function Gallery() {
             <div className="flex flex-wrap gap-10 mt-[8rem] p-[1rem] justify-center">
                 {connectionStatus !== "connected" ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-0 sm:mb-[15rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem] drop-shadow-shady">
                             Connect Your Wallet To View Certificates
                         </p>
                     </div>
                 ) : emitted.data && emitted.data.toNumber() === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem] sm:h-[10rem]">
+                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem] sm:h-[10rem] drop-shadow-shady">
                             No Certificates To Display For Now...
                         </p>
                     </div>

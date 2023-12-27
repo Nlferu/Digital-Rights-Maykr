@@ -6,7 +6,7 @@ export default function About() {
     const contractAddress = contract.address
 
     return (
-        <section className="block mt-[6rem] text-center text-white" ref={ref}>
+        <section className="block mt-[6rem] text-center text-white drop-shadow-shady" ref={ref}>
             <div className="text-center">
                 <h1 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-4xl sm:text-6xl font-bold">
                     Digital Rights Maykr
