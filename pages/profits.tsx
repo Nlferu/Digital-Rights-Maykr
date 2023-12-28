@@ -169,7 +169,7 @@ export default function Profits() {
 
                         <Button name="Verse Stake" onClick={handleVerseStake} disabled={isLoadingB} />
                     </div>
-                    <div className="max-w-[40rem] mt-[2rem] text-gray-400 text-xs mb-[4rem] px-24 lg:px-1">
+                    <div className="max-w-[40rem] mt-[2rem] text-gray-400 text-xs mb-[4rem] px-4 lg:px-1">
                         Rewards for staking are paid in Verse. Above function allows you to deposit your proceeds into Verse, which will give you some Liquidity
                         Pools (LP) tokens with some APY profit %. If you would like to go further you can deposit your generated LP tokens into Verse Farms for
                         even more profits! You can find more details here: <br></br>

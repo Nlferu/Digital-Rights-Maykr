@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { ConnectButton } from "web3uikit"
 import { links } from "@/lib/data"
 import { Space_Grotesk } from "next/font/google"
 import { FaBars, FaTimes } from "react-icons/fa"
 import { useActiveSectionContext } from "@/context/active-section-context"
-import { ConnectWallet } from "@thirdweb-dev/react"
+import { ConnectWallet, darkTheme } from "@thirdweb-dev/react"
 import Link from "next/link"
 import Image from "next/image"
 import clsx from "clsx"
@@ -105,11 +104,43 @@ export default function Header() {
                     ))}
                 </div>
                 <div className="flex justify-center items-center mt-[0.5rem] mb-[1rem]">
-                    <ConnectWallet theme={"dark"} modalSize={"wide"} switchToActiveChain={true} />
+                    <ConnectWallet
+                        theme={darkTheme({
+                            colors: {
+                                primaryButtonText: "#fff",
+                                primaryText: "#5acdf1",
+                                primaryButtonBg: "#9833e3",
+                                connectedButtonBg: "#20093d",
+                                connectedButtonBgHover: "#4d0dab",
+                                modalBg: "#1d093c",
+                                dropdownBg: "#1d093c",
+                                secondaryButtonBg: "#fff",
+                                walletSelectorButtonHoverBg: "#411c91",
+                            },
+                        })}
+                        modalSize={"wide"}
+                        switchToActiveChain={true}
+                    />
                 </div>
             </nav>
-            <div className="hidden lg:flex absolute right-[0.5rem] top-[4.5rem]">
-                <ConnectWallet theme={"dark"} modalSize={"wide"} switchToActiveChain={true} />
+            <div className="hidden lg:flex absolute right-[1.5rem] top-[4.5rem]">
+                <ConnectWallet
+                    theme={darkTheme({
+                        colors: {
+                            primaryButtonText: "#fff",
+                            primaryText: "#5acdf1",
+                            primaryButtonBg: "#9833e3",
+                            connectedButtonBg: "#20093d",
+                            connectedButtonBgHover: "#4d0dab",
+                            modalBg: "#1d093c",
+                            dropdownBg: "#1d093c",
+                            secondaryButtonBg: "#fff",
+                            walletSelectorButtonHoverBg: "#411c91",
+                        },
+                    })}
+                    modalSize={"wide"}
+                    switchToActiveChain={true}
+                />
             </div>
             <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer"}>
                 {navBtn ? <FaTimes onClick={handleNavBtn} /> : <FaBars onClick={handleNavBtn} />}
