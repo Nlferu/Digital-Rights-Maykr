@@ -4,14 +4,14 @@ import { useNotification } from "web3uikit"
 import { RightsButton, DisabledButton } from "@/components/button"
 import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
-import Tilt from "react-parallax-tilt"
 import Image from "next/image"
 
 type CertificateBoxProps = {
     certificateId: number
+    onCertificateClick: (url: string) => void
 }
 
-export default function CertificateBox({ certificateId }: CertificateBoxProps) {
+export default function CertificateBox({ certificateId, onCertificateClick }: CertificateBoxProps) {
     const [updatedUrl, setUpdatedUrl] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useNotification()
@@ -96,26 +96,24 @@ export default function CertificateBox({ certificateId }: CertificateBoxProps) {
 
     return (
         <div className="">
-            <div className="hover:scale-110 duration-500">
+            <div className="hover:scale-110 duration-500 hover:drop-shadow-cert">
                 {updatedUrl && updatedUrl.toString() !== "" ? (
-                    <a href={updatedUrl} target="_blank">
-                        <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
-                            <Image
-                                className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark"
-                                src={updatedUrl}
-                                height={400}
-                                width={400}
-                                quality="95"
-                                priority={true}
-                                alt="NFT Image"
-                            />
-                        </Tilt>
+                    <a onClick={() => onCertificateClick(updatedUrl)}>
+                        <Image
+                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark hover:shadow-none duration-500"
+                            src={updatedUrl}
+                            height={400}
+                            width={400}
+                            quality="95"
+                            priority={true}
+                            alt="NFT Image"
+                        />
                     </a>
                 ) : (
                     <div className="text-[#5acdf1] font-bold">Image not available for this NFT yet...</div>
                 )}
             </div>
-            <div className="">
+            <div className="mt-[3rem]">
                 {!lendingStatus.data ? (
                     <DisabledButton name="Unbuyable" />
                 ) : (

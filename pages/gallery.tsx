@@ -1,11 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
 import { useSectionInView } from "@/lib/hooks"
 import { useContract, useContractRead, useConnectionStatus } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
+import Modal from "@/components/modal"
+import Tilt from "react-parallax-tilt"
+import Image from "next/image"
 
 export default function Gallery() {
     const { ref } = useSectionInView("Gallery", 0.5)
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [selectedCertificateImage, setSelectedCertificateImage] = useState<string>("")
 
     const contractAddress = maykr.address
     const abi = maykr.abi
@@ -14,9 +19,23 @@ export default function Gallery() {
     const { contract } = useContract(contractAddress, abi)
     const emitted = useContractRead(contract, "emittedCount")
 
+    const handleCertificateClick = (imageUrl: string) => {
+        setSelectedCertificateImage(imageUrl)
+        setModalOpen(true)
+    }
+
     return (
         <section className="min-h-[48.5rem]" ref={ref}>
-            <div className="flex flex-wrap gap-10 mt-[8rem] p-[1rem] justify-center">
+            {modalOpen && (
+                <Modal closeModal={() => setModalOpen(false)}>
+                    {selectedCertificateImage && (
+                        <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
+                            <Image src={selectedCertificateImage} height={400} width={400} quality="95" priority={true} alt="NFT Image" />
+                        </Tilt>
+                    )}
+                </Modal>
+            )}
+            <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
                 {connectionStatus !== "connected" ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-0 sm:mb-[15rem]">
                         <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem] drop-shadow-shady">
@@ -30,11 +49,11 @@ export default function Gallery() {
                         </p>
                     </div>
                 ) : (
-                    <div className="max-w-[100rem] flex items-center justify-center flex-wrap w-full gap-10 list-none mt-[1rem]">
+                    <div className="max-w-[100rem] flex items-center justify-center flex-wrap w-full gap-20 list-none mt-[1rem]">
                         {Array.from({ length: (emitted.data as number) || 0 }, (_, index) => (
                             <li className="" key={index}>
                                 <React.Fragment key={index}>
-                                    <CertificateBox certificateId={index} />
+                                    <CertificateBox certificateId={index} onCertificateClick={handleCertificateClick} />
                                 </React.Fragment>
                             </li>
                         ))}
