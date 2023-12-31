@@ -2,7 +2,7 @@ import { BigNumber } from "ethers"
 import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import { RightsButton, DisabledButton } from "@/components/button"
-import { useAddress, useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react"
+import { useAddress, useContract, useConnectionStatus, useContractRead, useContractWrite } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import Image from "next/image"
 
@@ -21,6 +21,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
 
     const { contract } = useContract(contractAddress, abi)
     const account = useAddress()
+    const connectionStatus = useConnectionStatus()
     const lendingStatus = useContractRead(contract, "getLendingStatus", [certificateId])
     const metadataURI = useContractRead(contract, "tokenURI", [certificateId])
     const handleBuy = useContractWrite(contract, "buyLicense")
@@ -43,23 +44,27 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
     }
 
     const handleBuyRights = async () => {
-        setIsLoading(true)
+        if (connectionStatus === "connected") {
+            setIsLoading(true)
 
-        if (contract) {
-            const price = await contract.call("getCertificatePrice", [certificateId])
-            console.log("Price: ", price as number)
+            if (contract) {
+                const price = await contract.call("getCertificatePrice", [certificateId])
+                console.log("Price: ", price as number)
 
-            try {
-                await handleBuy.mutateAsync({ args: [certificateId, account], overrides: { value: price as BigNumber } })
-                handleBuyRightsSuccess()
-            } catch (error) {
-                handleBuyRightsError()
-                console.error(`Buying Rights To Use Certified Art Failed With Error: ${error}`)
-            } finally {
-                setIsLoading(false)
+                try {
+                    await handleBuy.mutateAsync({ args: [certificateId, account], overrides: { value: price as BigNumber } })
+                    handleBuyRightsSuccess()
+                } catch (error) {
+                    handleBuyRightsError("Buying Rights Failed")
+                    console.error(`Buying Rights To Use Certified Art Failed With Error: ${error}`)
+                } finally {
+                    setIsLoading(false)
+                }
+            } else {
+                console.log("Contract does not exists")
             }
         } else {
-            console.log("Contract does not exists")
+            handleBuyRightsError("Wallet Not Connected")
         }
     }
 
@@ -73,10 +78,10 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
         })
     }
 
-    async function handleBuyRightsError() {
+    async function handleBuyRightsError(error: string) {
         dispatch({
             type: "error",
-            message: "Buying Rights Failed",
+            message: error,
             title: "Buying Rights Error!",
             position: "bottomR",
             icon: "exclamation",
@@ -100,7 +105,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
                 {updatedUrl && updatedUrl.toString() !== "" ? (
                     <a onClick={() => onCertificateClick(updatedUrl)}>
                         <Image
-                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-dark hover:shadow-none duration-500"
+                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-cert hover:shadow-none duration-500"
                             src={updatedUrl}
                             height={400}
                             width={400}

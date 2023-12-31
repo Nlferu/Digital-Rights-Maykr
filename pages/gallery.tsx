@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useSectionInView } from "@/lib/hooks"
-import { useContract, useContractRead, useConnectionStatus } from "@thirdweb-dev/react"
+import { useContract, useContractRead } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
 import Modal from "@/components/modal"
@@ -15,7 +15,6 @@ export default function Gallery() {
     const contractAddress = maykr.address
     const abi = maykr.abi
 
-    const connectionStatus = useConnectionStatus()
     const { contract } = useContract(contractAddress, abi)
     const emitted = useContractRead(contract, "emittedCount")
 
@@ -36,13 +35,7 @@ export default function Gallery() {
                 </Modal>
             )}
             <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
-                {connectionStatus !== "connected" ? (
-                    <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-0 sm:mb-[15rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[11rem] drop-shadow-shady">
-                            Connect Your Wallet To View Certificates
-                        </p>
-                    </div>
-                ) : emitted.data && emitted.data.toNumber() === 0 ? (
+                {emitted.data && emitted.data.toNumber() === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
                         <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem] sm:h-[10rem] drop-shadow-shady">
                             No Certificates To Display For Now...

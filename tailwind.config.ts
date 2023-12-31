@@ -20,7 +20,8 @@ module.exports = {
             },
             boxShadow: {
                 sun: "0px 0px 5px rgba(253, 186, 116, 0.8)",
-                dark: "0px 0px 15px 5px #5acdf1",
+                dark: "4px 4px 15px 10px rgba(0, 0, 0, 1)",
+                cert: "0px 0px 15px 5px #5acdf1",
             },
             dropShadow: {
                 shady: "5px 5px 3px rgba(0, 0, 0, 0.9)",

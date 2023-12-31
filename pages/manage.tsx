@@ -90,7 +90,7 @@ export default function Manage() {
                 setIsLoadingB(false)
             }
         } else {
-            handleAllowError("Wallet Not Connected")
+            handleBlockError("Wallet Not Connected")
         }
     }
 

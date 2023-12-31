@@ -57,61 +57,66 @@ export default function Maykr() {
     }
 
     const handleGenerateCertificate = async () => {
-        setIsMinting(true)
+        if (connectionStatus === "connected") {
+            setIsMinting(true)
 
-        const certificateContainer = containerRef.current
-        // Reset the box shadow before generating the image
-        if (certificateContainer) {
-            certificateContainer.style.boxShadow = "none"
+            const certificateContainer = containerRef.current
+            // Reset the box shadow before generating the image
+            if (certificateContainer) {
+                certificateContainer.style.boxShadow = "none"
 
-            const canvas = await html2canvas(certificateContainer)
+                const canvas = await html2canvas(certificateContainer)
 
-            // Convert the canvas to a Blob object
-            const imageBlob: Blob = await new Promise((resolve) => {
-                canvas.toBlob((blob) => {
-                    if (blob) {
-                        resolve(blob)
+                // Convert the canvas to a Blob object
+                const imageBlob: Blob = await new Promise((resolve) => {
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            resolve(blob)
+                        } else {
+                            // Handle the case where resolving blob fails
+                            console.log("Unable to create Blob from canvas")
+                        }
+                    }, "image/png")
+                })
+
+                // Restore the box shadow after generating the image
+                certificateContainer.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
+                // Pass the image blob to the upload function
+                if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber() >= 0) {
+                    const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
+                    console.log("NFT.storage response:", metadata)
+
+                    if (metadata) {
+                        try {
+                            await handleMint.mutateAsync({ args: [metadata] })
+                            handleMintSuccess()
+                        } catch (error) {
+                            console.log("Following error occurred:", error)
+                            handleMintError(cid)
+                        } finally {
+                            setIsMinting(false)
+                        }
                     } else {
-                        // Handle the case where resolving blob fails
-                        console.log("Unable to create Blob from canvas")
-                    }
-                }, "image/png")
-            })
-
-            // Restore the box shadow after generating the image
-            certificateContainer.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
-            // Pass the image blob to the upload function
-            if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber() >= 0) {
-                const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
-                console.log("NFT.storage response:", metadata)
-
-                if (metadata) {
-                    try {
-                        await handleMint.mutateAsync({ args: [metadata] })
-                        handleMintSuccess()
-                    } catch (error) {
-                        console.log("Following error occurred:", error)
-                        handleMintError(cid)
-                    } finally {
-                        setIsMinting(false)
+                        console.log("No metadata available")
                     }
                 } else {
-                    console.log("No metadata available")
+                    console.log("Fill all the fields")
+                    handleGenerateError("Fill all the fields")
+                    setIsMinting(false)
                 }
             } else {
-                console.log("Fill all the fields")
                 handleGenerateError("Fill all the fields")
                 setIsMinting(false)
             }
         } else {
-            handleGenerateError("Fill all the fields")
-            setIsMinting(false)
+            handleGenerateError("Wallet Not Connected")
         }
     }
 
     const handleDownloadCertificate = async () => {
         const container = containerRef.current
         // Remove the box shadow temporarily before generating the image
+
         if (container) {
             container.style.boxShadow = "none"
 
@@ -170,122 +175,114 @@ export default function Maykr() {
 
     return (
         <div ref={ref}>
-            {connectionStatus !== "connected" ? (
-                <div className="flex flex-col text-center items-center justify-center mt-[21rem] mb-0 sm:mb-[17.5rem]">
-                    <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[20rem] sm:h-[10rem] drop-shadow-shady">
-                        Connect Your Wallet To Create Certificate
-                    </p>
-                </div>
-            ) : (
-                <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0">
-                    <div className="flex mt-[4.5rem] justify-center">
-                        <div className="flex flex-col gap-3 w-[16rem] self-center">
-                            <input
-                                type="file"
-                                style={{ color: "white" }}
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer"
-                                id="art"
-                                name="art"
-                                placeholder="Art Hash"
-                                onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
-                            />
+            <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0">
+                <div className="flex mt-[4.5rem] justify-center">
+                    <div className="flex flex-col gap-3 w-[16rem] self-center">
+                        <input
+                            type="file"
+                            style={{ color: "white" }}
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer"
+                            id="art"
+                            name="art"
+                            placeholder="Art Hash"
+                            onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
+                        />
 
-                            {inputs.map((input) => (
-                                <input
-                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                    key={input.name}
-                                    type={input.type}
-                                    name={input.name}
-                                    id={input.name}
-                                    placeholder={input.placeholder}
-                                    onChange={handleInputChange}
-                                ></input>
-                            ))}
-                            <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
-                        </div>
+                        {inputs.map((input) => (
+                            <input
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                                key={input.name}
+                                type={input.type}
+                                name={input.name}
+                                id={input.name}
+                                placeholder={input.placeholder}
+                                onChange={handleInputChange}
+                            ></input>
+                        ))}
+                        <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
                     </div>
-                    {/* Certificate will show only if we have "art" field filled */}
-                    {!form.art && (
-                        <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
-                            <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
-                                Magic Will Be Happening Here...
-                            </p>
-                        </div>
-                    )}
-                    {form.art && (
-                        <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
+                </div>
+                {/* Certificate will show only if we have "art" field filled */}
+                {!form.art && (
+                    <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
+                        <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
+                            Magic Will Be Happening Here...
+                        </p>
+                    </div>
+                )}
+                {form.art && (
+                    <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
+                        <div
+                            ref={containerRef}
+                            id="certificate-container"
+                            style={{
+                                position: "relative",
+                                width: "25.4rem",
+                                height: "35.9rem",
+                                background: `url('/certificate.png')`,
+                                backgroundSize: "contain",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                                boxShadow: "0px 0px 25px 15px rgba(3, 3, 3, 1)",
+                            }}
+                        >
                             <div
-                                ref={containerRef}
-                                id="certificate-container"
                                 style={{
-                                    position: "relative",
-                                    width: "25.4rem",
-                                    height: "35.9rem",
-                                    background: `url('/certificate.png')`,
-                                    backgroundSize: "contain",
-                                    backgroundPosition: "center",
-                                    backgroundRepeat: "no-repeat",
-                                    boxShadow: "0px 0px 25px 15px rgba(3, 3, 3, 1)",
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    textAlign: "center",
+                                    color: "white",
                                 }}
                             >
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        left: "50%",
-                                        transform: "translate(-50%, -50%)",
-                                        textAlign: "center",
-                                        color: "white",
-                                    }}
-                                >
-                                    <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Author
-                                    </p>
-                                    <p className="text-certL text-sm mt-1" style={{ textShadow: "2px 2px #000" }}>
-                                        <span>{form.author}</span>
-                                    </p>
-                                    {form.co_author && (
-                                        <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                            Co-Author
-                                            <p className="text-certL text-sm mt-1 font-normal">
-                                                <span>{form.co_author}</span>
-                                            </p>
-                                        </div>
-                                    )}
+                                <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Author
+                                </p>
+                                <p className="text-certL text-sm mt-1" style={{ textShadow: "2px 2px #000" }}>
+                                    <span>{form.author}</span>
+                                </p>
+                                {form.co_author && (
                                     <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Title
+                                        Co-Author
                                         <p className="text-certL text-sm mt-1 font-normal">
-                                            <span>{form.title}</span>
+                                            <span>{form.co_author}</span>
                                         </p>
                                     </div>
-                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Creator Address
-                                        <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1 font-normal">{account}</span>
-                                        </p>
-                                    </div>
-                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Art Hash
-                                        <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-[0.72rem] mt-1 font-normal">{form.art}</span>
-                                        </p>
-                                    </div>
-                                    <p className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Certificate_Id_{emitted.data.toNumber()}
+                                )}
+                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Title
+                                    <p className="text-certL text-sm mt-1 font-normal">
+                                        <span>{form.title}</span>
                                     </p>
-                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Description{" "}
-                                        <p className="text-certL text-sm mt-1">
-                                            <span className="text-certL text-sm mt-1 font-normal">{form.description}</span>
-                                        </p>
-                                    </div>
+                                </div>
+                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Creator Address
+                                    <p className="text-certL text-sm mt-1">
+                                        <span className="text-certL text-sm mt-1 font-normal">{account}</span>
+                                    </p>
+                                </div>
+                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Art Hash
+                                    <p className="text-certL text-sm mt-1">
+                                        <span className="text-certL text-[0.72rem] mt-1 font-normal">{form.art}</span>
+                                    </p>
+                                </div>
+                                <p className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Certificate_Id_{emitted.data.toNumber()}
+                                </p>
+                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                    Description{" "}
+                                    <p className="text-certL text-sm mt-1">
+                                        <span className="text-certL text-sm mt-1 font-normal">{form.description}</span>
+                                    </p>
                                 </div>
                             </div>
-                            <Button name="Download" onClick={handleDownloadCertificate} />
                         </div>
-                    )}
-                </div>
-            )}
+                        <Button name="Download" onClick={handleDownloadCertificate} />
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
