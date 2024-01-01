@@ -28,7 +28,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
 
     const getCorrectImageUrl = async () => {
         metadataURI.data
-        //console.log("Metadata: ", metadataURI)
+        console.log("Metadata: ", metadataURI)
 
         const response = await fetch(metadataURI.data)
         const metadata = await response.json()
@@ -115,7 +115,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
                         />
                     </a>
                 ) : (
-                    <div className="text-[#5acdf1] font-bold">Image not available for this NFT yet...</div>
+                    <div className="text-[#5acdf1] font-bold">Loading Image From Blockchain...</div>
                 )}
             </div>
             <div className="mt-[3rem]">

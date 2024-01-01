@@ -4,3 +4,4 @@
 4. Fix error handling
 5. Fix error's theme
 6. Check if wallet is necessary to display certificates
+7. Add resizing to flipped Cert

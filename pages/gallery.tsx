@@ -4,8 +4,6 @@ import { useContract, useContractRead } from "@thirdweb-dev/react"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
 import Modal from "@/components/modal"
-import Tilt from "react-parallax-tilt"
-import Image from "next/image"
 
 export default function Gallery() {
     const { ref } = useSectionInView("Gallery", 0.5)
@@ -25,15 +23,7 @@ export default function Gallery() {
 
     return (
         <section className="min-h-[48.5rem]" ref={ref}>
-            {modalOpen && (
-                <Modal closeModal={() => setModalOpen(false)}>
-                    {selectedCertificateImage && (
-                        <Tilt tiltReverse={true} glareEnable={true} glareColor="#a4a4a4" glareMaxOpacity={0.25}>
-                            <Image src={selectedCertificateImage} height={400} width={400} quality="95" priority={true} alt="NFT Image" />
-                        </Tilt>
-                    )}
-                </Modal>
-            )}
+            {modalOpen && <Modal closeModal={() => setModalOpen(false)} selectedCertificateImage={selectedCertificateImage} />}
             <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
                 {emitted.data && emitted.data.toNumber() === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
