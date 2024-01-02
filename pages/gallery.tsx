@@ -8,6 +8,7 @@ import Modal from "@/components/modal"
 export default function Gallery() {
     const { ref } = useSectionInView("Gallery", 0.5)
     const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [tokenId, setTokenId] = useState<number>(0)
     const [selectedCertificateImage, setSelectedCertificateImage] = useState<string>("")
 
     const contractAddress = maykr.address
@@ -16,14 +17,15 @@ export default function Gallery() {
     const { contract } = useContract(contractAddress, abi)
     const emitted = useContractRead(contract, "emittedCount")
 
-    const handleCertificateClick = (imageUrl: string) => {
+    const handleCertificateClick = (tokenId: number, imageUrl: string) => {
+        setTokenId(tokenId)
         setSelectedCertificateImage(imageUrl)
         setModalOpen(true)
     }
 
     return (
         <section className="min-h-[48.5rem]" ref={ref}>
-            {modalOpen && <Modal closeModal={() => setModalOpen(false)} selectedCertificateImage={selectedCertificateImage} />}
+            {modalOpen && <Modal tokenId={tokenId} closeModal={() => setModalOpen(false)} selectedCertificateImage={selectedCertificateImage} />}
             <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
                 {emitted.data && emitted.data.toNumber() === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">

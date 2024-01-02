@@ -8,7 +8,7 @@ import Image from "next/image"
 
 type CertificateBoxProps = {
     certificateId: number
-    onCertificateClick: (url: string) => void
+    onCertificateClick: (token: number, url: string) => void
 }
 
 export default function CertificateBox({ certificateId, onCertificateClick }: CertificateBoxProps) {
@@ -103,9 +103,9 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
         <div className="">
             <div className="hover:scale-110 duration-500 hover:drop-shadow-cert">
                 {updatedUrl && updatedUrl.toString() !== "" ? (
-                    <a onClick={() => onCertificateClick(updatedUrl)}>
+                    <a onClick={() => onCertificateClick(certificateId, updatedUrl)}>
                         <Image
-                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-cert hover:shadow-none duration-500"
+                            className="w-[17.5rem] h-[24.09rem] object-cover shadow-cert hover:shadow-none duration-500 hover:cursor-pointer"
                             src={updatedUrl}
                             height={400}
                             width={400}
@@ -115,7 +115,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
                         />
                     </a>
                 ) : (
-                    <div className="text-[#5acdf1] font-bold">Loading Image From Blockchain...</div>
+                    <div className="text-[#5acdf1] font-bold">Loading Image From IPFS...</div>
                 )}
             </div>
             <div className="mt-[3rem]">

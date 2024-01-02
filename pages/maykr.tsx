@@ -80,7 +80,7 @@ export default function Maykr() {
                 })
 
                 // Restore the box shadow after generating the image
-                certificateContainer.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
+                certificateContainer.style.boxShadow = "0px 0px 15px 5px #5acdf1"
                 // Pass the image blob to the upload function
                 if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber() >= 0) {
                     const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
@@ -123,7 +123,7 @@ export default function Maykr() {
             html2canvas(container)
                 .then((canvas) => {
                     // Restore the box shadow after generating the image
-                    container.style.boxShadow = "0px 0px 25px 15px rgba(3, 3, 3, 1)"
+                    container.style.boxShadow = "0px 0px 15px 5px #5acdf1"
 
                     canvas.toBlob((blob) => {
                         if (blob && emitted.data) {
@@ -223,7 +223,7 @@ export default function Maykr() {
                                 backgroundSize: "contain",
                                 backgroundPosition: "center",
                                 backgroundRepeat: "no-repeat",
-                                boxShadow: "0px 0px 25px 15px rgba(3, 3, 3, 1)",
+                                boxShadow: "0px 0px 15px 5px #5acdf1",
                             }}
                         >
                             <div

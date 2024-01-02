@@ -1,17 +1,29 @@
 import React, { useState, useRef, MouseEvent } from "react"
+import { BigNumber, ethers } from "ethers"
+import { useContract, useContractRead } from "@thirdweb-dev/react"
+import { FaEthereum } from "react-icons/fa"
+import maykr from "@/contracts/DigitalRightsMaykr.json"
 import Tilt from "react-parallax-tilt"
 import Image from "next/image"
 
 type ModalProps = {
     children?: React.ReactNode
+    tokenId: number
     closeModal: () => void
     selectedCertificateImage: string
 }
 
-export default function Modal({ children, closeModal, selectedCertificateImage }: ModalProps) {
+export default function Modal({ children, tokenId, closeModal, selectedCertificateImage }: ModalProps) {
     const modalRef = useRef<HTMLDivElement>(null)
     const flipRef = useRef<HTMLDivElement>(null)
     const [flipHorizontally, setFlipHorizontally] = useState<boolean>(false)
+
+    const contractAddress = maykr.address
+    const abi = maykr.abi
+
+    const { contract } = useContract(contractAddress, abi)
+    const lendingPeriod = useContractRead(contract, "getLendingPeriod", [tokenId])
+    const certificatePrice = useContractRead(contract, "getCertificatePrice", [tokenId])
 
     const handleClick = (e: MouseEvent<HTMLDivElement>) => {
         if (modalRef.current && e.target === modalRef.current) {
@@ -33,13 +45,32 @@ export default function Modal({ children, closeModal, selectedCertificateImage }
                     {flipHorizontally ? (
                         <div
                             ref={flipRef}
-                            className="w-[25rem] h-[35.32rem] bg-[#26133b] border border-black flex items-center justify-center text-white my-rotate-y-180"
+                            className="hover:cursor-pointer gap-[15vw] sm:gap-20 font-bold text-2xl max-w-[500px] max-h-[565.109px] px-[1.621rem] py-[6.1rem] bg-stone-950 border border-black flex flex-col items-center justify-center my-rotate-y-180 shadow-cert"
                             onClick={handleClick}
                         >
-                            FlippedCert
+                            <div className="text-green-600 underline underline-offset-4" style={{ textShadow: "4px 4px #000" }}>
+                                Certificate Data
+                            </div>
+                            <div className="text-green-400" style={{ textShadow: "4px 4px #000" }}>
+                                TokenId: <span className="text-white">{tokenId}</span>
+                            </div>
+                            <div className="flex text-green-400" style={{ textShadow: "4px 4px #000" }}>
+                                Price:
+                                <span className="text-white flex ml-[0.5rem]">
+                                    {certificatePrice ? parseFloat(ethers.utils.formatEther(certificatePrice.data as BigNumber)) : 0}
+                                    <FaEthereum className="ml-[0.4rem] mt-[0.1rem] text-3xl text-green-300" />
+                                </span>
+                            </div>
+                            <div className="text-green-400 text-center" style={{ textShadow: "4px 4px #000" }}>
+                                Lending Period:{" "}
+                                <span className="text-white">
+                                    {lendingPeriod && lendingPeriod.data > 1 ? lendingPeriod.data + " days" : lendingPeriod.data + " day"}
+                                </span>
+                            </div>
                         </div>
                     ) : (
                         <Image
+                            className="shadow-cert hover:cursor-pointer"
                             src={selectedCertificateImage}
                             height={400}
                             width={400}
