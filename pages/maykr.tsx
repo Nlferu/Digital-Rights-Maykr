@@ -215,27 +215,9 @@ export default function Maykr() {
                         <div
                             ref={containerRef}
                             id="certificate-container"
-                            style={{
-                                position: "relative",
-                                width: "25.4rem",
-                                height: "35.9rem",
-                                background: `url('/certificate.png')`,
-                                backgroundSize: "contain",
-                                backgroundPosition: "center",
-                                backgroundRepeat: "no-repeat",
-                                boxShadow: "0px 0px 15px 5px #5acdf1",
-                            }}
+                            className="relative w-[25.4rem] h-[35.9rem] bg-contain bg-center bg-no-repeat bg-[url('/certificate.png')] shadow-cert"
                         >
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    top: "50%",
-                                    left: "50%",
-                                    transform: "translate(-50%, -50%)",
-                                    textAlign: "center",
-                                    color: "white",
-                                }}
-                            >
+                            <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white text-center">
                                 <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
                                     Author
                                 </p>

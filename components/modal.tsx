@@ -45,7 +45,7 @@ export default function Modal({ children, tokenId, closeModal, selectedCertifica
                     {flipHorizontally ? (
                         <div
                             ref={flipRef}
-                            className="hover:cursor-pointer gap-[15vw] sm:gap-20 font-bold text-2xl max-w-[500px] max-h-[565.109px] px-[1.621rem] py-[6.1rem] bg-stone-950 border border-black flex flex-col items-center justify-center my-rotate-y-180 shadow-cert"
+                            className="hover:cursor-pointer gap-[15vw] sm:gap-20 font-bold text-2xl max-w-[500px] max-h-[565.109px] px-[4.791rem] py-[6.1rem] bg-stone-950 border border-black flex flex-col items-center justify-center my-rotate-y-180 shadow-cert"
                             onClick={handleClick}
                         >
                             <div className="text-green-600 underline underline-offset-4" style={{ textShadow: "4px 4px #000" }}>
