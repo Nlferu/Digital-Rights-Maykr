@@ -180,8 +180,7 @@ export default function Maykr() {
                     <div className="flex flex-col gap-3 w-[16rem] self-center">
                         <input
                             type="file"
-                            style={{ color: "white" }}
-                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer"
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
                             id="art"
                             name="art"
                             placeholder="Art Hash"
