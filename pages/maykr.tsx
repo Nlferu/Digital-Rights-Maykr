@@ -7,6 +7,7 @@ import { inputs } from "@/lib/data"
 import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useContractRead, useContractWrite, useConnectionStatus } from "@thirdweb-dev/react"
 import { handleError, handleSuccess } from "@/lib/error-handlers"
+import { getErrorMessage } from "@/lib/utils"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -92,8 +93,7 @@ export default function Maykr() {
                             await handleMint.mutateAsync({ args: [metadata] })
                             handleMintSuccess()
                         } catch (error) {
-                            console.log("Following error occurred:", error)
-                            handleMintError(cid)
+                            handleMintError(getErrorMessage(error), cid)
                         } finally {
                             setIsMinting(false)
                         }
@@ -101,11 +101,11 @@ export default function Maykr() {
                         console.log("No metadata available")
                     }
                 } else {
-                    handleError("Please fill all the necessary fields first")
+                    handleError("Minting Error: Please fill all the necessary fields")
                     setIsMinting(false)
                 }
             } else {
-                handleError("Please fill all the necessary fields first")
+                handleError("Minting Error: Please fill all the necessary fields")
                 setIsMinting(false)
             }
         } else {
@@ -140,15 +140,15 @@ export default function Maykr() {
     }
 
     async function handleMintSuccess() {
-        handleSuccess("NFT Created Successfully!")
+        handleSuccess("Minting Success: NFT Created Successfully!")
 
         setTimeout(() => {
             location.reload()
         }, 2000)
     }
 
-    async function handleMintError(cid: string) {
-        handleError("NFT Creation Error")
+    async function handleMintError(error: string, cid: string) {
+        handleError(error)
 
         deleteFromNftStorage(cid)
     }
@@ -158,6 +158,9 @@ export default function Maykr() {
             <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0">
                 <div className="flex mt-[4.5rem] justify-center">
                     <div className="flex flex-col gap-3 w-[16rem] self-center">
+                        <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady">
+                            Choose File For Certification:
+                        </div>
                         <input
                             type="file"
                             className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
@@ -168,15 +171,29 @@ export default function Maykr() {
                         />
 
                         {inputs.map((input) => (
-                            <input
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                key={input.name}
-                                type={input.type}
-                                name={input.name}
-                                id={input.name}
-                                placeholder={input.placeholder === "Co-Author" ? input.placeholder : input.placeholder + " *"}
-                                onChange={handleInputChange}
-                            ></input>
+                            <div className="relative" key={input.name}>
+                                <input
+                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
+                                    type={input.type}
+                                    name={input.name}
+                                    id={input.name}
+                                    placeholder={input.placeholder}
+                                    onChange={handleInputChange}
+                                />
+                                {input.placeholder !== "Co-Author" && !form[input.name] && (
+                                    <span
+                                        style={{
+                                            position: "absolute",
+                                            top: "50%",
+                                            transform: "translateY(-50%)",
+                                            left: `calc(50% + ${input.placeholder.length * 0.5}ch)`,
+                                            color: "#f06543",
+                                        }}
+                                    >
+                                        *
+                                    </span>
+                                )}
+                            </div>
                         ))}
                         <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
                     </div>
@@ -212,7 +229,7 @@ export default function Maykr() {
                                     </div>
                                 )}
                                 <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Title *
+                                    Title
                                     <p className="text-certL text-sm mt-1 font-normal">
                                         <span>{form.title}</span>
                                     </p>
