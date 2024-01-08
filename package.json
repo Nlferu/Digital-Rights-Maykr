@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@thirdweb-dev/react": "^4.1.16",
+    "react-hot-toast": "^2.4.1",
     "clsx": "^1.2.1",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.0",

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useNotification } from "web3uikit"
 import { RightsButton, DisabledButton } from "@/components/button"
 import { useAddress, useContract, useConnectionStatus, useContractRead, useContractWrite } from "@thirdweb-dev/react"
+import style from "@/styles/loading.module.css"
 import Typed from "react-typed"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import Image from "next/image"
@@ -117,7 +118,7 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
                     </a>
                 ) : (
                     <div className="text-[#5acdf1] font-bold w-[17.5rem] my-[12.045rem] text-center">
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center gap-1">
                             Loading Image From IPFS
                             <Typed
                                 className="text-[#5acdf1] font-bold w-[1rem]"

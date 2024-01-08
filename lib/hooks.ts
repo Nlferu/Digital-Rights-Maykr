@@ -9,14 +9,14 @@ export function useSectionInView(sectionName: SectionName, viewField = 0.75) {
         /** @dev If (viewField)% for example 75% (0-1 scale) of content is in view bool will be true */
         threshold: viewField,
     })
-    const { setActiveSection, timeOfLastClick } = useActiveSectionContext()
+    const { setActiveSection } = useActiveSectionContext()
 
     useEffect(() => {
         /** @dev If section in view and time since click is more than 1s then set this section as active */
-        if (inView && Date.now() - timeOfLastClick > 1000) {
+        if (inView) {
             setActiveSection(sectionName)
         }
-    }, [inView, setActiveSection, timeOfLastClick])
+    }, [inView, setActiveSection])
 
     return { ref }
 }

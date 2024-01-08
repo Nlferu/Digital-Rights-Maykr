@@ -6,6 +6,7 @@ import { Button } from "@/components/button"
 import { inputs } from "@/lib/data"
 import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useContractRead, useContractWrite, useConnectionStatus } from "@thirdweb-dev/react"
+import { handleError, handleSuccess } from "@/lib/error-handlers"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -100,16 +101,15 @@ export default function Maykr() {
                         console.log("No metadata available")
                     }
                 } else {
-                    console.log("Fill all the fields")
-                    handleGenerateError("Fill all the fields")
+                    handleError("Please fill all the necessary fields first")
                     setIsMinting(false)
                 }
             } else {
-                handleGenerateError("Fill all the fields")
+                handleError("Please fill all the necessary fields first")
                 setIsMinting(false)
             }
         } else {
-            handleGenerateError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
     }
 
@@ -140,37 +140,17 @@ export default function Maykr() {
     }
 
     async function handleMintSuccess() {
-        dispatch({
-            type: "success",
-            message: "NFT Created!",
-            title: "NFT Creation Success",
-            position: "bottomR",
-            icon: "bell",
-        })
+        handleSuccess("NFT Created Successfully!")
+
         setTimeout(() => {
             location.reload()
-        }, 8000)
+        }, 2000)
     }
 
     async function handleMintError(cid: string) {
-        dispatch({
-            type: "error",
-            message: "NFT Has Not Been Created",
-            title: "NFT Creation Error",
-            position: "bottomR",
-            icon: "exclamation",
-        })
-        deleteFromNftStorage(cid)
-    }
+        handleError("NFT Creation Error")
 
-    async function handleGenerateError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "NFT Creation Error",
-            position: "bottomR",
-            icon: "exclamation",
-        })
+        deleteFromNftStorage(cid)
     }
 
     return (
@@ -194,7 +174,7 @@ export default function Maykr() {
                                 type={input.type}
                                 name={input.name}
                                 id={input.name}
-                                placeholder={input.placeholder}
+                                placeholder={input.placeholder === "Co-Author" ? input.placeholder : input.placeholder + " *"}
                                 onChange={handleInputChange}
                             ></input>
                         ))}
@@ -232,7 +212,7 @@ export default function Maykr() {
                                     </div>
                                 )}
                                 <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Title
+                                    Title *
                                     <p className="text-certL text-sm mt-1 font-normal">
                                         <span>{form.title}</span>
                                     </p>

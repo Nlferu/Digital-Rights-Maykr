@@ -3,6 +3,7 @@ import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
 import { ThirdwebProvider } from "@thirdweb-dev/react"
 import { Sepolia } from "@thirdweb-dev/chains"
+import { Toaster } from "react-hot-toast"
 import ActiveSectionContextProvider from "@/context/active-section-context"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -30,6 +31,8 @@ export default function App({ Component, pageProps }: AppProps) {
                         </ActiveSectionContextProvider>
                     </NotificationProvider>
                 </ThirdwebProvider>
+
+                <Toaster position="bottom-right" />
             </MoralisProvider>
         </div>
     )
