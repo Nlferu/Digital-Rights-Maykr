@@ -1,8 +1,9 @@
 import { BigNumber } from "ethers"
 import { useState, useEffect } from "react"
-import { useNotification } from "web3uikit"
 import { RightsButton, DisabledButton } from "@/components/button"
 import { useAddress, useContract, useConnectionStatus, useContractRead, useContractWrite } from "@thirdweb-dev/react"
+import { handleError, handleSuccess } from "@/lib/error-handlers"
+import { getErrorMessage } from "@/lib/utils"
 import Typed from "react-typed"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import Image from "next/image"
@@ -15,7 +16,6 @@ type CertificateBoxProps = {
 export default function CertificateBox({ certificateId, onCertificateClick }: CertificateBoxProps) {
     const [updatedUrl, setUpdatedUrl] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const dispatch = useNotification()
 
     const contractAddress = maykr.address
     const abi = maykr.abi
@@ -54,10 +54,9 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
 
                 try {
                     await handleBuy.mutateAsync({ args: [certificateId, account], overrides: { value: price as BigNumber } })
-                    handleBuyRightsSuccess()
+                    handleSuccess("Buy Rights: Art Rights Acquired")
                 } catch (error) {
-                    handleBuyRightsError("Buying Rights Failed")
-                    console.error(`Buying Rights To Use Certified Art Failed With Error: ${error}`)
+                    handleError(getErrorMessage(error))
                 } finally {
                     setIsLoading(false)
                 }
@@ -65,28 +64,8 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
                 console.log("Contract does not exists")
             }
         } else {
-            handleBuyRightsError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
-    }
-
-    async function handleBuyRightsSuccess() {
-        dispatch({
-            type: "success",
-            message: "Art Rights Acquired",
-            title: "Rights Acquired!",
-            position: "bottomR",
-            icon: "bell",
-        })
-    }
-
-    async function handleBuyRightsError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Buying Rights Error!",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     useEffect(() => {

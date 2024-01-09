@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react"
-import { useNotification } from "web3uikit"
 import { BigNumber, ethers } from "ethers"
 import { Button } from "@/components/button"
 import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useConnectionStatus, useContractRead, useContractWrite } from "@thirdweb-dev/react"
+import { handleError, handleSuccess } from "@/lib/error-handlers"
+import { getErrorMessage } from "@/lib/utils"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import verse from "@/contracts/Verse.json"
 
@@ -11,7 +12,6 @@ export default function Profits() {
     const { ref } = useSectionInView("Profits", 0.5)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
-    const dispatch = useNotification()
 
     const stake = useRef<HTMLInputElement | null>(null)
 
@@ -36,39 +36,18 @@ export default function Profits() {
 
                 try {
                     await handleWithdrawal.mutateAsync({ args: [] })
-                    handleWithdrawSuccess()
+                    handleSuccess("Proceeds Withdrawal Success!")
                 } catch (error) {
-                    console.error(`Withdrawing Proceeds Failed With Error: ${error}`)
-                    handleWithdrawError("Withdraw Error")
+                    handleError(getErrorMessage(error))
                 } finally {
                     setIsLoading(false)
                 }
             } else {
-                handleWithdrawError("Nothing To Withdraw")
+                handleError("Nothing To Withdraw")
             }
         } else {
-            handleWithdrawError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
-    }
-
-    async function handleWithdrawSuccess() {
-        dispatch({
-            type: "success",
-            message: "Proceeds Withdrew",
-            title: "Proceeds Withdrawal Success!",
-            position: "bottomR",
-            icon: "bell",
-        })
-    }
-
-    async function handleWithdrawError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Proceeds Withdrawal",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     const handleVerseStake = async () => {
@@ -81,53 +60,33 @@ export default function Profits() {
 
                 try {
                     await handleWithdrawal.mutateAsync({ args: [] })
-                    handleWithdrawSuccess()
+                    handleSuccess("Proceeds Withdrawal Success!")
 
                     /** @DISCLAIMER */
                     /* As Verse does not support testnets like Sepolia or Goerli below code should be taken just as an example !!! */
 
                     await handleVerseStakeTx.mutateAsync({ args: [], overrides: { value: amount } })
-                    handleVerseStakeSuccess()
+                    handleSuccess("Verse Stake Success!")
                 } catch (error) {
                     console.error(`Error occurred: ${error}`)
                     if (error instanceof Error) {
                         if (error.message.includes("DRM__NothingToWithdraw")) {
-                            handleVerseStakeError("Nothing To Withdraw")
+                            handleError("Nothing To Withdraw")
                         } else if (error.message.includes("verseStaking")) {
-                            handleVerseStakeError("Verse Staking Error")
+                            handleError("Verse Staking Error")
                         } else {
-                            handleVerseStakeError(error.message)
+                            handleError(error.message)
                         }
                     }
                 } finally {
                     setIsLoadingB(false)
                 }
             } else {
-                handleVerseStakeError("Please Provide Number Greater Than 0")
+                handleError("Please Provide Number Greater Than 0")
             }
         } else {
-            handleVerseStakeError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
-    }
-
-    async function handleVerseStakeSuccess() {
-        dispatch({
-            type: "success",
-            message: "Verse Staking Success",
-            title: "Staking Success!",
-            position: "bottomR",
-            icon: "bell",
-        })
-    }
-
-    async function handleVerseStakeError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Staking Failure!",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     return (

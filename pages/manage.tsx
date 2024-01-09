@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react"
-import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import { manageInputs } from "@/lib/data"
 import { Button } from "@/components/button"
 import { useSectionInView } from "@/lib/hooks"
 import { useContract, useConnectionStatus, useContractWrite } from "@thirdweb-dev/react"
+import { handleError, handleSuccess } from "@/lib/error-handlers"
+import { getErrorMessage } from "@/lib/utils"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 
 export default function Manage() {
     const { ref } = useSectionInView("Manage", 0.5)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingB, setIsLoadingB] = useState<boolean>(false)
-    const dispatch = useNotification()
 
     const refs = {
         tokenIdRef: useRef<HTMLInputElement | null>(null),
@@ -42,36 +42,15 @@ export default function Manage() {
                 let convPrice = ethers.utils.parseEther(price as string)
 
                 await handleLend.mutateAsync({ args: [tokenId, lendingTime, convPrice] })
-                handleAllowSuccess()
+                handleSuccess("Lend Certificate: Certificate Lending Allowed")
             } catch (error) {
-                console.error(`Allowing Certificate Lending Failed With Error: ${error}`)
-                handleAllowError("Lending Allowance Failed")
+                handleError(getErrorMessage(error))
             } finally {
                 setIsLoading(false)
             }
         } else {
-            handleAllowError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
-    }
-
-    async function handleAllowSuccess() {
-        dispatch({
-            type: "success",
-            message: "Certificate Lending Allowed",
-            title: "Lending Allowed!",
-            position: "bottomR",
-            icon: "bell",
-        })
-    }
-
-    async function handleAllowError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Allowance Error!",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     const handleBlockCertificate = async () => {
@@ -82,36 +61,15 @@ export default function Manage() {
                 var blockTokenId = refs.blockTokenIdRef.current?.value
 
                 await handleBlock.mutateAsync({ args: [blockTokenId] })
-                handleBlockSuccess()
+                handleSuccess("Lend Certificate: Certificate Lending Blocked")
             } catch (error) {
-                console.error(`Blocking Certificate Lending Failed With Error: ${error}`)
-                handleBlockError("Lending Blockage Failed")
+                handleError(getErrorMessage(error))
             } finally {
                 setIsLoadingB(false)
             }
         } else {
-            handleBlockError("Wallet Not Connected")
+            handleError("Wallet Not Connected")
         }
-    }
-
-    async function handleBlockSuccess() {
-        dispatch({
-            type: "success",
-            message: "Certificate Lending Blocked",
-            title: "Lending Blocked!",
-            position: "bottomR",
-            icon: "bell",
-        })
-    }
-
-    async function handleBlockError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Blockage Error!",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     return (

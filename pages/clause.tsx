@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react"
-import { useNotification } from "web3uikit"
 import { Button } from "@/components/button"
 import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useConnectionStatus } from "@thirdweb-dev/react"
+import { handleError } from "@/lib/error-handlers"
+import { getErrorMessage } from "@/lib/utils"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import clsx from "clsx"
 
@@ -10,7 +11,6 @@ export default function Clause() {
     const { ref } = useSectionInView("Clause", 0.5)
     const [isLoading, setIsLoading] = useState(false)
     const [clause, setClause] = useState("")
-    const dispatch = useNotification()
 
     const tokenRef = useRef<HTMLInputElement | null>(null)
 
@@ -38,28 +38,17 @@ export default function Clause() {
                         setClause(wrongClause)
                     }
                 } catch (error) {
-                    console.error(`Getting Clause Failed With Error: ${error}`)
                     setClause("")
-                    handleClauseError("Incorrect TokenId Provided")
+                    handleError(getErrorMessage(error))
                 } finally {
                     setIsLoading(false)
                 }
             } else {
-                handleClauseError("Wallet Not Connected")
+                handleError("Wallet Not Connected")
             }
         } else {
-            console.log("Contract does not exists")
+            handleError("Contract does not exists")
         }
-    }
-
-    async function handleClauseError(error: string) {
-        dispatch({
-            type: "error",
-            message: error,
-            title: "Clause Reading Error!",
-            position: "bottomR",
-            icon: "exclamation",
-        })
     }
 
     return (

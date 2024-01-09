@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react"
-import { useNotification } from "web3uikit"
 import { uploadToNftStorage } from "@/utils/uploadToNftStorage"
 import { deleteFromNftStorage } from "@/utils/deleteFromNftStorage"
 import { Button } from "@/components/button"
@@ -23,9 +22,6 @@ export default function Maykr() {
         description: "",
     })
     const [isMinting, setIsMinting] = useState<boolean>(false)
-
-    // This to be replaced
-    const dispatch = useNotification()
 
     const account = useAddress()
     const connectionStatus = useConnectionStatus()
