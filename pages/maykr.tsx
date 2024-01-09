@@ -6,7 +6,7 @@ import { inputs } from "@/lib/data"
 import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useContractRead, useContractWrite, useConnectionStatus } from "@thirdweb-dev/react"
 import { handleError, handleSuccess } from "@/lib/error-handlers"
-import { getErrorMessage } from "@/lib/utils"
+import { validateString, getErrorMessage } from "@/lib/utils"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -81,20 +81,37 @@ export default function Maykr() {
                 certificateContainer.style.boxShadow = "0px 0px 15px 5px #5acdf1"
                 // Pass the image blob to the upload function
                 if (form.author && form.title && form.description && form.art && imageBlob && emitted.data.toNumber() >= 0) {
-                    const { metadata, cid } = await uploadToNftStorage(form.author, form.title, form.description, form.art, imageBlob, emitted.data.toNumber())
-                    console.log("NFT.storage response:", metadata)
+                    if (!validateString(form.author, 30) || !validateString(form.co_author, 30) || !validateString(form.title, 30)) {
+                        handleError("Error: \nMaximum characters amount is 30")
+                        setIsMinting(false)
+                    } else if (!validateString(form.description, 275)) {
+                        handleError("Error: \nMaximum characters amount is 275")
+                        setIsMinting(false)
+                    } else {
+                        const { metadata, cid } = await uploadToNftStorage(
+                            form.author,
+                            form.title,
+                            form.description,
+                            form.art,
+                            imageBlob,
+                            emitted.data.toNumber()
+                        )
 
-                    if (metadata) {
-                        try {
-                            await handleMint.mutateAsync({ args: [metadata] })
-                            handleMintSuccess()
-                        } catch (error) {
-                            handleMintError(getErrorMessage(error), cid)
-                        } finally {
+                        console.log("NFT.storage response:", metadata)
+
+                        if (metadata) {
+                            try {
+                                await handleMint.mutateAsync({ args: [metadata] })
+                                handleMintSuccess()
+                            } catch (error) {
+                                handleMintError(getErrorMessage(error), cid)
+                            } finally {
+                                setIsMinting(false)
+                            }
+                        } else {
+                            handleError("Error: \nNo Metadata Available")
                             setIsMinting(false)
                         }
-                    } else {
-                        handleError("Error: \nNo Metadata Available")
                     }
                 } else {
                     handleError("Minting Error: \nPlease fill all the necessary fields")
@@ -209,7 +226,7 @@ export default function Maykr() {
                             id="certificate-container"
                             className="relative w-[25.4rem] h-[35.9rem] bg-contain bg-center bg-no-repeat bg-[url('/certificate.png')] shadow-cert"
                         >
-                            <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white text-center">
+                            <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white text-center mt-[3rem]">
                                 <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
                                     Author
                                 </p>
