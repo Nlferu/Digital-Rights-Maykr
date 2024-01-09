@@ -72,7 +72,7 @@ export default function Maykr() {
                             resolve(blob)
                         } else {
                             // Handle the case where resolving blob fails
-                            console.log("Unable to create Blob from canvas")
+                            handleError("Error: \nUnable to create Blob from canvas")
                         }
                     }, "image/png")
                 })
@@ -94,18 +94,18 @@ export default function Maykr() {
                             setIsMinting(false)
                         }
                     } else {
-                        console.log("No metadata available")
+                        handleError("Error: \nNo Metadata Available")
                     }
                 } else {
-                    handleError("Minting Error: Please fill all the necessary fields")
+                    handleError("Minting Error: \nPlease fill all the necessary fields")
                     setIsMinting(false)
                 }
             } else {
-                handleError("Minting Error: Please fill all the necessary fields")
+                handleError("Minting Error: \nPlease fill all the necessary fields")
                 setIsMinting(false)
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 
@@ -136,7 +136,7 @@ export default function Maykr() {
     }
 
     async function handleMintSuccess() {
-        handleSuccess("Minting Success: NFT Created Successfully!")
+        handleSuccess("Minting: \nNFT Created Successfully!")
 
         setTimeout(() => {
             location.reload()

@@ -54,17 +54,17 @@ export default function CertificateBox({ certificateId, onCertificateClick }: Ce
 
                 try {
                     await handleBuy.mutateAsync({ args: [certificateId, account], overrides: { value: price as BigNumber } })
-                    handleSuccess("Buy Rights: Art Rights Acquired")
+                    handleSuccess("Buy Rights: \nArt Rights Acquired")
                 } catch (error) {
                     handleError(getErrorMessage(error))
                 } finally {
                     setIsLoading(false)
                 }
             } else {
-                console.log("Contract does not exists")
+                handleError("Error: \nContract does not exists")
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 

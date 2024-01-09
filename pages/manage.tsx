@@ -42,14 +42,14 @@ export default function Manage() {
                 let convPrice = ethers.utils.parseEther(price as string)
 
                 await handleLend.mutateAsync({ args: [tokenId, lendingTime, convPrice] })
-                handleSuccess("Lend Certificate: Certificate Lending Allowed")
+                handleSuccess("Lend Certificate: \nCertificate Lending Allowed")
             } catch (error) {
                 handleError(getErrorMessage(error))
             } finally {
                 setIsLoading(false)
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 
@@ -61,14 +61,14 @@ export default function Manage() {
                 var blockTokenId = refs.blockTokenIdRef.current?.value
 
                 await handleBlock.mutateAsync({ args: [blockTokenId] })
-                handleSuccess("Lend Certificate: Certificate Lending Blocked")
+                handleSuccess("Lend Certificate: \nCertificate Lending Blocked")
             } catch (error) {
                 handleError(getErrorMessage(error))
             } finally {
                 setIsLoadingB(false)
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 

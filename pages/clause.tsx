@@ -44,10 +44,10 @@ export default function Clause() {
                     setIsLoading(false)
                 }
             } else {
-                handleError("Wallet Not Connected")
+                handleError("Error: \nWallet Not Connected")
             }
         } else {
-            handleError("Contract does not exists")
+            handleError("Error: \nContract does not exists")
         }
     }
 

@@ -36,17 +36,17 @@ export default function Profits() {
 
                 try {
                     await handleWithdrawal.mutateAsync({ args: [] })
-                    handleSuccess("Proceeds Withdrawal Success!")
+                    handleSuccess("Withdrawal: \nProceeds Withdrawal Success!")
                 } catch (error) {
                     handleError(getErrorMessage(error))
                 } finally {
                     setIsLoading(false)
                 }
             } else {
-                handleError("Nothing To Withdraw")
+                handleError("Error: \nNothing To Withdraw")
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 
@@ -60,20 +60,20 @@ export default function Profits() {
 
                 try {
                     await handleWithdrawal.mutateAsync({ args: [] })
-                    handleSuccess("Proceeds Withdrawal Success!")
+                    handleSuccess("Verse Withdrawal: \nProceeds Withdrawal Success!")
 
                     /** @DISCLAIMER */
                     /* As Verse does not support testnets like Sepolia or Goerli below code should be taken just as an example !!! */
 
                     await handleVerseStakeTx.mutateAsync({ args: [], overrides: { value: amount } })
-                    handleSuccess("Verse Stake Success!")
+                    handleSuccess("Verse Staking: \nVerse Staking Success!")
                 } catch (error) {
                     console.error(`Error occurred: ${error}`)
                     if (error instanceof Error) {
                         if (error.message.includes("DRM__NothingToWithdraw")) {
-                            handleError("Nothing To Withdraw")
+                            handleError("Error: \nNothing To Withdraw")
                         } else if (error.message.includes("verseStaking")) {
-                            handleError("Verse Staking Error")
+                            handleError("Error: \nVerse Staking Error")
                         } else {
                             handleError(error.message)
                         }
@@ -82,10 +82,10 @@ export default function Profits() {
                     setIsLoadingB(false)
                 }
             } else {
-                handleError("Please Provide Number Greater Than 0")
+                handleError("Error: \nPlease Provide Number Greater Than 0")
             }
         } else {
-            handleError("Wallet Not Connected")
+            handleError("Error: \nWallet Not Connected")
         }
     }
 

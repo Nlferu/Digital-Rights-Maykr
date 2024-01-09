@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app"
-import { MoralisProvider } from "react-moralis"
 import { ThirdwebProvider } from "@thirdweb-dev/react"
 import { Sepolia } from "@thirdweb-dev/chains"
 import { Toaster } from "react-hot-toast"
@@ -20,17 +19,15 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/icon.png" />
             </Head>
 
-            <MoralisProvider initializeOnMount={false}>
-                <ThirdwebProvider clientId="your-client-id" activeChain={activeChain} supportedChains={[activeChain]}>
-                    <ActiveSectionContextProvider>
-                        <Header />
-                        <Component {...pageProps} />
-                        <Footer />
-                    </ActiveSectionContextProvider>
-                </ThirdwebProvider>
+            <ThirdwebProvider clientId="your-client-id" activeChain={activeChain} supportedChains={[activeChain]}>
+                <ActiveSectionContextProvider>
+                    <Header />
+                    <Component {...pageProps} />
+                    <Footer />
+                </ActiveSectionContextProvider>
+            </ThirdwebProvider>
 
-                <Toaster position="bottom-right" />
-            </MoralisProvider>
+            <Toaster position="bottom-right" />
         </div>
     )
 }
