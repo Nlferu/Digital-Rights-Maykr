@@ -1,22 +1,4 @@
-// import { validateString, getErrorMessage } from "@/lib/utils"
 import toast from "react-hot-toast"
-
-// const handleCreateDream = async (formData: FormData) => {
-//     const goal = formData.get("goal")
-//     const description = formData.get("description")
-
-//     if (!validateString(goal, 100)) {
-//         return {
-//             error: "Invalid sender email",
-//         }
-//     }
-
-//     if (!validateString(description, 5000)) {
-//         return {
-//             error: "Invalid message",
-//         }
-//     }
-// }
 
 export async function handleSuccess(message: string) {
     toast.success(message, {
