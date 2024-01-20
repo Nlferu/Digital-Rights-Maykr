@@ -1,1 +1,1 @@
-1. Add motion using webflow
+1. Add motion using framer-motion
