@@ -52,50 +52,49 @@ export default function Clause() {
     }
 
     return (
-        <div ref={ref}>
-            <div
-                className={clsx("text-center flex-wrap justify-center items-center mb-[23rem]", {
-                    "!mb-[1rem]": clause.includes("The Artist") || clause === "Clause Not Detected",
-                })}
-            >
-                <div className="flex mt-[12rem] justify-center px-4">
-                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
-                        Read Active Clause
-                    </h4>
-                </div>
-                <input
-                    type="text"
-                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                    ref={tokenRef}
-                    id="tokenId"
-                    name="tokenId"
-                    placeholder="TokenId"
-                />
-
-                <Button name={"Read"} onClick={handleGetClause} disabled={isLoading} />
-
-                <div>
-                    {clause.includes("The Artist") ? (
-                        <div className="flex flex-col justify-center items-center ">
-                            <div className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
-                                Delivered Directly From Blockchain
-                            </div>
-                            <div className="border-0 shadow-dark w-[30rem] h-[15rem] text-white bg-dev rounded-lg bg-opacity-80">
-                                <div className="py-[0.5rem] px-[2rem] text-center leading-8">{clause}</div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div></div>
-                    )}
-                    {clause === "Clause Not Detected" ? (
-                        <div className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
-                            {clause}
-                        </div>
-                    ) : (
-                        <div></div>
-                    )}
-                </div>
+        <section
+            className={clsx("text-center flex-wrap justify-center items-center", {
+                "!mb-[1rem]": clause.includes("The Artist") || clause === "Clause Not Detected",
+            })}
+            ref={ref}
+        >
+            <div className="flex mt-[12rem] justify-center px-4">
+                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                    Read Active Clause
+                </h4>
             </div>
-        </div>
+            <input
+                type="text"
+                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                ref={tokenRef}
+                id="tokenId"
+                name="tokenId"
+                placeholder="TokenId"
+            />
+
+            <Button name={"Read"} onClick={handleGetClause} disabled={isLoading} />
+
+            <div>
+                {clause.includes("The Artist") ? (
+                    <div className="flex flex-col justify-center items-center ">
+                        <div className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
+                            Delivered Directly From Blockchain
+                        </div>
+                        <div className="border-0 shadow-dark w-[30rem] h-[15rem] text-white bg-dev rounded-lg bg-opacity-80">
+                            <div className="py-[0.5rem] px-[2rem] text-center leading-8">{clause}</div>
+                        </div>
+                    </div>
+                ) : (
+                    <div></div>
+                )}
+                {clause === "Clause Not Detected" ? (
+                    <div className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
+                        {clause}
+                    </div>
+                ) : (
+                    <div></div>
+                )}
+            </div>
+        </section>
     )
 }

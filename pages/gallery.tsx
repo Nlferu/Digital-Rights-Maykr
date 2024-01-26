@@ -24,7 +24,7 @@ export default function Gallery() {
     }
 
     return (
-        <section className="min-h-[48.5rem]" ref={ref}>
+        <section className="min-h-[48.5rem] mb-10" ref={ref}>
             {modalOpen && <Modal tokenId={tokenId} closeModal={() => setModalOpen(false)} selectedCertificateImage={selectedCertificateImage} />}
             <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
                 {emitted.data && emitted.data.toNumber() === 0 ? (

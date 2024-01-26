@@ -73,48 +73,46 @@ export default function Manage() {
     }
 
     return (
-        <div ref={ref}>
-            <div>
-                <div className="flex mt-[7rem] justify-center mb-[1rem]">
+        <section className="mb-10" ref={ref}>
+            <div className="flex mt-[7rem] justify-center mb-[1rem]">
+                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                    Lend Certificate
+                </h4>
+            </div>
+            <div className="flex flex-col text-center">
+                <div className="flex flex-col gap-3 w-[16rem] self-center">
+                    {manageInputs.map((input) => (
+                        <input
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                            key={input.name}
+                            type={input.type}
+                            name={input.name}
+                            id={input.name}
+                            ref={refs[input.ref]}
+                            placeholder={input.placeholder}
+                        ></input>
+                    ))}
+
+                    <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
+                </div>
+                <div className="flex mt-[5rem] justify-center">
                     <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
-                        Lend Certificate
+                        Block Certificate
                     </h4>
                 </div>
-                <div className="flex flex-col text-center">
-                    <div className="flex flex-col gap-3 w-[16rem] self-center">
-                        {manageInputs.map((input) => (
-                            <input
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                                key={input.name}
-                                type={input.type}
-                                name={input.name}
-                                id={input.name}
-                                ref={refs[input.ref]}
-                                placeholder={input.placeholder}
-                            ></input>
-                        ))}
+                <div className="flex flex-col gap-3 w-[16rem] self-center">
+                    <input
+                        type="text"
+                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                        ref={refs.blockTokenIdRef}
+                        id="blockTokenId"
+                        name="tokenId"
+                        placeholder="TokenId"
+                    />
 
-                        <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
-                    </div>
-                    <div className="flex mt-[5rem] justify-center">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
-                            Block Certificate
-                        </h4>
-                    </div>
-                    <div className="flex flex-col gap-3 w-[16rem] self-center">
-                        <input
-                            type="text"
-                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
-                            ref={refs.blockTokenIdRef}
-                            id="blockTokenId"
-                            name="tokenId"
-                            placeholder="TokenId"
-                        />
-
-                        <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
-                    </div>
+                    <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

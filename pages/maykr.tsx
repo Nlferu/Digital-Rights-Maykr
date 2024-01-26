@@ -167,113 +167,114 @@ export default function Maykr() {
     }
 
     return (
-        <div ref={ref}>
-            <div className="flex items-center lg:pl-[14rem] mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0">
-                <div className="flex mt-[4.5rem] justify-center">
-                    <div className="flex flex-col gap-3 w-[16rem] self-center">
-                        <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady">
-                            Choose File For Certification:
-                        </div>
-                        <input
-                            type="file"
-                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
-                            id="art"
-                            name="art"
-                            placeholder="Art Hash"
-                            onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
-                        />
+        <section
+            className="flex items-center lg:pl-[14rem] mr-0 sm:mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-0 sm:mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0"
+            ref={ref}
+        >
+            <div className="flex mt-0 sm:mt-[4.5rem] justify-center">
+                <div className="flex flex-col gap-3 w-[16rem] self-center">
+                    <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady">
+                        Choose File For Certification:
+                    </div>
+                    <input
+                        type="file"
+                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
+                        id="art"
+                        name="art"
+                        placeholder="Art Hash"
+                        onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
+                    />
 
-                        {inputs.map((input) => (
-                            <div className="relative" key={input.name}>
-                                <input
-                                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
-                                    type={input.type}
-                                    name={input.name}
-                                    id={input.name}
-                                    placeholder={input.placeholder}
-                                    onChange={handleInputChange}
-                                />
-                                {input.placeholder !== "Co-Author" && !form[input.name] && (
-                                    <span
-                                        style={{
-                                            position: "absolute",
-                                            top: "50%",
-                                            transform: "translateY(-50%)",
-                                            left: `calc(50% + ${input.placeholder.length * 0.5}ch)`,
-                                            color: "#f06543",
-                                        }}
-                                    >
-                                        *
-                                    </span>
-                                )}
-                            </div>
-                        ))}
-                        <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
-                    </div>
+                    {inputs.map((input) => (
+                        <div className="relative" key={input.name}>
+                            <input
+                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
+                                type={input.type}
+                                name={input.name}
+                                id={input.name}
+                                placeholder={input.placeholder}
+                                onChange={handleInputChange}
+                            />
+                            {input.placeholder !== "Co-Author" && !form[input.name] && (
+                                <span
+                                    style={{
+                                        position: "absolute",
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        left: `calc(50% + ${input.placeholder.length * 0.5}ch)`,
+                                        color: "#f06543",
+                                    }}
+                                >
+                                    *
+                                </span>
+                            )}
+                        </div>
+                    ))}
+                    <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
                 </div>
-                {/* Certificate will show only if we have "art" field filled */}
-                {!form.art && (
-                    <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
-                        <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
-                            Magic Will Be Happening Here...
-                        </p>
-                    </div>
-                )}
-                {form.art && (
-                    <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
-                        <div
-                            ref={containerRef}
-                            id="certificate-container"
-                            className="relative w-[25.4rem] h-[35.9rem] bg-contain bg-center bg-no-repeat bg-[url('/certificate.png')] shadow-cert"
-                        >
-                            <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white text-center mt-[3rem]">
-                                <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Author
-                                </p>
-                                <p className="text-certL text-sm mt-1" style={{ textShadow: "2px 2px #000" }}>
-                                    <span>{form.author}</span>
-                                </p>
-                                {form.co_author && (
-                                    <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                        Co-Author
-                                        <p className="text-certL text-sm mt-1 font-normal">
-                                            <span>{form.co_author}</span>
-                                        </p>
-                                    </div>
-                                )}
+            </div>
+            {/* Certificate will show only if we have "art" field filled */}
+            {!form.art && (
+                <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
+                    <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
+                        Magic Will Be Happening Here...
+                    </p>
+                </div>
+            )}
+            {form.art && (
+                <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
+                    <div
+                        ref={containerRef}
+                        id="certificate-container"
+                        className="relative w-[25.4rem] h-[35.9rem] bg-contain bg-center bg-no-repeat bg-[url('/certificate.png')] shadow-cert"
+                    >
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white text-center mt-[3rem]">
+                            <p className=" text-certH text-xl mt-3 font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Author
+                            </p>
+                            <p className="text-certL text-sm mt-1" style={{ textShadow: "2px 2px #000" }}>
+                                <span>{form.author}</span>
+                            </p>
+                            {form.co_author && (
                                 <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Title
+                                    Co-Author
                                     <p className="text-certL text-sm mt-1 font-normal">
-                                        <span>{form.title}</span>
+                                        <span>{form.co_author}</span>
                                     </p>
                                 </div>
-                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Creator Address
-                                    <p className="text-certL text-sm mt-1">
-                                        <span className="text-certL text-sm mt-1 font-normal">{account}</span>
-                                    </p>
-                                </div>
-                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Art Hash
-                                    <p className="text-certL text-sm mt-1">
-                                        <span className="text-certL text-[0.72rem] mt-1 font-normal">{form.art}</span>
-                                    </p>
-                                </div>
-                                <p className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Certificate_Id_{emitted.data.toNumber()}
+                            )}
+                            <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Title
+                                <p className="text-certL text-sm mt-1 font-normal">
+                                    <span>{form.title}</span>
                                 </p>
-                                <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
-                                    Description{" "}
-                                    <p className="text-certL text-sm mt-1">
-                                        <span className="text-certL text-sm mt-1 font-normal">{form.description}</span>
-                                    </p>
-                                </div>
+                            </div>
+                            <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Creator Address
+                                <p className="text-certL text-sm mt-1">
+                                    <span className="text-certL text-sm mt-1 font-normal">{account}</span>
+                                </p>
+                            </div>
+                            <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Art Hash
+                                <p className="text-certL text-sm mt-1">
+                                    <span className="text-certL text-[0.72rem] mt-1 font-normal">{form.art}</span>
+                                </p>
+                            </div>
+                            <p className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Certificate_Id_{emitted.data.toNumber()}
+                            </p>
+                            <div className="text-certH text-xl font-bold" style={{ textShadow: "2px 2px #000" }}>
+                                Description{" "}
+                                <p className="text-certL text-sm mt-1">
+                                    <span className="text-certL text-sm mt-1 font-normal">{form.description}</span>
+                                </p>
                             </div>
                         </div>
-                        <Button name="Download" onClick={handleDownloadCertificate} />
                     </div>
-                )}
-            </div>
-        </div>
+                    <Button name="Download" onClick={handleDownloadCertificate} />
+                </div>
+            )}
+        </section>
     )
 }

@@ -36,7 +36,7 @@ export default function Header() {
     return (
         <header className="flex fixed w-full h-[4.5rem] bg-transparent z-10 drop-shadow-shady">
             <Image
-                className="pl-[2rem] xl:ml-[3rem] h-[57.6px] w-[80px] sm:h-[72px] sm:w-[100px] mt-[0.3rem] sm:mt-[0]"
+                className="pl-[2rem] xl:ml-[3rem] h-[57.6px] w-[80px] sm:h-[72px] sm:w-[100px] self-center"
                 src="/icon.png"
                 alt="DigitalRightsMaykr"
                 height="100"
@@ -46,7 +46,7 @@ export default function Header() {
             ></Image>
 
             <h1
-                className={`${montserrat.className} fixed mt-[1.25rem] ml-[5rem] sm:ml-[6rem] xl:ml-[9rem] text-center w-[13rem] sm:w-[20rem] text-xl sm:text-3xl text-white font-bold`}
+                className={`${montserrat.className} fixed sm:flex hidden self-center ml-[5rem] sm:ml-[7rem] xl:ml-[10rem] text-center w-[13rem] sm:w-[20rem] pr-4 sm:pr-0 text-xl sm:text-3xl text-white font-bold`}
             >
                 Digital Rights Maykr
             </h1>
@@ -122,7 +122,20 @@ export default function Header() {
                         switchToActiveChain={true}
                     />
                 </div>
+
+                {/* Adds ability to close modal on click below it */}
+                {navBtn ? (
+                    <div
+                        className="bg-black/40 h-[100vh] w-full absolute"
+                        onClick={() => {
+                            setNavBtn(false)
+                        }}
+                    ></div>
+                ) : (
+                    <></>
+                )}
             </nav>
+
             <div className="hidden lg:flex absolute right-[1.5rem] top-[4.5rem]">
                 <ConnectWallet
                     theme={darkTheme({
@@ -142,7 +155,8 @@ export default function Header() {
                     switchToActiveChain={true}
                 />
             </div>
-            <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer"}>
+
+            <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer z-50"}>
                 {navBtn ? <FaTimes onClick={handleNavBtn} /> : <FaBars onClick={handleNavBtn} />}
             </div>
         </header>
