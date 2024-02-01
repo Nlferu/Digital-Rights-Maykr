@@ -81,14 +81,18 @@ export default function Manage() {
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 1 }}
             >
-                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                <h4
+                    className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl
+                               font-bold drop-shadow-shady"
+                >
                     Lend Certificate
                 </h4>
 
                 <div className="flex flex-col gap-3 w-[16rem] self-center">
                     {manageInputs.map((input) => (
                         <input
-                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300
+                                     placeholder:text-gray-100"
                             key={input.name}
                             type={input.type}
                             name={input.name}
@@ -108,14 +112,18 @@ export default function Manage() {
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 1 }}
             >
-                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                <h4
+                    className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl
+                               font-bold drop-shadow-shady"
+                >
                     Block Certificate
                 </h4>
 
                 <div className="flex flex-col gap-3 w-[16rem] self-center">
                     <input
                         type="text"
-                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100"
+                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300
+                                 placeholder:text-gray-100"
                         ref={refs.blockTokenIdRef}
                         id="blockTokenId"
                         name="tokenId"
