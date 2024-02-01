@@ -4,6 +4,7 @@ import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useConnectionStatus } from "@thirdweb-dev/react"
 import { handleError } from "@/lib/error-handlers"
 import { getErrorMessage } from "@/lib/utils"
+import { motion } from "framer-motion"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import clsx from "clsx"
 
@@ -52,11 +53,14 @@ export default function Clause() {
     }
 
     return (
-        <section
+        <motion.section
             className={clsx("text-center flex-wrap justify-center items-center", {
                 "!mb-[1rem]": clause.includes("The Artist") || clause === "Clause Not Detected",
             })}
             ref={ref}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
         >
             <div className="flex mt-[12rem] justify-center px-4">
                 <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
@@ -76,25 +80,39 @@ export default function Clause() {
 
             <div>
                 {clause.includes("The Artist") ? (
-                    <div className="flex flex-col justify-center items-center ">
-                        <div className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
+                    <motion.div
+                        className="flex flex-col justify-center items-center"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 1 }}
+                    >
+                        <div
+                            className="mt-[2rem] mb-[1rem] lg:mb-0 bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent
+                                        bg-clip-text text-4xl font-bold drop-shadow-shady"
+                        >
                             Delivered Directly From Blockchain
                         </div>
                         <div className="border-0 shadow-dark w-[30rem] h-[15rem] text-white bg-dev rounded-lg bg-opacity-80">
                             <div className="py-[0.5rem] px-[2rem] text-center leading-8">{clause}</div>
                         </div>
-                    </div>
+                    </motion.div>
                 ) : (
                     <div></div>
                 )}
                 {clause === "Clause Not Detected" ? (
-                    <div className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-4xl font-bold drop-shadow-shady">
+                    <motion.div
+                        className="mt-[10rem] mb-[7rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text
+                                   text-4xl font-bold drop-shadow-shady"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 1 }}
+                    >
                         {clause}
-                    </div>
+                    </motion.div>
                 ) : (
                     <div></div>
                 )}
             </div>
-        </section>
+        </motion.section>
     )
 }
