@@ -5,6 +5,7 @@ import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useConnectionStatus, useContractRead, useContractWrite } from "@thirdweb-dev/react"
 import { handleError, handleSuccess } from "@/lib/error-handlers"
 import { getErrorMessage } from "@/lib/utils"
+import { motion } from "framer-motion"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import verse from "@/contracts/Verse.json"
 
@@ -92,12 +93,16 @@ export default function Profits() {
     return (
         <div ref={ref}>
             <div className="text-center flex-wrap">
-                <div className="flex mt-[7rem] justify-center px-4">
+                <motion.div
+                    className="flex mt-[7rem] justify-center px-4 flex-col text-center items-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                >
                     <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                         Your Current Proceeds
                     </h4>
-                </div>
-                <div className="flex flex-col text-center justify-center items-center">
+
                     <div className="flex flex-col gap-3 w-[16rem] self-center">
                         <div className="font-bold text-red-600 text-3xl">
                             {handleGetProceeds.data ? (
@@ -111,11 +116,18 @@ export default function Profits() {
 
                         <Button name="Withdraw" onClick={handleWithdraw} disabled={isLoading} />
                     </div>
-                    <div className="flex mt-[4rem] justify-center px-20 lg:px-1 mb-[1.5rem] lg:mb-0">
-                        <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
-                            Stake Your Proceeds With Verse
-                        </h4>
-                    </div>
+                </motion.div>
+
+                <motion.div
+                    className="flex flex-col mt-[4rem] items-center justify-center px-20 lg:px-1 mb-[1.5rem] lg:mb-0"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                >
+                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                        Stake Your Proceeds With Verse
+                    </h4>
+
                     <div className="flex flex-col gap-3 w-[16rem] self-center">
                         <input
                             type="text"
@@ -136,7 +148,7 @@ export default function Profits() {
                             Verse
                         </a>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     )
