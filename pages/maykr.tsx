@@ -7,6 +7,7 @@ import { useSectionInView } from "@/lib/hooks"
 import { useAddress, useContract, useContractRead, useContractWrite, useConnectionStatus } from "@thirdweb-dev/react"
 import { handleError, handleSuccess } from "@/lib/error-handlers"
 import { validateString, getErrorMessage } from "@/lib/utils"
+import { motion } from "framer-motion"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import html2canvas from "html2canvas"
 import download from "downloadjs"
@@ -171,58 +172,72 @@ export default function Maykr() {
             className="flex items-center lg:pl-[14rem] mr-0 sm:mr-[-1rem] lg:pr-[-10rem] h-[45rem] mt-0 sm:mt-[3.5rem] gap-20 px-[1rem] mb-[-4rem] lg:mb-0"
             ref={ref}
         >
-            <div className="flex mt-0 sm:mt-[4.5rem] justify-center">
-                <div className="flex flex-col gap-3 w-[16rem] self-center">
-                    <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady">
-                        Choose File For Certification:
-                    </div>
-                    <input
-                        type="file"
-                        className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
-                        id="art"
-                        name="art"
-                        placeholder="Art Hash"
-                        onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
-                    />
-
-                    {inputs.map((input) => (
-                        <div className="relative" key={input.name}>
-                            <input
-                                className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
-                                type={input.type}
-                                name={input.name}
-                                id={input.name}
-                                placeholder={input.placeholder}
-                                onChange={handleInputChange}
-                            />
-                            {input.placeholder !== "Co-Author" && !form[input.name] && (
-                                <span
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        transform: "translateY(-50%)",
-                                        left: `calc(50% + ${input.placeholder.length * 0.5}ch)`,
-                                        color: "#f06543",
-                                    }}
-                                >
-                                    *
-                                </span>
-                            )}
-                        </div>
-                    ))}
-                    <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
+            <motion.div
+                className="flex flex-col gap-3 w-[16rem] self-center mt-0 sm:mt-[4.5rem] justify-center"
+                initial={{ opacity: 0, x: `-100%` }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.9 }}
+            >
+                <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady text-lg">
+                    Choose File For Certification:
                 </div>
-            </div>
+                <input
+                    type="file"
+                    className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center cursor-pointer text-white"
+                    id="art"
+                    name="art"
+                    placeholder="Art Hash"
+                    onChange={() => hashCreator((hash) => setForm({ ...form, art: hash }))}
+                />
+
+                {inputs.map((input) => (
+                    <div className="relative" key={input.name}>
+                        <input
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
+                            type={input.type}
+                            name={input.name}
+                            id={input.name}
+                            placeholder={input.placeholder}
+                            onChange={handleInputChange}
+                        />
+                        {input.placeholder !== "Co-Author" && !form[input.name] && (
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    left: `calc(50% + ${input.placeholder.length * 0.5}ch)`,
+                                    color: "#f06543",
+                                }}
+                            >
+                                *
+                            </span>
+                        )}
+                    </div>
+                ))}
+                <Button name="Mint NFT" onClick={handleGenerateCertificate} disabled={isMinting} />
+            </motion.div>
+
             {/* Certificate will show only if we have "art" field filled */}
             {!form.art && (
-                <div className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]">
+                <motion.div
+                    className="lg:flex hidden text-center justify-end pl-[10rem] pr-[10rem] mt-[4.5rem]"
+                    initial={{ opacity: 0, x: `100%` }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1 }}
+                >
                     <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
                         Magic Will Be Happening Here...
                     </p>
-                </div>
+                </motion.div>
             )}
             {form.art && (
-                <div className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]">
+                <motion.div
+                    className="lg:flex hidden flex-col text-center justify-end xl:pl-[15rem] pl:[2rem] pr-[14rem] mt-[2rem]"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                >
                     <div
                         ref={containerRef}
                         id="certificate-container"
@@ -273,7 +288,7 @@ export default function Maykr() {
                         </div>
                     </div>
                     <Button name="Download" onClick={handleDownloadCertificate} />
-                </div>
+                </motion.div>
             )}
         </section>
     )
