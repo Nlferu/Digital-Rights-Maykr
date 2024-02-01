@@ -178,7 +178,10 @@ export default function Maykr() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.9 }}
             >
-                <div className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center drop-shadow-shady text-lg">
+                <div
+                    className="h-[2rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text font-bold self-center
+                                drop-shadow-shady text-lg"
+                >
                     Choose File For Certification:
                 </div>
                 <input
@@ -193,7 +196,8 @@ export default function Maykr() {
                 {inputs.map((input) => (
                     <div className="relative" key={input.name}>
                         <input
-                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300 placeholder:text-gray-100 w-full"
+                            className="p-[0.7rem] border-0 rounded-xl bg-impale hover:bg-hpale shadow-dark text-center text-gray-300 focus:text-gray-300
+                                     placeholder:text-gray-100 w-full"
                             type={input.type}
                             name={input.name}
                             id={input.name}
@@ -226,7 +230,10 @@ export default function Maykr() {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <p className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold self-center drop-shadow-shady">
+                    <p
+                        className="h-[10rem] bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-4xl font-bold
+                                  self-center drop-shadow-shady"
+                    >
                         Magic Will Be Happening Here...
                     </p>
                 </motion.div>
