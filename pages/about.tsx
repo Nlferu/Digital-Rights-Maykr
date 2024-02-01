@@ -1,4 +1,5 @@
 import { useSectionInView } from "@/lib/hooks"
+import { motion } from "framer-motion"
 import contract from "@/contracts/DigitalRightsMaykr.json"
 
 export default function About() {
@@ -7,70 +8,47 @@ export default function About() {
 
     return (
         <section className="block mt-[6rem] text-center text-white drop-shadow-shady mb-10" ref={ref}>
-            <div className="text-center">
+            <motion.div className="text-center" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}>
                 <h1 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 h-[6rem] sm:h-[5rem] text-transparent bg-clip-text text-4xl sm:text-6xl font-bold">
                     Digital Rights Maykr
                 </h1>
-            </div>
+            </motion.div>
 
-            <div className="flex gap-4 sm:gap-12">
-                <div className="flex flex-col max-w-[25rem]">
-                    <div>
-                        <strong className="list-inside text-blue-400 text-xl underline">Creator And Artists Tool </strong>
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            This project is the ultimate tool for creators, providing an awe-inspiring sanctuary for your artistic genius to flourish and gain
-                            recognition.
-                        </p>
-                    </div>
-                    <div className="mt-[1.5rem]">
-                        <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Power Of Blockchain </strong>
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            Experience the true power of blockchain, revolutionizing the protection and authentication of your intellectual property.
-                        </p>
-                    </div>
-                    <div className="mt-[1.5rem]">
-                        <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Safetiness </strong>
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            Unlock the extraordinary potential to safeguard your creations and establish undeniable proof of your authorship.
-                        </p>
-                    </div>
+            <motion.div
+                className="flex flex-col text-center items-center text-lg"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.25, duration: 1 }}
+            >
+                <div className="mt-10 mb-4 max-w-[60rem]">
+                    Welcome to our revolutionary project, the Creator and Artists Tool a haven for unleashing your artistic brilliance and garnering
+                    well-deserved recognition.
                 </div>
-                <div className="flex flex-col max-w-[25rem]">
-                    <div className="">
-                        <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Proceeds </strong>
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            Earn proceeds from your work and gain the possibility to withdraw or multiply those earnings with Verse!
-                        </p>
-                    </div>
-                    <div className="mt-[1.5rem]">
-                        <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Rights Purchase </strong>
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            Others can purchase rights for their usage in their projects, but only for the time specified by you.
-                        </p>
-                    </div>
-                    <div className="mt-[1.5rem]">
-                        <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Gallery </strong>
+                <div className="mb-4 max-w-[58rem] leading-[2rem]">
+                    Immerse yourself in the transformative power of blockchain technology, redefining the protection and authentication of your intellectual
+                    property. Safeguard your creations with unprecedented security, establishing irrefutable proof of your authorship. Unlock the extraordinary
+                    potential to earn proceeds from your work. With Verse, you gain the flexibility to withdraw or multiply your earnings, putting the control
+                    firmly in your hands. Offer others the opportunity to purchase rights for their projects, respecting your terms and timeline. Embrace the
+                    concept of shared creativity while maintaining ownership. Navigate our gallery to ensure the uniqueness of your creations. Avoid duplication
+                    and find inspiration by exploring similar works, fostering a community of originality.
+                </div>
+                <div className="max-w-[50rem]">
+                    Our protocol boasts cutting-edge features designed to empower you in creating and lending rights to your masterpiece. Join us in shaping the
+                    future of artistic collaboration and protection!
+                </div>
+            </motion.div>
 
-                        <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap">
-                            If you&apos;re unsure whether someone has already created artistry similar to what you&apos;re working on to ensure your idea is
-                            unique!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-col text-center items-center">
-                <strong className="list-inside mt-[1rem] text-blue-400 text-xl underline">Cutting Edge Features </strong>
-                <p className="text-sm text-white font-bold py-[0.5rem] leading-6 flex flex-wrap max-w-[25rem]">
-                    Our protocol offers cutting-edge features enabling you to create and lend rights to your masterpiece.
+            <motion.div
+                className="flex flex-col font-bold mt-16"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+            >
+                <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 h-[4rem] sm:h-[3rem] text-transparent bg-clip-text text-2xl sm:text-3xl font-bold">
+                    DRM Contract Address:{" "}
                 </p>
-            </div>
-            <div className="my-[1rem] text-xl sm:text-3xl lg:text-4xl text-red-400">
-                <p>The possibilities are boundless!</p>
-            </div>
-            <div className="flex flex-col mt-[0.5rem] font-bold">
-                <p className="text-xl sm:text-2xl text-[#7042f8] underline">DRM Contract Address: </p>
-                <span className="text-xs sm:text-xl pt-[1rem] text-pink-200">{contractAddress}</span>
-            </div>
+                <span className="text-xs sm:text-xl text-pink-200">{contractAddress}</span>
+            </motion.div>
         </section>
     )
 }
