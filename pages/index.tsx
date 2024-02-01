@@ -14,7 +14,10 @@ export default function Index() {
     return (
         <section className="w-full mt-[6rem] mb-[2rem] lg:mb-[5rem] text-center text-purple-200" ref={ref}>
             <motion.div className="text-center" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}>
-                <h1 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[10rem] text-transparent bg-clip-text text-4xl sm:text-6xl font-bold drop-shadow-shady">
+                <h1
+                    className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[10rem] text-transparent bg-clip-text text-4xl sm:text-6xl
+                               font-bold drop-shadow-shady"
+                >
                     Welcome To Digital Rights Maykr!
                 </h1>
             </motion.div>
