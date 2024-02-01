@@ -63,7 +63,10 @@ export default function Clause() {
             transition={{ duration: 1 }}
         >
             <div className="flex mt-[12rem] justify-center px-4">
-                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                <h4
+                    className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold
+                               drop-shadow-shady"
+                >
                     Read Active Clause
                 </h4>
             </div>
