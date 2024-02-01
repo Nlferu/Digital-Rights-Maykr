@@ -6,6 +6,7 @@ import { useSectionInView } from "@/lib/hooks"
 import { useContract, useConnectionStatus, useContractWrite } from "@thirdweb-dev/react"
 import { handleError, handleSuccess } from "@/lib/error-handlers"
 import { getErrorMessage } from "@/lib/utils"
+import { motion } from "framer-motion"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 
 export default function Manage() {
@@ -74,12 +75,16 @@ export default function Manage() {
 
     return (
         <section className="mb-10" ref={ref}>
-            <div className="flex mt-[7rem] justify-center mb-[1rem]">
+            <motion.div
+                className="flex flex-col mt-[7rem] justify-center mb-[1rem] text-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+            >
                 <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
                     Lend Certificate
                 </h4>
-            </div>
-            <div className="flex flex-col text-center">
+
                 <div className="flex flex-col gap-3 w-[16rem] self-center">
                     {manageInputs.map((input) => (
                         <input
@@ -95,11 +100,18 @@ export default function Manage() {
 
                     <Button name="Allow Lending" onClick={handleLendCertificate} disabled={isLoading} />
                 </div>
-                <div className="flex mt-[5rem] justify-center">
-                    <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
-                        Block Certificate
-                    </h4>
-                </div>
+            </motion.div>
+
+            <motion.div
+                className="flex flex-col mt-[5rem] justify-center text-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+            >
+                <h4 className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block h-[5rem] text-transparent bg-clip-text text-2xl sm:text-4xl font-bold drop-shadow-shady">
+                    Block Certificate
+                </h4>
+
                 <div className="flex flex-col gap-3 w-[16rem] self-center">
                     <input
                         type="text"
@@ -112,7 +124,7 @@ export default function Manage() {
 
                     <Button name="Block Lending" onClick={handleBlockCertificate} disabled={isLoadingB} />
                 </div>
-            </div>
+            </motion.div>
         </section>
     )
 }
