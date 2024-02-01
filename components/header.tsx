@@ -52,7 +52,8 @@ export default function Header() {
             ></Image>
 
             <h1
-                className={`${montserrat.className} fixed sm:flex hidden self-center ml-[5rem] sm:ml-[7rem] xl:ml-[10rem] text-center w-[13rem] sm:w-[20rem] pr-4 sm:pr-0 text-xl sm:text-3xl text-white font-bold`}
+                className={`${montserrat.className} fixed sm:flex hidden self-center ml-[5rem] sm:ml-[7rem] xl:ml-[10rem] text-center w-[13rem] sm:w-[20rem] pr-4 sm:pr-0 text-xl
+                            sm:text-3xl text-white font-bold`}
             >
                 Digital Rights Maykr
             </h1>
