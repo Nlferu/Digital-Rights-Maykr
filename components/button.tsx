@@ -31,9 +31,9 @@ export function Button({ name, onClick, disabled }: ButtonProps) {
 export function RightsButton({ name, onClick, disabled }: ButtonProps) {
     return (
         <button
-            className="group relative text-purple-200 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack border-[2px] border-black rounded-full
-                after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-light after:animate-fullSpin
-                hover:scale-[1.03] active:scale-[1.01]"
+            className="group relative text-purple-200 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack border-[2px]
+                       after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-light after:animate-fullSpin border-black rounded-full
+                       hover:scale-[1.03] active:scale-[1.01]"
             onClick={onClick}
             disabled={disabled}
         >
@@ -52,9 +52,8 @@ export function RightsButton({ name, onClick, disabled }: ButtonProps) {
 export function DisabledButton({ name }: DisabledButtonProps) {
     return (
         <button
-            className="group relative text-gray-700 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack rounded-full border-[1px] border-black
-                after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-black after:animate-delayedSpin
-                active:scale-[1.01]"
+            className="group relative text-gray-700 flex m-auto mt-[1.5rem] justify-center items-center overflow-hidden w-[8.4rem] h-[3.9rem] bg-tblack rounded-full border-[1px]
+                     border-black after:content-[''] after:absolute after:w-[12rem] after:h-[10rem] after:bg-linear-black after:animate-delayedSpin active:scale-[1.01]"
             style={{ textShadow: "2px 2px #000" }}
         >
             <span
