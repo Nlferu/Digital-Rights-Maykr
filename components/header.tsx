@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google"
 import { FaBars, FaTimes } from "react-icons/fa"
 import { useActiveSectionContext } from "@/context/active-section-context"
 import { ConnectWallet, darkTheme } from "@thirdweb-dev/react"
+import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import clsx from "clsx"
@@ -34,7 +35,12 @@ export default function Header() {
     }, [])
 
     return (
-        <header className="flex fixed w-full h-[4.5rem] bg-transparent z-10 drop-shadow-shady">
+        <motion.header
+            className="flex fixed w-full h-[4.5rem] bg-transparent z-10 drop-shadow-shady"
+            initial={{ y: -150, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
             <Image
                 className="pl-[2rem] xl:ml-[3rem] h-[57.6px] w-[80px] sm:h-[72px] sm:w-[100px] self-center"
                 src="/icon.png"
@@ -159,6 +165,6 @@ export default function Header() {
             <div className={"flex lg:hidden self-center ml-auto mr-[3rem] text-2xl text-white hover:cursor-pointer z-50"}>
                 {navBtn ? <FaTimes onClick={handleNavBtn} /> : <FaBars onClick={handleNavBtn} />}
             </div>
-        </header>
+        </motion.header>
     )
 }
