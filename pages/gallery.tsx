@@ -30,7 +30,10 @@ export default function Gallery() {
             <div className="flex flex-wrap mt-[8rem] p-[1rem] justify-center">
                 {emitted.data && emitted.data.toNumber() === 0 ? (
                     <div className="flex flex-col text-center items-center justify-center mt-[12rem] mb-[16rem]">
-                        <p className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem] sm:h-[10rem] drop-shadow-shady">
+                        <p
+                            className="bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 inline-block text-transparent bg-clip-text text-6xl font-bold h-[15rem]
+                                      sm:h-[10rem] drop-shadow-shady"
+                        >
                             No Certificates To Display For Now...
                         </p>
                     </div>
