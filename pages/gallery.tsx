@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useSectionInView } from "@/lib/hooks"
 import { useContract, useContractRead } from "@thirdweb-dev/react"
+import { motion } from "framer-motion"
 import maykr from "@/contracts/DigitalRightsMaykr.json"
 import CertificateBox from "@/components/certificateBox"
 import Modal from "@/components/modal"
@@ -36,11 +37,17 @@ export default function Gallery() {
                 ) : (
                     <div className="max-w-[100rem] flex items-center justify-center flex-wrap w-full gap-20 list-none mt-[1rem]">
                         {Array.from({ length: (emitted.data as number) || 0 }, (_, index) => (
-                            <li className="" key={index}>
+                            <motion.li
+                                className=""
+                                key={index}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ delay: 0.2 * index, duration: 1 }}
+                            >
                                 <React.Fragment key={index}>
                                     <CertificateBox certificateId={index} onCertificateClick={handleCertificateClick} />
                                 </React.Fragment>
-                            </li>
+                            </motion.li>
                         ))}
                     </div>
                 )}
