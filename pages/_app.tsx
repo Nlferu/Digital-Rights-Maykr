@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const activeChain = Sepolia
 
     return (
-        <div className="flex px-4 flex-col min-h-[100vh] items-center bg-[url('/digital.jpg')] bg-cover">
+        <div className="flex px-4 flex-col min-h-[100vh] items-center bg-[url('/digital.jpg')] bg-cover overflow-hidden">
             <Head>
                 <title>Digital Rights Maykr</title>
                 <meta name="description" content="Digital Rights Maykr" />
