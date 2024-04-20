@@ -9,6 +9,7 @@ import Head from "next/head"
 import "@/styles/globals.css"
 
 export default function App({ Component, pageProps }: AppProps) {
+    const clientId = process.env.CLIENT_ID || ""
     const activeChain = Sepolia
 
     return (
@@ -19,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/icon.png" />
             </Head>
 
-            <ThirdwebProvider clientId="your-client-id" activeChain={activeChain} supportedChains={[activeChain]}>
+            <ThirdwebProvider clientId={clientId} activeChain={activeChain} supportedChains={[activeChain]}>
                 <ActiveSectionContextProvider>
                     <Header />
                     <Component {...pageProps} />
